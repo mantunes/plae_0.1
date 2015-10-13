@@ -1,4 +1,14 @@
 Rails.application.routes.draw do
+  get 'time_entries/index'
+  get 'time_entries/new'
+  get 'time_entries/show'
+  get 'time_entries/edit'
+  get 'time_entries/delete'
+  match 'time_entries/create', :via => [:get, :post]
+
+
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
