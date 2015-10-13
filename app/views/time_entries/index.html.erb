@@ -1,0 +1,33 @@
+<% @page_title = "Time Entries" %>
+
+<div class="time_entries index">
+	<h2>TimeEntries</h2>
+
+	<%= link_to "Add New Time Entry", action: 'new' %>
+
+	<table summary="TimeEntry list">
+		<tr class="header">
+			<th>ID</th>
+			<th>Name</th>
+			<th>Start Time</th>
+			<th>End Time</th>
+			<th>Total Time</th>
+			<th>Created At</th>
+		</tr>
+		<% @time_entries.each do |time_entry| %>
+		<tr>
+			<td><%= time_entry.id %></td>
+			<td><%= time_entry.name %></td>
+			<td><%= time_entry.start_time %></td>
+			<td><%= time_entry.end_time %></td>
+			<td><%= time_entry.total_time %></td>
+			<td><%= time_entry.created_at %></td>
+			<td>
+				<%= link_to "Show", action: "show", id: time_entry.id %>
+				<%= link_to "Edit", action: "edit", id: time_entry.id %>
+				<%= link_to "Delete", action: "delete", id: time_entry.id %>
+			</td>
+		</tr>
+		<% end %>
+	</table>
+</div>
