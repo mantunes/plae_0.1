@@ -3,29 +3,9 @@
 <div>
 	<h2>Create Time Entry</h2>
 
-	<%= form_for @time_entry, url: time_entries_path, method: :post do |t| %>
-
-	<table summary="fields">
-		<tr>
-			<th>Name</th>
-			<td><%= t.text_field(:name) %></td>
-		</tr>
-		<tr>
-			<th>Start Time</th>
-			<td><%= t.text_field(:start_time) %></td>
-		</tr>
-		<tr>
-			<th>End Time</th>
-			<td><%= t.text_field(:end_time) %></td>
-		</tr>
-		<tr>
-			<th>Total Time</th>
-			<td><%= t.text_field(:total_time) %></td>
-		</tr>
-	</table>
-
-	<div class="form-buttons">
-		<%= submit_tag("Create Time Entry") %>
-	</div>
-	<% end %>
+	<%= render 'form' %>
+	
 </div>
+
+
+

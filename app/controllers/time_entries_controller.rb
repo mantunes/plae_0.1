@@ -9,15 +9,15 @@ class TimeEntriesController < ApplicationController
 	end
 
 	def new
-		@time_entry = TimeEntry.new(name: "default", start_time: Time.now)
+		@time_entry = TimeEntry.new(name: "default")
 	end
 
 	def create
 		@time_entry = TimeEntry.new(time_entry_params)
 		if @time_entry.save
-			redirect_to time_entries_path
+			redirect_to @time_entry
 		else
-			redirect_to new_time_entry_path
+			render('new')
 		end
 	end
 
@@ -26,9 +26,9 @@ class TimeEntriesController < ApplicationController
 
 	def update
 		if  @time_entry.update_attributes(time_entry_params)
-			redirect_to time_entry_path(@time_entry.id)
+			redirect_to @time_entry
 		else
-			render('edit') 
+			render('edit')
 		end
 	end
 
