@@ -2,7 +2,7 @@ class TimeEntriesController < ApplicationController
 	before_action :set_time_entry, only: [:show, :edit, :update, :destroy]
 
 	def index
-		@time_entries = TimeEntry.sorted
+		@time_entries = TimeEntry.sort_by_updated
 	end
 
 	def show
