@@ -1,9 +1,8 @@
 <%= link_to "<< Back to List", time_entries_path  %>
 
 <div>
-	<h2>Create Time Entry</h2>
-
-	<%= form_for @time_entry, url: time_entries_path, method: :post do |t| %>
+	<h2>Update Time Entry</h2>
+	<%= form_for @time_entry, method: :PUT do |t| %>
 
 	<table summary="fields">
 		<tr>
@@ -25,7 +24,7 @@
 	</table>
 
 	<div class="form-buttons">
-		<%= submit_tag("Create Time Entry") %>
+		<%= submit_tag("Update Time Entry") %>
 	</div>
 	<% end %>
 </div>

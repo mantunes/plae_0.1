@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
-  get 'time_entries/index'
-  get 'time_entries/new'
-  get 'time_entries/show'
-  get 'time_entries/edit'
-  get 'time_entries/delete'
-  match 'time_entries/create', :via => [:get, :post]
+  #get 'time_entries/index'
+  #get 'time_entries/new'
+  #get 'time_entries/show'
+  #get 'time_entries/edit'
+  #get 'time_entries/delete'
+  resources :time_entries
+  #match 'time_entries/create', :via => [:get, :post]
 
 
 
