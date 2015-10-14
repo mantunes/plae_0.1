@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     else
       redirect_to new_user_session_path, notice: 'You are not logged in.'
     end
-      @users = User.all
+    @users = User.all
   end
 
   def show
