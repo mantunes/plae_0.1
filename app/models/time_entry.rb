@@ -1,6 +1,6 @@
 class TimeEntry < ActiveRecord::Base
 	validates :name, presence: true
-	validate :end_time_cannot_be_older_than_start_time, on: :update
+	validate :end_time_cannot_be_older_than_start_time
 
 	def end_time_cannot_be_older_than_start_time
 		if end_time == start_time
