@@ -11,8 +11,8 @@ class User < ActiveRecord::Base
       and 1 number or special character)
   }, on: :create
 
-  validates :first_name, presence: true, on: :create
-  validates :last_name, presence: true, on: :create
+  validates :first_name, presence: true
+  validates :last_name, presence: true
 
   private
   def password_required?
