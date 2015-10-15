@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20151014143535) do
   enable_extension "plpgsql"
 
   create_table "time_entries", force: :cascade do |t|
+    t.integer  "user_id"
     t.string   "name"
     t.datetime "start_time"
     t.datetime "end_time"

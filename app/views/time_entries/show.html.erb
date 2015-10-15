@@ -1,33 +1,33 @@
-<%= link_to "<< Back to List", time_entries_path  %>
+<%= link_to "<< Back to List", users_path  %>
 
 <div>
-	<h2>Show Time Entry</h2>
+  <h2>Show Time Entry</h2>
 
-	<table summary="fields">
-		<tr>
-			<th>Name: </th>
-			<td><%= @time_entry.name %></td>
-		</tr>
-		<tr>
-			<th>Start Time: </th>
-			<td><%= @time_entry.start_time.try(:strftime, "%H:%M:%S %d/%m/%y") %></td>
-		</tr>
-		<tr>
-			<th>End Time: </th>
-			<td><%= @time_entry.end_time.try(:strftime, "%H:%M:%S %d/%m/%y") %></td>
-		</tr>
-		<tr>
-			<th>Total Time: </th>
-			<td><%= @time_entry.total_time %></td>
-		</tr>
-		<tr>
-			<th>Created at: </th>
-			<td><%= @time_entry.created_at.strftime("%H:%M:%S %d/%m/%y") %></td>
-		</tr>
-		<tr>
-			<th>Updated at: </th>
-			<td><%= @time_entry.updated_at.strftime("%H:%M:%S %d/%m/%y") %></td>
-		</tr>
-	</table>
+  <table summary="fields">
+    <tr>
+      <th>Name: </th>
+      <td><%= @time_entry.name %></td>
+    </tr>
+    <tr>
+      <th>Start Time: </th>
+      <td><%= @time_entry.start_time.try(:strftime, "%H:%M:%S %d/%m/%y") %></td>
+    </tr>
+    <tr>
+      <th>End Time: </th>
+      <td><%= @time_entry.end_time.try(:strftime, "%H:%M:%S %d/%m/%y") %></td>
+    </tr>
+    <tr>
+      <th>Total Time: </th>
+      <td><%= @time_entry.total_time %></td>
+    </tr>
+    <tr>
+      <th>Created at: </th>
+      <td><%= @time_entry.created_at.strftime("%H:%M:%S %d/%m/%y") %></td>
+    </tr>
+    <tr>
+      <th>Updated at: </th>
+      <td><%= @time_entry.updated_at.strftime("%H:%M:%S %d/%m/%y") %></td>
+    </tr>
+  </table>
 
 </div>
