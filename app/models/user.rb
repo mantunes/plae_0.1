@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-
+  include Authority::UserAbilities
   has_many :time_entries
 
   # Include default devise modules. Others available are:

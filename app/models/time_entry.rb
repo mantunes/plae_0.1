@@ -1,5 +1,5 @@
 class TimeEntry < ActiveRecord::Base
-
+  include Authority::Abilities
   belongs_to :user
 
   validates :name, presence: true
