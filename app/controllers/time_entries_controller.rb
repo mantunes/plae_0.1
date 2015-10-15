@@ -1,11 +1,18 @@
 class TimeEntriesController < ApplicationController
   before_action :set_time_entry, only: [:show, :edit, :update, :destroy]
+  authorize_actions_for TimeEntry, :except => [:new,:create, :show, :edit,:delete, :destroy]
+
+  rescue_from ActiveRecord::RecordNotFound do
+    flash[:notice] = 'The object you tried to access does not exist'
+    redirect_to users_path
+    end
 
   def index
     @time_entries = TimeEntry.sort_by_updated
   end
 
   def show
+    authorize_action_for(@time_entry)
   end
 
   def new
@@ -35,7 +42,7 @@ class TimeEntriesController < ApplicationController
 
   def destroy
     @time_entry.destroy
-    redirect_to time_entries_path
+    redirect_to users_path
   end
 
   private 
