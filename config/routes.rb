@@ -1,13 +1,9 @@
 Rails.application.routes.draw do
-  #get 'time_entries/index'
-  #get 'time_entries/new'
-  #get 'time_entries/show'
-  #get 'time_entries/edit'
-  #get 'time_entries/delete'
+
+  root to: 'users#index'
+  devise_for :users
+  resources :users, only: [:index,:show]
   resources :time_entries
-  #match 'time_entries/create', :via => [:get, :post]
-
-
 
 
   # The priority is based upon order of creation: first created -> highest priority.
