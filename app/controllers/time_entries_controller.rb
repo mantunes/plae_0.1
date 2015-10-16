@@ -1,6 +1,5 @@
 class TimeEntriesController < ApplicationController
   before_action :set_time_entry, only: [:show, :edit, :update, :destroy]
-  authorize_actions_for TimeEntry, :except => [:new,:create, :show, :edit,:delete, :destroy]
 
   rescue_from ActiveRecord::RecordNotFound do
     flash[:notice] = 'The object you tried to access does not exist'
@@ -30,6 +29,7 @@ class TimeEntriesController < ApplicationController
   end
 
   def edit
+    authorize_action_for(@time_entry)
   end
 
   def update
