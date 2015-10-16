@@ -7,6 +7,6 @@ RSpec.describe User do
   subject {@user}
 
   it { should validate_presence_of(:first_name) }
-
+  puts @user.first_name
 end
 
