@@ -1,13 +1,14 @@
 class TimeEntriesController < ApplicationController
   before_action :set_time_entry, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   rescue_from ActiveRecord::RecordNotFound do
     flash[:notice] = 'The object you tried to access does not exist'
     redirect_to users_path
-    end
+  end
 
   def index
-    @time_entries = TimeEntry.sort_by_updated
+    @time_entries = current_user.time_entries
   end
 
   def show
@@ -15,15 +16,16 @@ class TimeEntriesController < ApplicationController
   end
 
   def new
-    @time_entry = TimeEntry.new(name: "default")
+    @time_entry = TimeEntry.new
   end
 
   def create
-    @time_entry = TimeEntry.new(time_entry_params)
+    @time_entry = current_user.time_entries.build(time_entry_params)
     if @time_entry.save
-      current_user.time_entries << @time_entry
+      flash[:notice] = "You've successfully created a new Time Entry"
       redirect_to @time_entry
     else
+      flash[:notice] = "The Time Entry couldn't be saved"
       render('new')
     end
   end
@@ -33,9 +35,11 @@ class TimeEntriesController < ApplicationController
   end
 
   def update
-    if  @time_entry.update_attributes(time_entry_params)
+    if @time_entry.update_attributes(time_entry_params)
+      flash[:notice] = "Time Entry updated successfully"
       redirect_to @time_entry
     else
+      flash[:notice] = "Couldn't update the Time Entry "
       render('edit')
     end
   end
@@ -52,6 +56,6 @@ class TimeEntriesController < ApplicationController
   end
 
   def time_entry_params
-    params.require(:time_entry).permit(:name,:start_time,:end_time,:total_time)
+    params.require(:time_entry).permit(:name, :start_time, :end_time)
   end 
 end

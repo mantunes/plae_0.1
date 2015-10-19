@@ -6,5 +6,6 @@ FactoryGirl.define do
     last_name  Faker::Name.last_name
     email Faker::Internet.email
     password "Awesome!"
+    confirmed_at Date.today
   end
 end

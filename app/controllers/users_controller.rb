@@ -6,7 +6,7 @@ class UsersController < ApplicationController
       redirect_to new_user_session_path, notice: 'You are not logged in.'
     end
     @user = current_user
-    @time_entries = @user.time_entries.sort_by_updated
+    @time_entries = @user.time_entries
   end
 
   def show
