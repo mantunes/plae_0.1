@@ -6,11 +6,11 @@
   </div>
   <div class="field">
     <%= t.label :start_time %><br>
-    <%= t.datetime_select :start_time %>
+    <%= t.datetime_select :start_time, include_seconds: true %>
   </div>
   <div class="field">
     <%= t.label :end_time %><br>
-    <%= t.datetime_select :end_time %>
+    <%= t.datetime_select :end_time, include_seconds: true %>
   </div>
   <div class="field">
     <%= t.label :total_time %><br>
