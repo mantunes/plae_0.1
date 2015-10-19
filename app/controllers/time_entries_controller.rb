@@ -22,10 +22,10 @@ class TimeEntriesController < ApplicationController
   def create
     @time_entry = current_user.time_entries.build(time_entry_params)
     if @time_entry.save
-      flash[:notice] = "You've successfully created a new Time Entry"
+      flash[:notice] = "You've successfully created a new time entry"
       redirect_to @time_entry
     else
-      flash[:notice] = "The Time Entry couldn't be saved"
+      flash[:notice] = "The time entry couldn't be saved"
       render('new')
     end
   end
@@ -36,10 +36,10 @@ class TimeEntriesController < ApplicationController
 
   def update
     if @time_entry.update_attributes(time_entry_params)
-      flash[:notice] = "Time Entry updated successfully"
+      flash[:notice] = "Time entry updated successfully"
       redirect_to @time_entry
     else
-      flash[:notice] = "Couldn't update the Time Entry "
+      flash[:notice] = "Couldn't update the time entry "
       render('edit')
     end
   end
@@ -57,6 +57,6 @@ class TimeEntriesController < ApplicationController
 
   def time_entry_params
     params.require(:time_entry).permit(:name, :start_time, :end_time)
-  end 
+  end
 
 end
