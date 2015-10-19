@@ -4,7 +4,7 @@ class TimeEntriesController < ApplicationController
 
   rescue_from ActiveRecord::RecordNotFound do
     flash[:notice] = 'The object you tried to access does not exist'
-    redirect_to users_path
+    redirect_to time_entries_path
   end
 
   def index
@@ -46,7 +46,7 @@ class TimeEntriesController < ApplicationController
 
   def destroy
     @time_entry.destroy
-    redirect_to users_path
+    redirect_to time_entries_path
   end
 
   private 
