@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe User,type: :model do
-    user = FactoryGirl.create(:user)
-    subject {user}
+  user = FactoryGirl.create(:user)
+  subject {user}
 
   it { should have_many(:time_entries) }
   

@@ -3,9 +3,9 @@
     <div id="error_explanation">
       <h3><%= pluralize(@time_entry.errors.count, "error") %> prohibited this entry from being saved:</h3>
       <ul>
-      <% @time_entry.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
+        <% @time_entry.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
@@ -22,6 +22,7 @@
     <%= t.label :end_time %><br>
     <%= t.datetime_select :end_time, include_seconds: true %>
   </div>
+  <br>
   <div class="actions">
     <%= t.submit %>
   </div>

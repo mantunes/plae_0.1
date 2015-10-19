@@ -8,7 +8,7 @@ class TimeEntriesController < ApplicationController
   end
 
   def index
-    @time_entries = current_user.time_entries
+    @time_entries = current_user.time_entries.order(updated_at: :desc)
   end
 
   def show
@@ -58,4 +58,5 @@ class TimeEntriesController < ApplicationController
   def time_entry_params
     params.require(:time_entry).permit(:name, :start_time, :end_time)
   end 
+
 end

@@ -10,11 +10,11 @@
     </tr>
     <tr>
       <th>Start Time: </th>
-      <td><%= @time_entry.start_time.try(:strftime, "%H:%M:%S %d/%m/%y") %></td>
+      <td><%= @time_entry.start_time.strftime("%H:%M:%S %d/%m/%y") %></td>
     </tr>
     <tr>
       <th>End Time: </th>
-      <td><%= @time_entry.end_time.try(:strftime, "%H:%M:%S %d/%m/%y") %></td>
+      <td><%= @time_entry.end_time.strftime("%H:%M:%S %d/%m/%y") %></td>
     </tr>
     <tr>
       <th>Total Time: </th>
