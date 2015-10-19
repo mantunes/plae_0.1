@@ -17,4 +17,8 @@ class ApplicationController < ActionController::Base
         :password_confirmation, :current_password) 
     end
   end
+
+  def update_resource(resource, params)
+    resource.update_without_password(params)
+  end
 end
