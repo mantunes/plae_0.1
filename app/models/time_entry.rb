@@ -1,7 +1,8 @@
 class TimeEntry < ActiveRecord::Base
   include Authority::Abilities
   belongs_to :user
-
+  belongs_to :project
+  
   validates :name, presence: true
   validates :start_time, presence: true
   validate :end_time_is_after_start_time
