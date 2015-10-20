@@ -1,0 +1,25 @@
+<%= link_to "<< Back to List", projects_path  %>
+
+<div>
+  <h2>Show Projects</h2>
+
+  <table summary="fields">
+    <tr>
+      <th>Name: </th>
+      <td><%= @project.name %></td>
+    </tr>
+    <tr>
+      <th>Total Duration: </th>
+      <td><%= @project.total_duration %></td>
+    </tr>
+    <tr>
+      <th>Created at: </th>
+      <td><%= @project.created_at.strftime("%H:%M:%S %d/%m/%y") %></td>
+    </tr>
+    <tr>
+      <th>Updated at: </th>
+      <td><%= @project.updated_at.strftime("%H:%M:%S %d/%m/%y") %></td>
+    </tr>
+  </table>
+
+</div>
