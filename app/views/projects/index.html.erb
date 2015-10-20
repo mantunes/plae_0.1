@@ -1,0 +1,25 @@
+<div class="container">
+  <h2>Projects</h2>
+  <table summary="Project list" class="table">
+    <tr class="header">
+      <th>Project Name</th>
+      <th>Total Time</th>
+      <th>Created At</th>
+      <th>Access level</th>
+    </tr>
+    <tbody>
+      <% @projects.each do |project| %>
+        <tr>
+          <td><%= project.name %></td>
+          <td><%= project.total_duration %></td>
+          <td><%= project.created_at.strftime("%H:%M:%S %d/%m/%y") %></td>
+          <td><%= @memberships.find_by(project_id: project).access_level %></td>
+          <td><%= link_to "Show", project %></td>
+          <td><%= link_to "Edit", edit_project_path(project) %></td>
+          <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    <tbody>
+  </table>
+  <%= link_to "Add New Project", new_project_path %>
+</div>
