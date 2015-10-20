@@ -10,7 +10,7 @@ class TimeEntry < ActiveRecord::Base
   after_save :update_total_time
 
 
-private 
+  private 
 
   def end_time_is_after_start_time
     if end_time <= start_time
