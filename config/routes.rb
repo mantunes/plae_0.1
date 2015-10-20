@@ -2,7 +2,10 @@ Rails.application.routes.draw do
 
   devise_for :users
   resources :time_entries
-  resources :projects
+  resources :projects do
+     get :invite_members, on: :member
+     post :email_invitation, on: :member
+  end
   root to: 'time_entries#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

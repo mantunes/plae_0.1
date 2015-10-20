@@ -1,3 +1,4 @@
+<div class="authform">
 <%= form_for(@project) do |t| %>
   <% if @project.errors.any? %>
     <div id="error_explanation">
@@ -10,13 +11,13 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= t.label :name %><br>
-    <%= t.text_field :name %>
+    <%= t.text_field :name, class: 'form-control' %>
   </div>
-  <br>
   <div class="actions">
-    <%= t.submit %>
+    <%= t.submit class: 'button right' %>
   </div>
 <% end %>
 
+</div>

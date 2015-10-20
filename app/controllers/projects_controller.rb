@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :email_invitation]
   before_action :authenticate_user!
 
   def index
@@ -17,7 +17,7 @@ class ProjectsController < ApplicationController
   def create
     @project = current_user.projects.build(project_params)
     if current_user.save
-      set_manager_role(current_user, @project)
+      set_user_role(current_user, @project, "Manager")
       flash[:notice] = "You've successfully created a new project"
       redirect_to @project
     else
@@ -38,12 +38,34 @@ class ProjectsController < ApplicationController
       flash[:notice] = "Couldn't update project details"
       render('edit')
     end
-end
+  end
 
   def destroy
     @project.destroy
     current_user.projects.delete(@project)
     redirect_to projects_path
+  end
+
+  def invite_members
+
+  end
+
+  def email_invitation
+    user = User.find_by(email: params[:email].downcase)
+    if user
+      if Membership.find_by(user_id: user.id, project_id: @project.id )
+        flash[:notice] = "User already in this project"
+        render('invite_members')
+      else
+        user.projects << @project
+        set_user_role(user, @project, params[:access_level])
+        flash[:notice] = "User #{user.first_name} #{user.last_name} was added to the project"
+        redirect_to projects_path
+      end
+    else
+      flash[:notice] = "Couldn't find user with email #{params[:email]}"
+      render('invite_members')
+    end
   end
 
   private
@@ -56,9 +78,9 @@ end
     @project = Project.find(params[:id])
   end
 
-  def set_manager_role user, project
+  def set_user_role user, project, role
     membership = user.memberships.find_by(project_id: project.id)
-    membership.access_level = "Manager"
+    membership.access_level = role
     membership.save
   end
 
