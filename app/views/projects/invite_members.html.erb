@@ -1,5 +1,3 @@
-<%= link_to "<< Back to List", projects_path  %>
-
 <h2>Invite Members to Project</h2>
 <div class="authform">
 
@@ -13,7 +11,8 @@
       <%= text_field_tag(:access_level, nil, class: 'form-control')%><br>
     </div>
     <div class="actions">
-     <%= submit_tag "Confirm", class: 'button right' %> 
+      <%= link_to "Cancel", projects_path, class: 'button left' %>
+      <%= submit_tag "Confirm", class: 'button right' %> 
    </div>
  <% end %>
 

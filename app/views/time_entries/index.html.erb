@@ -3,6 +3,7 @@
   <table summary="TimeEntry list" class="table">
     <tr class="header">
       <th>Time Entry Name</th>
+      <th>Project</th>
       <th>Start Time</th>
       <th>End Time</th>
       <th>Total Time</th>
@@ -12,6 +13,7 @@
       <% @time_entries.each do |time_entry| %>
         <tr>
           <td><%= time_entry.name %></td>
+          <td><%= time_entry.project.try(:name) %></td>
           <td><%= time_entry.start_time.strftime("%H:%M:%S %d/%m/%y") %></td>
           <td><%= time_entry.end_time.strftime("%H:%M:%S %d/%m/%y") %></td>
           <td><%= formatted_time(time_entry.total_time) %></td>
