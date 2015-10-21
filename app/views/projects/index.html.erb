@@ -3,6 +3,7 @@
   <table summary="Project list" class="table">
     <tr class="header">
       <th>Project Name</th>
+      <th>Number of Tasks</th>
       <th>Total Duration</th>
       <th>Created At</th>
       <th>Access level</th>
@@ -11,13 +12,16 @@
       <% @projects.each do |project| %>
         <tr>
           <td><%= project.name %></td>
+          <td><%= project.time_entries.count %></td>
           <td><%= project.total_duration %></td>
           <td><%= project.created_at.strftime("%H:%M:%S %d/%m/%y") %></td>
           <td><%= project.memberships.find_by(user_id: current_user.id).access_level %></td>
           <td><%= link_to "Show", project %></td>
-          <td><%= link_to "Edit", edit_project_path(project) %></td>
-          <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          <td><%= button_to "Invite Members", invite_members_project_path(project), method: :get %> </td>
+          <% if owner? project %>
+            <td><%= link_to "Edit", edit_project_path(project) %></td>
+            <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td><%= button_to "Invite Members", invite_members_project_path(project), method: :get %> </td>
+          <% end %>
         </tr>
       <% end %>
     <tbody>

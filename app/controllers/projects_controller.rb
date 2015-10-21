@@ -1,6 +1,7 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy, :email_invitation]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :email_invitation, :owner?]
   before_action :authenticate_user!
+  helper_method :owner?
 
   def index
     @projects = current_user.projects
@@ -17,7 +18,7 @@ class ProjectsController < ApplicationController
   def create
     @project = current_user.projects.build(project_params)
     if current_user.save
-      set_user_role(current_user, @project, "Manager")
+      set_user_role(current_user, @project, "Owner")
       flash[:notice] = "You've successfully created a new project"
       redirect_to @project
     else
@@ -47,7 +48,6 @@ class ProjectsController < ApplicationController
   end
 
   def invite_members
-
   end
 
   def email_invitation
@@ -82,6 +82,10 @@ class ProjectsController < ApplicationController
     membership = user.memberships.find_by(project_id: project.id)
     membership.access_level = role
     membership.save
+  end
+
+  def owner? project
+    project.memberships.find_by(user_id: current_user).access_level == "Owner"
   end
 
 end
