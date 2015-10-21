@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
 
   devise_for :users
-  resources :time_entries
+  resources :time_entries do
+    get :select_project, on: :member
+    post :add_to_project, on: :member
+  end
   resources :projects do
      get :invite_members, on: :member
      post :email_invitation, on: :member

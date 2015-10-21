@@ -1,5 +1,5 @@
 class TimeEntriesController < ApplicationController
-  before_action :set_time_entry, only: [:show, :edit, :update, :destroy]
+  before_action :set_time_entry, only: [:show, :edit, :update, :destroy, :add_to_project]
   before_action :authenticate_user!
 
   rescue_from ActiveRecord::RecordNotFound do
@@ -46,6 +46,17 @@ class TimeEntriesController < ApplicationController
 
   def destroy
     @time_entry.destroy
+    redirect_to time_entries_path
+  end
+
+  def select_project
+    @projects = current_user.projects
+  end
+
+  def add_to_project
+    project = Project.find(params[:project].values.first)
+    project.time_entries << @time_entry
+    flash[:notice] = "Time Entry added to #{project.name}"
     redirect_to time_entries_path
   end
 
