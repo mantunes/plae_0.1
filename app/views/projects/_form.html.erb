@@ -10,12 +10,12 @@
         </ul>
       </div>
     <% end %>
-
     <div class="form-group">
       <%= t.label :name %><br>
       <%= t.text_field :name, class: 'form-control' %>
     </div>
     <div class="actions">
+      <%= link_to "Cancel", projects_path, class: 'button left'  %>
       <%= t.submit class: 'button right' %>
     </div>
   <% end %>
