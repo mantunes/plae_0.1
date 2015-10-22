@@ -10,6 +10,7 @@ class ProjectsController < ApplicationController
   def show
     authorize_action_for(@project)
     @time_entries = @project.time_entries
+    @users = @project.users
   end
 
   def new

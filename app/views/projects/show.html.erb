@@ -20,32 +20,51 @@
       <td><%= @project.updated_at.strftime("%H:%M:%S %d/%m/%y") %></td>
     </tr>
   </table>
+  <br>
 
-    <%unless @time_entries.empty? %>
-      <h3> Time Entries </h3>
-      <table summary="TimeEntry list" class="table">
-        <tr class="header">
-          <th>Time Entry Name</th>
-          <th>User</th>
-          <th>Start Time</th>
-          <th>End Time</th>
-          <th>Total Time</th>
-          <th>Created At</th>
+  <h3> Users </h3>
+
+  <table summary="User list" class="table">
+    <tr class="header">
+      <th>Name</th>
+      <th>Access Level</th>
+    </tr>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= "#{user.first_name} #{user.last_name}" %></td>
+          <td><%= user.memberships.find_by(project_id: @project.id).access_level %></td>
         </tr>
-        <tbody>
-          <% @time_entries.each do |time_entry| %>
-            <tr>
-              <td><%= time_entry.name %></td>
-              <td><%= "#{time_entry.user.first_name} #{time_entry.user.last_name}" %></td>
-              <td><%= time_entry.start_time.strftime("%H:%M:%S %d/%m/%y") %></td>
-              <td><%= time_entry.end_time.strftime("%H:%M:%S %d/%m/%y") %></td>
-              <td><%= formatted_time(time_entry.total_time) %></td>
-              <td><%= time_entry.created_at.strftime("%H:%M:%S %d/%m/%y") %></td>
-            </tr>
-          <% end %>
-        <tbody>
-      </table>
-    <% end %>
-    </br>
+      <% end %>
+    </tbody>
+  </table>
+  <br>
+
+  <%unless @time_entries.empty? %>
+    <h3> Time Entries </h3>
+    <table summary="TimeEntry list" class="table">
+      <tr class="header">
+        <th>Time Entry Name</th>
+        <th>User</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Total Time</th>
+        <th>Created At</th>
+      </tr>
+      <tbody>
+        <% @time_entries.each do |time_entry| %>
+          <tr>
+            <td><%= time_entry.name %></td>
+            <td><%= "#{time_entry.user.first_name} #{time_entry.user.last_name}" %></td>
+            <td><%= time_entry.start_time.strftime("%H:%M:%S %d/%m/%y") %></td>
+            <td><%= time_entry.end_time.strftime("%H:%M:%S %d/%m/%y") %></td>
+            <td><%= formatted_time(time_entry.total_time) %></td>
+            <td><%= time_entry.created_at.strftime("%H:%M:%S %d/%m/%y") %></td>
+          </tr>
+        <% end %>
+      <tbody>
+    </table>
+  <% end %>
+  </br>
   <%= link_to "<< Back to List", projects_path  %>
 </div>
