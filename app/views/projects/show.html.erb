@@ -9,7 +9,7 @@
     </tr>
     <tr>
       <th>Total Duration: </th>
-      <td><%= formatted_time(@project.total_duration) %></td>
+      <td><%= formatted_time(@project.total_duration) if @project.total_duration %></td>
     </tr>
     <tr>
       <th>Created at: </th>

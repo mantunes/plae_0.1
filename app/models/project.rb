@@ -6,10 +6,11 @@ class Project < ActiveRecord::Base
   
   validates :name, presence: true
 
-  after_save :update_total_duration
+  after_update :update_total_duration
 
   def update_total_duration
     total_duration = time_entries.map(&:total_time).sum
     self.update_column(:total_duration, total_duration)
   end
 end
+

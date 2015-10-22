@@ -49,6 +49,7 @@ class TimeEntriesController < ApplicationController
     redirect_to time_entries_path
   end
 
+
   def select_project
     @projects = current_user.projects
   end
@@ -56,7 +57,6 @@ class TimeEntriesController < ApplicationController
   def add_to_project
     project = Project.find(params[:project].values.first)
     project.time_entries << @time_entry
-    flash[:notice] = "Time Entry added to #{project.name}"
     redirect_to time_entries_path
   end
 

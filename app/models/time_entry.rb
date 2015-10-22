@@ -8,8 +8,8 @@ class TimeEntry < ActiveRecord::Base
 
   validate :end_time_is_after_start_time
 
-  after_save :update_total_time
-
+  after_save :update_total_time, :update_project
+  after_destroy :update_project
 
   private 
 
@@ -22,6 +22,10 @@ class TimeEntry < ActiveRecord::Base
   def update_total_time
     total_seconds = end_time - start_time
     self.update_column(:total_time, total_seconds.floor)
+  end
+
+  def update_project
+    self.project.save unless self.project.blank?
   end
 
 end
