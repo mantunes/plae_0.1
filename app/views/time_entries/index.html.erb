@@ -12,13 +12,12 @@
     <tbody>
       <% @time_entries.each do |time_entry| %>
         <tr>
-          <td><%= time_entry.name %></td>
+          <td><%= link_to "#{time_entry.name}", time_entry %></td>
           <td><%= time_entry.project.try(:name) %></td>
           <td><%= time_entry.start_time.strftime("%H:%M:%S %d/%m/%y") %></td>
           <td><%= time_entry.end_time.strftime("%H:%M:%S %d/%m/%y") %></td>
           <td><%= formatted_time(time_entry.total_time) %></td>
           <td><%= time_entry.created_at.strftime("%H:%M:%S %d/%m/%y") %></td>
-          <td><%= link_to "Show", time_entry %></td>
           <td><%= link_to "Edit", edit_time_entry_path(time_entry) %></td>
           <td><%= link_to 'Destroy', time_entry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           <td><%= button_to "Add to Project", select_project_time_entry_path(time_entry), method: :get %> </td>

@@ -11,12 +11,11 @@
     <tbody>
       <% @projects.each do |project| %>
         <tr>
-          <td><%= project.name %></td>
+          <td><%= link_to "#{project.name}", project %></td>
           <td><%= project.time_entries.count %></td>
           <td><%= project.total_duration %></td>
           <td><%= project.created_at.strftime("%H:%M:%S %d/%m/%y") %></td>
           <td><%= project.memberships.find_by(user_id: current_user.id).access_level %></td>
-          <td><%= link_to "Show", project %></td>
           <% if owner? project %>
             <td><%= link_to "Edit", edit_project_path(project) %></td>
             <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>

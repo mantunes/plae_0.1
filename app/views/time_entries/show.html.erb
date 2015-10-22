@@ -1,4 +1,3 @@
-<%= link_to "<< Back to List", time_entries_path  %>
 
 <div>
   <h2>Show Time Entry</h2>
@@ -29,5 +28,6 @@
       <td><%= @time_entry.updated_at.strftime("%H:%M:%S %d/%m/%y") %></td>
     </tr>
   </table>
-
+  <br>
+  <%= link_to "<< Back to List", time_entries_path  %>
 </div>

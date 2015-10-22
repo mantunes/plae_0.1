@@ -5,6 +5,7 @@ class TimeEntry < ActiveRecord::Base
   
   validates :name, presence: true
   validates :start_time, presence: true
+
   validate :end_time_is_after_start_time
 
   after_save :update_total_time

@@ -1,7 +1,6 @@
-<%= link_to "<< Back to List", projects_path  %>
 
 <div>
-  <h2>Show Projects</h2>
+  <h2>Project Details</h2>
 
   <table summary="fields">
     <tr>
@@ -22,4 +21,29 @@
     </tr>
   </table>
 
+  <h3> Time Entries </h3>
+
+  <table summary="TimeEntry list" class="table">
+    <tr class="header">
+      <th>Time Entry Name</th>
+      <th>User</th>
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th>Total Time</th>
+      <th>Created At</th>
+    </tr>
+    <tbody>
+      <% @time_entries.each do |time_entry| %>
+        <tr>
+          <td><%= time_entry.name %></td>
+          <td><%= "#{time_entry.user.first_name} #{time_entry.user.last_name}" %></td>
+          <td><%= time_entry.start_time.strftime("%H:%M:%S %d/%m/%y") %></td>
+          <td><%= time_entry.end_time.strftime("%H:%M:%S %d/%m/%y") %></td>
+          <td><%= formatted_time(time_entry.total_time) %></td>
+          <td><%= time_entry.created_at.strftime("%H:%M:%S %d/%m/%y") %></td>
+        </tr>
+      <% end %>
+    <tbody>
+  </table>
+  <%= link_to "<< Back to List", projects_path  %>
 </div>

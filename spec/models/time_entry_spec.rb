@@ -6,7 +6,10 @@ RSpec.describe TimeEntry, type: :model do
   subject {time_entry}
 
   it { should belong_to(:user) }
+  it { should belong_to(:project) }
+
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:start_time) }
+
 
 end
