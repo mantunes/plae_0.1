@@ -5,4 +5,11 @@ class Project < ActiveRecord::Base
   has_many :users, through: :memberships
   
   validates :name, presence: true
+
+  after_save :update_total_duration
+
+  def update_total_duration
+    total_duration = time_entries.map(&:total_time).sum
+    self.update_column(:total_duration, total_duration)
+  end
 end
