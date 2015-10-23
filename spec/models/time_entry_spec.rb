@@ -9,7 +9,7 @@ RSpec.describe TimeEntry, type: :model do
 
 
   describe 'bd' do
-    context "indexes" do
+    describe "indexes" do
       it { should have_db_index(:user_id) }
       it { should have_db_index(:project_id) }
     end
