@@ -23,8 +23,4 @@ RSpec.describe User,type: :model do
     it { should allow_value("a@b.com").for(:email) }
     it { should_not allow_value("bad").for(:email) }
   end
-
-
-
-
 end

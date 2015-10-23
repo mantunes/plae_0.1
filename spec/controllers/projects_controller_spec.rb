@@ -7,7 +7,7 @@ RSpec.describe ProjectsController, type: :controller do
     sign_in @user
   end
 
- it "Creates Project" do
+  it "Creates Project" do
     post :create, project: FactoryGirl.attributes_for(:project)
     expect( Project.count ).to eq(1)
   end

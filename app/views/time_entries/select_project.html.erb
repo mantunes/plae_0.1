@@ -1,18 +1,20 @@
-<h2>Add Entry to a Project</h2>
-<br>
-<% if @projects.empty? %>
-  <h4> You have no projects </h4>
-<% else %>
-  <div class="authform">
-    <%= form_tag add_to_project_time_entry_path do %>
-      <div class="form-group">
-        <%= label_tag(:project, "Project:") %><br>
-        <%= collection_select(:project, :project_id, @projects, :id, :name, {prompt: nil }, {class: "form-control"}) %>
-      </div>
-      <div class="actions">
-        <%= link_to "Cancel", time_entries_path, class: 'button left' %>
-        <%= submit_tag "Confirm", class: 'button right' %> 
-      </div>
-    <% end %>
-  </div>
-<% end %>
+<div>
+  <h2>Add Entry to a Project</h2>
+  <br>
+  <% if @projects.empty? %>
+    <h4> You have no projects </h4>
+  <% else %>
+    <div class="authform">
+      <%= form_tag add_to_project_time_entry_path do %>
+        <div class="form-group">
+          <%= label_tag(:project, "Project:") %><br>
+          <%= collection_select(:project, :project_id, @projects, :id, :name, {prompt: nil }, {class: "form-control"}) %>
+        </div>
+        <div class="actions">
+          <%= link_to "Cancel", time_entries_path, class: 'button left' %>
+          <%= submit_tag "Confirm", class: 'button right' %> 
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
