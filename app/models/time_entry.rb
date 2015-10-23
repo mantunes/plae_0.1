@@ -5,10 +5,11 @@ class TimeEntry < ActiveRecord::Base
   
   validates :name, presence: true
   validates :start_time, presence: true
+  validate :end_time_is_after_start_time, if: 'end_time.present?'
 
-  validate :end_time_is_after_start_time
 
-  after_save :update_total_time, :update_project
+  after_save :update_total_time, if: 'end_time.present?'
+  after_save :update_project
   after_destroy :update_project
 
   private 

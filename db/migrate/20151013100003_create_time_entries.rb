@@ -9,5 +9,6 @@ class CreateTimeEntries < ActiveRecord::Migration
       t.integer :total_time, limit: 8
       t.timestamps null: false
     end
+    add_index :time_entries, [:user_id, :project_id]
   end
 end
