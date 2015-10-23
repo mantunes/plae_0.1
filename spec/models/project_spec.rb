@@ -24,6 +24,5 @@ RSpec.describe Project, type: :model do
     project.time_entries << time_entry
     expect(project.total_duration).to eq(5)
   end
-
-
+  
 end

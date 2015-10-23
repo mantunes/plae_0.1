@@ -6,6 +6,5 @@ class CreateMemberships < ActiveRecord::Migration
       t.string :access_level
       t.timestamps null: false
     end
-    add_index :memberships, [:user_id, :project_id]
   end
 end

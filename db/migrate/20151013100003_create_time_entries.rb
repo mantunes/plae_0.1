@@ -1,14 +1,13 @@
 class CreateTimeEntries < ActiveRecord::Migration
   def change
     create_table :time_entries do |t|
-      t.integer :user_id
-      t.integer :project_id
+      t.integer :user_id, index: true
+      t.integer :project_id, index: true
       t.string :name
       t.datetime :start_time
       t.datetime :end_time
       t.integer :total_time, limit: 8
       t.timestamps null: false
     end
-    add_index :time_entries, [:user_id, :project_id]
   end
 end
