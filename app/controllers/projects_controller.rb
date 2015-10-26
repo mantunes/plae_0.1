@@ -58,7 +58,7 @@ class ProjectsController < ApplicationController
     if user
       if Membership.find_by(user_id: user.id, project_id: @project.id )
         flash[:notice] = "User already in this project"
-        render('invite_members')
+        render('invite')
       else
         user.projects << @project
         set_user_role(user, @project, params[:access_level])
@@ -67,7 +67,7 @@ class ProjectsController < ApplicationController
       end
     else
       flash[:notice] = "Couldn't find user with email #{params[:email]}"
-      render('invite_members')
+      render('invite')
     end
   end
 
