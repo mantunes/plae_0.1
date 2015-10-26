@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy, :email_invitation, :owner?]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :invite,:email_invitation, :owner?]
   before_action :authenticate_user!
   helper_method :owner?
 
@@ -49,7 +49,8 @@ class ProjectsController < ApplicationController
     redirect_to projects_path
   end
 
-  def invite_members
+  def invite
+    authorize_action_for(@project)
   end
 
   def email_invitation

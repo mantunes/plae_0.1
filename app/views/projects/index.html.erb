@@ -22,7 +22,7 @@
             <% if owner? project %>
               <td><%= link_to "Edit", edit_project_path(project) %></td>
               <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-              <td><%= button_to "Invite Members", invite_members_project_path(project), method: :get %> </td>
+              <td><%= button_to "Invite Members", invite_project_path(project), method: :get %> </td>
             <% end %>
           </tr>
         <% end %>

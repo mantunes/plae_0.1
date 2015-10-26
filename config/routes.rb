@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     post :add_to_project, on: :member
   end
   resources :projects do
-     get :invite_members, on: :member
+     get :invite, on: :member
      post :email_invitation, on: :member
   end
   root to: 'time_entries#index'
