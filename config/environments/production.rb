@@ -1,6 +1,6 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  config.action_mailer.default_url_options = { host: 'www.example.com' }
+  config.action_mailer.default_url_options = { host: 'https://rocky-wave-8276.herokuapp.com' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     :address   => "smtp.sendgrid.net",
@@ -9,7 +9,7 @@ Rails.application.configure do
     :user_name => ENV["SENDGRID_USERNAME"],
     :password  => ENV["SENDGRID_PASSWORD"], # SMTP password is any valid API key
     :authentication => 'login',
-    :domain => 'heroku.com', # your domain to identify your server when connecting
+    :domain => 'https://rocky-wave-8276.herokuapp.com', # your domain to identify your server when connecting
 }
   # Code is not reloaded between requests.
   config.cache_classes = true
