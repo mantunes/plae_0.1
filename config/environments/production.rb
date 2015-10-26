@@ -9,7 +9,7 @@ Rails.application.configure do
     :user_name => ENV["SENDGRID_USERNAME"],
     :password  => ENV["SENDGRID_PASSWORD"], # SMTP password is any valid API key
     :authentication => 'login',
-    :domain => 'EXAMPLE.com',  # your domain to identify your server when connecting
+      # your domain to identify your server when connecting
 }
   # Code is not reloaded between requests.
   config.cache_classes = true
