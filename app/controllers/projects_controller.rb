@@ -1,9 +1,14 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy, :invite, 
-    :email_invitation, :manage_members, :update_members, :remove_members,:owner?]
-  before_action :set_roles, only: [:invite, :manage_members]
+    :email_invitation, :manage, :update_members, :remove_members,:owner?]
+  before_action :set_roles, only: [:invite, :manage]
   before_action :authenticate_user!
   helper_method :owner?
+
+  rescue_from ActiveRecord::RecordNotFound do
+    flash[:notice] = 'The object you tried to access does not exist'
+    redirect_to projects_path
+  end
 
   def index
     @projects = current_user.projects
@@ -12,7 +17,7 @@ class ProjectsController < ApplicationController
   def show
     authorize_action_for(@project)
     @time_entries = @project.time_entries
-    @users = @project.users.order(created_at: :asc)
+    @users = @project.users
   end
 
   def new
@@ -74,8 +79,10 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def manage_members
-    @users = @project.users.reject {|user| user.id == 1}
+  def manage
+    authorize_action_for(@project)
+    id = @project.memberships.find_by(access_level: "Owner").user_id
+    @users = @project.users.reject {|u| u.id == id}
   end
 
   def update_members

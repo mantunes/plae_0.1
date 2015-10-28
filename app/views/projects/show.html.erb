@@ -23,7 +23,7 @@
     </div>
     <div class="col-lg-6">
       <% if owner? @project %>
-        <%= button_to "Manage Members", manage_members_project_path(@project), method: :get %> </td>
+        <%= button_to "Manage Members", manage_project_path(@project), method: :get %> </td>
       <% end %>
     </div>
   </div>

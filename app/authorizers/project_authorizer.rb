@@ -20,4 +20,14 @@ class ProjectAuthorizer < ApplicationAuthorizer
     end
   end
 
+  def manageable_by?(user)
+    user_in_project = resource.memberships.find_by(user_id: user.id)
+    return false unless user_in_project
+    if user_in_project.access_level == "Owner"
+      return true
+    else
+      return false
+    end
+  end
+
 end

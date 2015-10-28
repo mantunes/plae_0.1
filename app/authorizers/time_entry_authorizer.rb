@@ -5,4 +5,7 @@ class TimeEntryAuthorizer < ApplicationAuthorizer
   def updatable_by?(user)
     resource.user_id == user.id
   end
+  def appendable_by?(user)
+    resource.user_id == user.id
+  end
 end

@@ -1,6 +1,6 @@
 class TimeEntriesController < ApplicationController
   before_action :set_time_entry, only: [:show, :edit, :update, :destroy, 
-    :add_to_project]
+    :append, :add_to_project]
   before_action :authenticate_user!
 
   rescue_from ActiveRecord::RecordNotFound do
@@ -50,8 +50,8 @@ class TimeEntriesController < ApplicationController
     redirect_to time_entries_path
   end
 
-
-  def select_project
+  def append
+    authorize_action_for(@time_entry)
     @projects = current_user.projects
   end
 

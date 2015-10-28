@@ -28,7 +28,9 @@ Authority.configure do |config|
     :edit    => 'update',
     :update  => 'update',
     :destroy => 'delete',
-    :invite => 'invite'
+    :invite => 'invite',
+    :manage => 'manage',
+    :append => 'append'
   }
 
   # ABILITIES
@@ -44,7 +46,9 @@ Authority.configure do |config|
     :read   => 'readable',
     :update => 'updatable',
     :delete => 'deletable',
-    :invite => 'invitable'
+    :invite => 'invitable',
+    :manage => 'manageable',
+    :append => 'appendable'
   }
 
   # LOGGER

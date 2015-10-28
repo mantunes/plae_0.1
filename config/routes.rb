@@ -2,11 +2,11 @@ Rails.application.routes.draw do
 
   devise_for :users
   resources :time_entries do
-    get :select_project, on: :member
+    get :append, on: :member
     post :add_to_project, on: :member
   end
   resources :projects do
-     get :invite, :manage_members, :remove_members, on: :member
+     get :invite, :manage, :remove_members, on: :member
      post :email_invitation, :update_members, on: :member
   end
   root to: 'time_entries#index'
