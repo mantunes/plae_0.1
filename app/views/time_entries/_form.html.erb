@@ -2,7 +2,8 @@
   <%= form_for(@time_entry) do |t| %>
     <% if @time_entry.errors.any? %>
       <div id="error_explanation">
-        <h3><%= pluralize(@time_entry.errors.count, "error") %> prohibited this entry from being saved:</h3>
+        <h3><%= pluralize(@time_entry.errors.count, "error") %> 
+          prohibited this entry from being saved:</h3>
         <ul>
           <% @time_entry.errors.full_messages.each do |msg| %>
             <li><%= msg %></li>

@@ -1,5 +1,6 @@
 class TimeEntriesController < ApplicationController
-  before_action :set_time_entry, only: [:show, :edit, :update, :destroy, :add_to_project]
+  before_action :set_time_entry, only: [:show, :edit, :update, :destroy, 
+    :add_to_project]
   before_action :authenticate_user!
 
   rescue_from ActiveRecord::RecordNotFound do

@@ -1,5 +1,6 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy, :invite,:email_invitation, :owner?]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :invite, 
+    :email_invitation, :owner?]
   before_action :authenticate_user!
   helper_method :owner?
 
@@ -62,7 +63,8 @@ class ProjectsController < ApplicationController
       else
         user.projects << @project
         set_user_role(user, @project, params[:access_level])
-        flash[:notice] = "User #{user.first_name} #{user.last_name} was added to the project"
+        flash[:notice] = "User #{user.first_name} #{user.last_name}
+          was added to the project"
         redirect_to projects_path
       end
     else
