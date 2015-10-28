@@ -52,6 +52,7 @@ class ProjectsController < ApplicationController
 
   def invite
     authorize_action_for(@project)
+    @roles = Project.get_roles.map(&:to_s)
   end
 
   def email_invitation

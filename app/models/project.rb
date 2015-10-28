@@ -12,5 +12,9 @@ class Project < ActiveRecord::Base
     total_duration = time_entries.map(&:total_time).sum
     self.update_column(:total_duration, total_duration)
   end
+
+  def self.get_roles
+    roles = [:Manager, :Member]
+  end
 end
 
