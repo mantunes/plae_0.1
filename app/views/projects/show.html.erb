@@ -40,6 +40,10 @@
         <tr>
           <td><%= "#{user.first_name} #{user.last_name}" %></td>
           <td><%= user.memberships.find_by(project_id: @project.id).access_level %></td>
+          <% unless user.memberships.find_by(project_id: @project.id).access_level == "Owner" %>
+            <td> <%= link_to "Remove", remove_members_project_path(user_id: user.id), 
+              data: { confirm: 'Are you sure?' }  %></td>
+          <% end %>
         </tr>
       <% end %>
     </tbody>
