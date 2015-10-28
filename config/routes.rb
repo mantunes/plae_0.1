@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   end
   resources :projects do
      get :invite, :manage, :remove_members, on: :member
-     post :email_invitation, :update_members, on: :member
+     post :email_invitation, :leave, :update_members, on: :member
   end
   root to: 'time_entries#index'
   # The priority is based upon order of creation: first created -> highest priority.

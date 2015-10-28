@@ -25,6 +25,9 @@
       <% if owner? @project %>
         <%= button_to "Manage Members", manage_project_path(@project), method: :get %> </td>
       <% end %>
+      <% unless owner? @project %>
+        <%= button_to "Leave Project", leave_project_path(@project), data: { confirm: 'Are you sure?' } %> </td>
+      <% end %>
     </div>
   </div>
 
@@ -40,9 +43,11 @@
         <tr>
           <td><%= "#{user.first_name} #{user.last_name}" %></td>
           <td><%= user.memberships.find_by(project_id: @project.id).access_level %></td>
-          <% unless user.memberships.find_by(project_id: @project.id).access_level == "Owner" %>
-            <td> <%= link_to "Remove", remove_members_project_path(user_id: user.id), 
-              data: { confirm: 'Are you sure?' }  %></td>
+          <% if owner? @project %>
+            <% unless user.memberships.find_by(project_id: @project.id).access_level == "Owner" %>
+              <td> <%= link_to "Remove", remove_members_project_path(user_id: user.id), 
+                data: { confirm: 'Are you sure?' }  %></td>
+            <% end %>
           <% end %>
         </tr>
       <% end %>

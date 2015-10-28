@@ -1,6 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy, :invite, 
-    :email_invitation, :manage, :update_members, :remove_members,:owner?]
+    :email_invitation, :manage, :update_members, :remove_members, 
+    :leave ,:owner?]
   before_action :set_roles, only: [:invite, :manage]
   before_action :authenticate_user!
   helper_method :owner?
@@ -99,6 +100,12 @@ class ProjectsController < ApplicationController
     redirect_to project_path
   end
 
+  def leave
+    @project.users.delete(current_user)
+    member_entries = @project.time_entries.where(user_id: current_user.id)
+    @project.time_entries.delete(member_entries)
+    redirect_to projects_path
+  end
   private
 
   def project_params
