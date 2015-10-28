@@ -1,6 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy, :invite, 
-    :email_invitation, :owner?]
+    :email_invitation, :manage_members, :update_members, :owner?]
+  before_action :set_roles, only: [:invite, :manage_members]
   before_action :authenticate_user!
   helper_method :owner?
 
@@ -52,7 +53,6 @@ class ProjectsController < ApplicationController
 
   def invite
     authorize_action_for(@project)
-    @roles = Project.get_roles.map(&:to_s)
   end
 
   def email_invitation
@@ -74,6 +74,17 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def manage_members
+    @users = @project.users.reject {|user| user.id == 1}
+  end
+
+  def update_members
+    user = User.find_by(id: params[:user][:id])
+    set_user_role(user, @project, params[:access_level])
+    redirect_to projects_path
+  end
+
+
   private
 
   def project_params
@@ -82,6 +93,10 @@ class ProjectsController < ApplicationController
 
   def set_project
     @project = Project.find(params[:id])
+  end
+
+  def set_roles
+    @roles = Project.get_roles.map(&:to_s)
   end
 
   def set_user_role user, project, role

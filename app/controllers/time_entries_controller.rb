@@ -56,7 +56,7 @@ class TimeEntriesController < ApplicationController
   end
 
   def add_to_project
-    project = Project.find(params[:project].values.first)
+    project = Project.find(params[:project][:project_id])
     project.time_entries << @time_entry
     redirect_to time_entries_path
   end

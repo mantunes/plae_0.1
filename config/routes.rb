@@ -6,8 +6,8 @@ Rails.application.routes.draw do
     post :add_to_project, on: :member
   end
   resources :projects do
-     get :invite, on: :member
-     post :email_invitation, on: :member
+     get :invite, :manage_members, on: :member
+     post :email_invitation, :update_members, on: :member
   end
   root to: 'time_entries#index'
   # The priority is based upon order of creation: first created -> highest priority.
