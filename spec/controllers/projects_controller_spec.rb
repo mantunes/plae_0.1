@@ -18,7 +18,7 @@ RSpec.describe ProjectsController, type: :controller do
     expect(response).to redirect_to Project.first
   end
 
-  it "Destroys Entry" do
+  it "Destroys Project" do
     project = Project.create(FactoryGirl.attributes_for(:project))
     delete :destroy, project: project, id: project
     expect(Project.all).not_to include project

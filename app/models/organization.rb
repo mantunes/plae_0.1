@@ -1,7 +1,6 @@
 class Organization < ActiveRecord::Base
-    include Authority::Abilities
+  include Authority::Abilities
 
-    validates :name, presence: true
-
+  validates :name, presence: true
 
 end
