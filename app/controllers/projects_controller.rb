@@ -2,7 +2,7 @@ class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy, :invite, 
     :email_invitation, :manage, :update_members, :remove_members, 
     :leave ,:owner?]
-  before_action :set_roles, only: [:invite, :manage]
+  before_action :set_roles, only: [:invite, :manage, :email_invitation]
   before_action :authenticate_user!
   helper_method :owner?
 
@@ -18,7 +18,7 @@ class ProjectsController < ApplicationController
   def show
     authorize_action_for(@project)
     @time_entries = @project.time_entries
-    @users = @project.users
+    @users = @project.users.order('memberships.created_at asc')
   end
 
   def new
@@ -106,6 +106,7 @@ class ProjectsController < ApplicationController
     @project.time_entries.delete(member_entries)
     redirect_to projects_path
   end
+
   private
 
   def project_params
