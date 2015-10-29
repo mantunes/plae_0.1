@@ -89,6 +89,8 @@ class ProjectsController < ApplicationController
   def update_members
     user = User.find_by(id: params[:user][:id])
     set_user_role(user, @project, params[:access_level])
+    flash[:notice] = "#{user.first_name} #{user.last_name}'s access level 
+      has changed to '#{params[:access_level]}'"
     redirect_to project_path
   end
 
@@ -97,6 +99,8 @@ class ProjectsController < ApplicationController
     @project.users.delete(user)
     member_entries = @project.time_entries.where(user_id: user.id)
     @project.time_entries.delete(member_entries)
+    flash[:notice] = "#{user.first_name} #{user.last_name}'s has 
+      removed from the project"
     redirect_to project_path
   end
 
@@ -104,6 +108,7 @@ class ProjectsController < ApplicationController
     @project.users.delete(current_user)
     member_entries = @project.time_entries.where(user_id: current_user.id)
     @project.time_entries.delete(member_entries)
+    flash[:notice] = "You left #{@project.name}"
     redirect_to projects_path
   end
 
