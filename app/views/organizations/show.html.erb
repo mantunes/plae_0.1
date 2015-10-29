@@ -1,0 +1,24 @@
+<div>
+  <h2>Organization Details</h2>
+
+  <table summary="fields">
+    <tr>
+      <th>Name: </th>
+      <td><%= @organization.name %></td>
+    </tr>
+    <tr>
+      <th>Description: </th>
+      <td><%= @organization.description %></td>
+    </tr>
+    <tr>
+      <th>Website: </th>
+      <td><%= @organization.website %></td>
+    </tr>
+    <tr>
+      <th>Created at: </th>
+      <td><%= @organization.created_at.strftime("%H:%M:%S %d/%m/%y") %></td>
+    </tr>
+  </table>
+  <br>
+  <%= link_to "<< Back to List", organizations_path  %>
+</div>

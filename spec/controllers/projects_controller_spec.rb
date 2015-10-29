@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ProjectsController, type: :controller do
+  include Devise::TestHelpers
 
   before(:each) do
     @user = FactoryGirl.create(:user)
@@ -9,11 +10,11 @@ RSpec.describe ProjectsController, type: :controller do
 
   it "Creates Project" do
     post :create, project: FactoryGirl.attributes_for(:project)
-    expect( Project.count ).to eq(1)
+    expect(Project.count).to eq(1)
   end
 
-  it 'Redirects to the "show" action for the new time entry' do
-    post :create, project: attributes_for(:project)
+  it 'Redirects to the "show" action for the new project' do
+    post :create, project: FactoryGirl.attributes_for(:project)
     expect(response).to redirect_to Project.first
   end
 

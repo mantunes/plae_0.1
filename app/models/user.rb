@@ -12,11 +12,11 @@ class User < ActiveRecord::Base
     :trackable, :validatable, :confirmable, :lockable
 
   validates :password,
-  format: {
+    format: {
     with: /(?=.*[\d\W])(?=.*[A-Z])(?=.*[a-z])/,
     message: %(must have 1 upper case letter, 1 down case letter,
       and 1 number or special character)
-  }, on: :create
+    }
 
   validates :first_name, presence: true
   validates :last_name, presence: true

@@ -27,10 +27,13 @@ class ProjectsController < ApplicationController
 
   def create
     @project = current_user.projects.build(project_params)
-    if current_user.save
-      set_user_role(current_user, @project, "Owner")
-      flash[:notice] = "You've successfully created a new project"
-      redirect_to @project
+    if @project.save
+      membership = Membership.new(user_id: current_user.id, project_id: @project.id)
+      if membership.save
+        set_user_role(current_user, @project, "Owner")
+        flash[:notice] = "You've successfully created a new project"
+        redirect_to @project
+      end
     else
       flash[:notice] = "The project couldn't be saved"
       render('new')

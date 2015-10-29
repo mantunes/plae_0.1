@@ -9,6 +9,7 @@ Rails.application.routes.draw do
      get :invite, :manage, :remove_members, on: :member
      post :email_invitation, :leave, :update_members, on: :member
   end
+  resources :organizations
   root to: 'time_entries#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
