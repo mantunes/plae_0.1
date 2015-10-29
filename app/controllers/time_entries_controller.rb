@@ -58,6 +58,7 @@ class TimeEntriesController < ApplicationController
   def add_to_project
     project = Project.find(params[:project][:project_id])
     project.time_entries << @time_entry
+    flash[:notice] = "#{@time_entry.name} was added to #{project.name} project"
     redirect_to time_entries_path
   end
 
