@@ -1,5 +1,6 @@
 class OrganizationsController < ApplicationController
   before_action :set_organization, only: [:show, :edit, :update, :destroy]
+  before_action :set_roles, only: [:invite]
   helper_method :admin?
 
   rescue_from ActiveRecord::RecordNotFound do
@@ -54,7 +55,17 @@ class OrganizationsController < ApplicationController
     redirect_to organizations_path
   end
 
+  def invite
+  end
+
+  def email_invitation
+  end
+
   private
+
+  def set_roles
+    @roles = Organization.roles.map(&:to_s)
+  end
 
   def organization_params
     params.require(:organization).permit(:name, :description, :website)
