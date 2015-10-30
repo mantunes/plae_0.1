@@ -8,7 +8,7 @@ RSpec.describe OrganizationsController, type: :controller do
     sign_in @user
   end
 
-  it "Creates Organization" do
+  it 'Creates Organization' do
     post :create, organization: FactoryGirl.attributes_for(:organization)
     expect(Organization.count).to eq(1)
   end
@@ -18,10 +18,9 @@ RSpec.describe OrganizationsController, type: :controller do
     expect(response).to redirect_to Organization.first
   end
 
-  it "Destroys Organization" do
-    organization = Organization.create(FactoryGirl.attributes_for(:organization))
-    delete :destroy, organization: organization, id: organization
-    expect(Organization.all).not_to include organization
+  it 'Destroys Organization' do
+    org = Organization.create(FactoryGirl.attributes_for(:organization))
+    delete :destroy, organization: org, id: org
+    expect(Organization.all).not_to include org
   end
-
 end

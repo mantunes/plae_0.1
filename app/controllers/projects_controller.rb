@@ -1,7 +1,6 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy, :invite, 
-    :email_invitation, :manage, :update_members, :remove_members, 
-    :leave ,:owner?]
+  before_action :set_project, except: [:index, :new, :create, :project_params,
+                                       :set_roles, :set_user_role, :owner?]
   before_action :set_roles, only: [:invite, :manage, :email_invitation]
   before_action :authenticate_user!
   helper_method :owner?
@@ -28,9 +27,9 @@ class ProjectsController < ApplicationController
   def create
     @project = current_user.projects.build(project_params)
     if @project.save
-      membership = Membership.new(user_id: current_user.id, project_id: @project.id)
-      if membership.save
-        set_user_role(current_user, @project, "Owner")
+      member = Membership.new(user_id: current_user.id, project_id: @project.id)
+      if member.save
+        set_user_role(current_user, @project, 'Owner')
         flash[:notice] = "You've successfully created a new project"
         redirect_to @project
       end
@@ -46,7 +45,7 @@ class ProjectsController < ApplicationController
 
   def update
     if @project.update_attributes(project_params)
-      flash[:notice] = "Project updated successfully"
+      flash[:notice] = 'Project updated successfully'
       redirect_to @project
     else
       flash[:notice] = "Couldn't update project details"
@@ -67,8 +66,8 @@ class ProjectsController < ApplicationController
   def email_invitation
     user = User.find_by(email: params[:email].downcase)
     if user
-      if Membership.find_by(user_id: user.id, project_id: @project.id )
-        flash[:notice] = "User already in this project"
+      if Membership.find_by(user_id: user.id, project_id: @project.id)
+        flash[:notice] = 'User already in this project'
         render('invite')
       else
         user.projects << @project
@@ -85,32 +84,28 @@ class ProjectsController < ApplicationController
 
   def manage
     authorize_action_for(@project)
-    id = @project.memberships.find_by(access_level: "Owner").user_id
-    @users = @project.users.reject {|u| u.id == id}
+    id = @project.memberships.find_by(access_level: 'Owner').user_id
+    @users = @project.users.reject { |u| u.id == id }
   end
 
   def update_members
     user = User.find_by(id: params[:user][:id])
     set_user_role(user, @project, params[:access_level])
-    flash[:notice] = "#{user.first_name} #{user.last_name}'s access level 
-      has changed to '#{params[:access_level]}'"
+    flash[:notice] = "#{user.first_name} #{user.last_name}'s access level
+      has changed"
     redirect_to project_path
   end
 
   def remove_members
     user = User.find_by(id: params[:user_id])
-    @project.users.delete(user)
-    member_entries = @project.time_entries.where(user_id: user.id)
-    @project.time_entries.delete(member_entries)
-    flash[:notice] = "#{user.first_name} #{user.last_name}'s has 
+    delete_user_entries(user, @project)
+    flash[:notice] = "#{user.first_name} #{user.last_name}'s has
       removed from the project"
     redirect_to project_path
   end
 
   def leave
-    @project.users.delete(current_user)
-    member_entries = @project.time_entries.where(user_id: current_user.id)
-    @project.time_entries.delete(member_entries)
+    delete_user_entries(current_user, @project)
     flash[:notice] = "You left #{@project.name}"
     redirect_to projects_path
   end
@@ -126,17 +121,22 @@ class ProjectsController < ApplicationController
   end
 
   def set_roles
-    @roles = Project.get_roles.map(&:to_s)
+    @roles = Project.roles.map(&:to_s)
   end
 
-  def set_user_role user, project, role
+  def set_user_role(user, project, role)
     membership = user.memberships.find_by(project_id: project.id)
     membership.access_level = role
     membership.save
   end
 
-  def owner? project
-    project.memberships.find_by(user_id: current_user).access_level == "Owner"
+  def delete_user_entries(user, project)
+    project.users.delete(user)
+    member_entries = project.time_entries.where(user_id: user.id)
+    project.time_entries.delete(member_entries)
   end
 
+  def owner?(project)
+    project.memberships.find_by(user_id: current_user).access_level == 'Owner'
+  end
 end

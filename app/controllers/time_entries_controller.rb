@@ -1,6 +1,6 @@
 class TimeEntriesController < ApplicationController
-  before_action :set_time_entry, only: [:show, :edit, :update, :destroy, 
-    :append, :add_to_project]
+  before_action :set_time_entry, only: [:show, :edit, :update, :destroy,
+                                        :append, :add_to_project]
   before_action :authenticate_user!
 
   rescue_from ActiveRecord::RecordNotFound do
@@ -37,7 +37,7 @@ class TimeEntriesController < ApplicationController
 
   def update
     if @time_entry.update_attributes(time_entry_params)
-      flash[:notice] = "Time entry updated successfully"
+      flash[:notice] = 'Time entry updated successfully'
       redirect_to @time_entry
     else
       flash[:notice] = "Couldn't update the time entry "
@@ -62,7 +62,7 @@ class TimeEntriesController < ApplicationController
     redirect_to time_entries_path
   end
 
-  private 
+  private
 
   def set_time_entry
     @time_entry = TimeEntry.find(params[:id])
@@ -71,5 +71,4 @@ class TimeEntriesController < ApplicationController
   def time_entry_params
     params.require(:time_entry).permit(:name, :start_time, :end_time)
   end
-
 end

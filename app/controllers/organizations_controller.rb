@@ -33,7 +33,7 @@ class OrganizationsController < ApplicationController
 
   def update
     if @organization.update_attributes(organization_params)
-      flash[:notice] = "Organization updated successfully"
+      flash[:notice] = 'Organization updated successfully'
       redirect_to @organization
     else
       flash[:notice] = "Couldn't update organization details"
@@ -55,5 +55,4 @@ class OrganizationsController < ApplicationController
   def set_organization
     @organization = Organization.find(params[:id])
   end
-
 end
