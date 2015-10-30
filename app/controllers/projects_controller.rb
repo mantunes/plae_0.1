@@ -1,6 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :set_project, except: [:index, :new, :create, :project_params,
-                                       :set_roles, :set_user_role, :owner?]
+                                       :set_roles, :set_user_role, :owner?,
+                                       :delete_user_entries]
   before_action :set_roles, only: [:invite, :manage, :email_invitation]
   before_action :authenticate_user!
   helper_method :owner?
@@ -27,12 +28,10 @@ class ProjectsController < ApplicationController
   def create
     @project = current_user.projects.build(project_params)
     if @project.save
-      member = Membership.new(user_id: current_user.id, project_id: @project.id)
-      if member.save
-        set_user_role(current_user, @project, 'Owner')
-        flash[:notice] = "You've successfully created a new project"
-        redirect_to @project
-      end
+      Membership.create!(user_id: current_user.id, project_id: @project.id,
+                         access_level: 'Owner')
+      flash[:notice] = "You've successfully created a new project"
+      redirect_to @project
     else
       flash[:notice] = "The project couldn't be saved"
       render('new')
@@ -70,8 +69,8 @@ class ProjectsController < ApplicationController
         flash[:notice] = 'User already in this project'
         render('invite')
       else
-        user.projects << @project
-        set_user_role(user, @project, params[:access_level])
+        Membership.create(user_id: user.id, project_id: @project.id,
+                          access_level: params[:access_level])
         flash[:notice] = "User #{user.first_name} #{user.last_name}
           was added to the project"
         redirect_to projects_path
