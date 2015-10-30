@@ -69,8 +69,8 @@ class ProjectsController < ApplicationController
         flash[:notice] = 'User already in this project'
         render('invite')
       else
-        Membership.create(user_id: user.id, project_id: @project.id,
-                          access_level: params[:access_level])
+        Membership.create!(user_id: user.id, project_id: @project.id,
+                           access_level: params[:access_level])
         flash[:notice] = "User #{user.first_name} #{user.last_name}
           was added to the project"
         redirect_to projects_path

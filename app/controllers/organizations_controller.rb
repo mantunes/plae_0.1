@@ -13,6 +13,7 @@ class OrganizationsController < ApplicationController
 
   def show
     authorize_action_for(@organization)
+    @projects = @organization.projects
     @users = @organization.users.order('teams.created_at asc')
   end
 
