@@ -2,7 +2,9 @@ class User < ActiveRecord::Base
   include Authority::UserAbilities
   has_many :time_entries
   has_many :memberships
+  has_many :teams
   has_many :projects, through: :memberships
+  has_many :organizations, through: :teams
 
   before_destroy :destroy_time_entries
 

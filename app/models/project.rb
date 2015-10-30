@@ -1,5 +1,6 @@
 class Project < ActiveRecord::Base
   include Authority::Abilities
+  belongs_to :organization
   has_many :time_entries
   has_many :memberships
   has_many :users, through: :memberships
