@@ -1,6 +1,6 @@
-class CreateMemberships < ActiveRecord::Migration
+class CreateProjectMemberships < ActiveRecord::Migration
   def change
-    create_table :memberships do |t|
+    create_table :project_memberships do |t|
       t.belongs_to :user, index: true
       t.belongs_to :project, index: true
       t.string :access_level

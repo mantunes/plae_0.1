@@ -17,7 +17,7 @@ class ProjectsController < ApplicationController
   def show
     authorize_action_for(@project)
     @time_entries = @project.time_entries
-    @users = @project.users.order('memberships.created_at asc')
+    @users = @project.users.order('project_memberships.created_at asc')
   end
 
   def new
@@ -27,7 +27,7 @@ class ProjectsController < ApplicationController
   def create
     @project = current_user.projects.build(project_params)
     if @project.save
-      Membership.create!(user_id: current_user.id, project_id: @project.id,
+      ProjectMembership.create!(user_id: current_user.id, project_id: @project.id,
                          access_level: 'Owner')
       flash[:notice] = "You've successfully created a new project"
       redirect_to @project
@@ -64,11 +64,11 @@ class ProjectsController < ApplicationController
   def email_invitation
     user = User.find_by(email: params[:email].downcase)
     if user
-      if Membership.find_by(user_id: user.id, project_id: @project.id)
+      if ProjectMembership.find_by(user_id: user.id, project_id: @project.id)
         flash[:notice] = 'User already in this project'
         render('invite')
       else
-        Membership.create!(user_id: user.id, project_id: @project.id,
+        ProjectMembership.create!(user_id: user.id, project_id: @project.id,
                            access_level: params[:access_level])
         flash[:notice] = "User #{user.first_name} #{user.last_name}
           was added to the project"
@@ -82,7 +82,7 @@ class ProjectsController < ApplicationController
 
   def manage
     authorize_action_for(@project)
-    id = @project.memberships.find_by(access_level: 'Owner').user_id
+    id = @project.project_memberships.find_by(access_level: 'Owner').user_id
     @users = @project.users.reject { |u| u.id == id }
   end
 
@@ -123,7 +123,7 @@ class ProjectsController < ApplicationController
   end
 
   def set_user_role(user, project, role)
-    membership = user.memberships.find_by(project_id: project.id)
+    membership = user.project_memberships.find_by(project_id: project.id)
     membership.access_level = role
     membership.save
   end

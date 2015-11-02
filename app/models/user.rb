@@ -1,9 +1,9 @@
 class User < ActiveRecord::Base
   include Authority::UserAbilities
   has_many :time_entries, dependent: :destroy
-  has_many :memberships
+  has_many :project_memberships
   has_many :teams
-  has_many :projects, through: :memberships
+  has_many :projects, through: :project_memberships
   has_many :organizations, through: :teams
 
   #before_destroy :destroy_time_entries

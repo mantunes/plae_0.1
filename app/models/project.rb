@@ -2,8 +2,8 @@ class Project < ActiveRecord::Base
   include Authority::Abilities
   belongs_to :organization
   has_many :time_entries
-  has_many :memberships, dependent: :destroy
-  has_many :users, through: :memberships
+  has_many :project_memberships, dependent: :destroy
+  has_many :users, through: :project_memberships
 
   validates :name, presence: true
 

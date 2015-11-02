@@ -9,7 +9,7 @@
         </tr>
         <tr>
           <th>Total Duration: </th>
-          <td><%= formatted_time(@project.total_duration) if @project.total_duration %></td>
+          <td><%= time_ago_in_words(@project.total_duration.seconds.ago, include_seconds: true)if @project.total_duration %></td>
         </tr>
         <tr>
           <th>Created at: </th>
@@ -42,9 +42,9 @@
       <% @users.each do |user| %>
         <tr>
           <td><%= "#{user.first_name} #{user.last_name}" %></td>
-          <td><%= user.memberships.find_by(project_id: @project.id).access_level %></td>
+          <td><%= user.project_memberships.find_by(project_id: @project.id).access_level %></td>
           <% if owner? @project %>
-            <% unless user.memberships.find_by(project_id: @project.id).access_level == "Owner" %>
+            <% unless user.project_memberships.find_by(project_id: @project.id).access_level == "Owner" %>
               <td> <%= link_to "Remove", remove_members_project_path(user_id: user.id), 
                 data: { confirm: 'Are you sure?' }  %></td>
             <% end %>

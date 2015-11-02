@@ -6,7 +6,7 @@ RSpec.describe Project, type: :model do
   describe 'associations' do
     it { should have_many(:time_entries) }
     it { should have_many(:users) }
-    it { should have_many(:memberships) }
+    it { should have_many(:project_memberships) }
   end
 
   describe 'bd' do
