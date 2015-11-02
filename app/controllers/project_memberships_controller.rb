@@ -3,6 +3,11 @@ class ProjectMembershipsController < ApplicationController
   before_action :set_roles, only: [:new, :create]
   before_action :authenticate_user!
 
+  rescue_from ActiveRecord::RecordNotFound do
+    flash[:notice] = 'The object you tried to access does not exist'
+    redirect_to projects_path
+  end
+
   def new
     authorize_action_for(@project)
   end
@@ -16,7 +21,7 @@ class ProjectMembershipsController < ApplicationController
         render('new')
       else
         ProjectMembership.create!(user_id: user.id, project_id: @project.id,
-                                  access_level: params[:access_level])
+                                  role: params[:role])
         flash[:notice] = "User #{user.first_name} #{user.last_name}
         was added to the project"
         redirect_to projects_path

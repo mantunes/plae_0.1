@@ -28,7 +28,7 @@ class ProjectsController < ApplicationController
     @project = current_user.projects.build(project_params)
     if @project.save
       ProjectMembership.create!(user_id: current_user.id, project_id: @project.id,
-                                access_level: 'Owner')
+                                role: 'Owner')
       flash[:notice] = "You've successfully created a new project"
       redirect_to @project
     else
@@ -59,13 +59,13 @@ class ProjectsController < ApplicationController
 
   def manage
     authorize_action_for(@project)
-    id = @project.project_memberships.find_by(access_level: 'Owner').user_id
+    id = @project.project_memberships.find_by(role: 'Owner').user_id
     @users = @project.users.reject { |u| u.id == id }
   end
 
   def update_members
     user = User.find_by(id: params[:user][:id])
-    set_user_role(user, @project, params[:access_level])
+    set_user_role(user, @project, params[:role])
     flash[:notice] = "#{user.first_name} #{user.last_name}'s access level
       has changed"
     redirect_to project_path
@@ -101,7 +101,7 @@ class ProjectsController < ApplicationController
 
   def set_user_role(user, project, role)
     membership = user.project_memberships.find_by(project_id: project.id)
-    membership.access_level = role
+    membership.role = role
     membership.save
   end
 
