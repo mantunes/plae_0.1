@@ -1,6 +1,5 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
-  before_action :set_roles, only: [:invite, :manage, :email_invitation]
   before_action :authenticate_user!
 
   rescue_from ActiveRecord::RecordNotFound do
@@ -55,20 +54,6 @@ class ProjectsController < ApplicationController
     redirect_to projects_path
   end
 
-  def remove_members
-    user = User.find_by(id: params[:user_id])
-    delete_user_entries(user, @project)
-    flash[:notice] = "#{user.first_name} #{user.last_name}'s has
-      removed from the project"
-    redirect_to project_path
-  end
-
-  def leave
-    delete_user_entries(current_user, @project)
-    flash[:notice] = "You left #{@project.name}"
-    redirect_to projects_path
-  end
-
   private
 
   def project_params
@@ -77,21 +62,5 @@ class ProjectsController < ApplicationController
 
   def set_project
     @project = Project.find(params[:id])
-  end
-
-  def set_roles
-    @roles = Project.roles.map(&:to_s)
-  end
-
-  def set_user_role(user, project, role)
-    membership = user.project_memberships.find_by(project_id: project.id)
-    membership.role = role
-    membership.save
-  end
-
-  def delete_user_entries(user, project)
-    project.users.delete(user)
-    member_entries = project.time_entries.where(user_id: user.id)
-    project.time_entries.delete(member_entries)
   end
 end

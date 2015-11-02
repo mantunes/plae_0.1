@@ -1,5 +1,6 @@
 class ProjectMembershipsController < ApplicationController
-  before_action :set_project, only: [:new, :create, :edit, :update]
+  before_action :set_project, only: [:new, :create, :edit, :update, 
+                                     :destroy, :leave]
   before_action :set_roles, only: [:new, :create, :edit, :update]
   before_action :authenticate_user!
 
@@ -37,7 +38,7 @@ class ProjectMembershipsController < ApplicationController
   end
 
   def edit
-    #authorize_action_for(@project)
+    authorize_action_for(@project)
     id = @project.project_memberships.find_by(role: 'Owner').user_id
     @users = @project.users.reject { |u| u.id == id }
   end
@@ -48,6 +49,20 @@ class ProjectMembershipsController < ApplicationController
     flash[:notice] = "#{user.first_name} #{user.last_name}'s access level
       has changed"
     redirect_to project_path
+  end
+
+  def destroy
+    user = User.find_by(id: params[:user_id])
+    delete_user_entries(user, @project)
+    flash[:notice] = "#{user.first_name} #{user.last_name}'s has
+      removed from the project"
+    redirect_to project_path
+  end
+
+  def leave
+    delete_user_entries(current_user, @project)
+    flash[:notice] = "You left #{@project.name}"
+    redirect_to projects_path
   end
 
   private
@@ -64,5 +79,11 @@ class ProjectMembershipsController < ApplicationController
     membership = user.project_memberships.find_by(project_id: project.id)
     membership.role = role
     membership.save
+  end
+
+  def delete_user_entries(user, project)
+    project.users.delete(user)
+    member_entries = project.time_entries.where(user_id: user.id)
+    project.time_entries.delete(member_entries)
   end
 end
