@@ -28,7 +28,7 @@ class ProjectsController < ApplicationController
     @project = current_user.projects.build(project_params)
     if @project.save
       ProjectMembership.create!(user_id: current_user.id, project_id: @project.id,
-                         access_level: 'Owner')
+                                access_level: 'Owner')
       flash[:notice] = "You've successfully created a new project"
       redirect_to @project
     else
@@ -55,29 +55,6 @@ class ProjectsController < ApplicationController
     @project.destroy
     current_user.projects.delete(@project)
     redirect_to projects_path
-  end
-
-  def invite
-    authorize_action_for(@project)
-  end
-
-  def email_invitation
-    user = User.find_by(email: params[:email].downcase)
-    if user
-      if ProjectMembership.find_by(user_id: user.id, project_id: @project.id)
-        flash[:notice] = 'User already in this project'
-        render('invite')
-      else
-        ProjectMembership.create!(user_id: user.id, project_id: @project.id,
-                           access_level: params[:access_level])
-        flash[:notice] = "User #{user.first_name} #{user.last_name}
-          was added to the project"
-        redirect_to projects_path
-      end
-    else
-      flash[:notice] = "Couldn't find user with email #{params[:email]}"
-      render('invite')
-    end
   end
 
   def manage

@@ -2,6 +2,7 @@ class OrganizationsController < ApplicationController
   before_action :set_organization, only: [:show, :edit, :update, :destroy,
                                           :email_invitation]
   before_action :set_roles, only: [:invite, :email_invitation]
+  before_action :authenticate_user!
 
   rescue_from ActiveRecord::RecordNotFound do
     flash[:notice] = 'The object you tried to access does not exist'
