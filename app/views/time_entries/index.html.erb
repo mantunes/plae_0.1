@@ -19,7 +19,7 @@
             <td><%= time_entry.project.try(:name) %></td>
             <td><%= time_entry.start_time.strftime("%H:%M:%S %d/%m/%y") %></td>
             <td><%= time_entry.end_time.strftime("%H:%M:%S %d/%m/%y") %></td>
-            <td><%= formatted_time(time_entry.total_time) %></td>
+            <td><%= time_ago_in_words(time_entry.total_time.seconds.ago, include_seconds: true) %></td>
             <td><%= time_entry.created_at.strftime("%H:%M:%S %d/%m/%y") %></td>
             <td><%= link_to "Edit", edit_time_entry_path(time_entry) %></td>
             <td><%= link_to 'Delete', time_entry, method: :delete, 

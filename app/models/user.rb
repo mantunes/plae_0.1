@@ -1,12 +1,12 @@
 class User < ActiveRecord::Base
   include Authority::UserAbilities
-  has_many :time_entries
+  has_many :time_entries, dependent: :destroy
   has_many :memberships
   has_many :teams
   has_many :projects, through: :memberships
   has_many :organizations, through: :teams
 
-  before_destroy :destroy_time_entries
+  #before_destroy :destroy_time_entries
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -22,10 +22,4 @@ class User < ActiveRecord::Base
 
   validates :first_name, presence: true
   validates :last_name, presence: true
-
-  private
-
-  def destroy_time_entries
-    time_entries.each(&:destroy)
-  end
 end

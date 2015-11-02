@@ -2,7 +2,6 @@ class OrganizationsController < ApplicationController
   before_action :set_organization, only: [:show, :edit, :update, :destroy,
                                           :email_invitation]
   before_action :set_roles, only: [:invite, :email_invitation]
-  helper_method :admin?
 
   rescue_from ActiveRecord::RecordNotFound do
     flash[:notice] = 'The object you tried to access does not exist'
@@ -90,9 +89,5 @@ class OrganizationsController < ApplicationController
 
   def set_organization
     @organization = Organization.find(params[:id])
-  end
-
-  def admin?(organization)
-    organization.teams.find_by(user_id: current_user).role == 'Owner'
   end
 end

@@ -4,7 +4,6 @@ class ProjectsController < ApplicationController
                                        :delete_user_entries]
   before_action :set_roles, only: [:invite, :manage, :email_invitation]
   before_action :authenticate_user!
-  helper_method :owner?
 
   rescue_from ActiveRecord::RecordNotFound do
     flash[:notice] = 'The object you tried to access does not exist'
@@ -133,9 +132,5 @@ class ProjectsController < ApplicationController
     project.users.delete(user)
     member_entries = project.time_entries.where(user_id: user.id)
     project.time_entries.delete(member_entries)
-  end
-
-  def owner?(project)
-    project.memberships.find_by(user_id: current_user).access_level == 'Owner'
   end
 end

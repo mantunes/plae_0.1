@@ -16,7 +16,7 @@
           <tr>
             <td><%= link_to "#{project.name}", project %></td>
             <td><%= project.time_entries.count %></td>
-            <td><%= formatted_time(project.total_duration) unless project.total_duration.blank? %></td>
+            <td><%= time_ago_in_words(project.total_duration.seconds.ago, include_seconds: true) unless project.total_duration.blank? %></td>
             <td><%= project.created_at.strftime("%H:%M:%S %d/%m/%y") %></td>
             <td><%= project.memberships.find_by(user_id: current_user.id).access_level %></td>
             <% if owner? project %>
