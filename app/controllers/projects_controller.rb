@@ -1,7 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, except: [:index, :new, :create, :project_params,
-                                       :set_roles, :set_user_role, :owner?,
-                                       :delete_user_entries]
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
   before_action :set_roles, only: [:invite, :manage, :email_invitation]
   before_action :authenticate_user!
 
@@ -55,20 +53,6 @@ class ProjectsController < ApplicationController
     @project.destroy
     current_user.projects.delete(@project)
     redirect_to projects_path
-  end
-
-  def manage
-    authorize_action_for(@project)
-    id = @project.project_memberships.find_by(role: 'Owner').user_id
-    @users = @project.users.reject { |u| u.id == id }
-  end
-
-  def update_members
-    user = User.find_by(id: params[:user][:id])
-    set_user_role(user, @project, params[:role])
-    flash[:notice] = "#{user.first_name} #{user.last_name}'s access level
-      has changed"
-    redirect_to project_path
   end
 
   def remove_members

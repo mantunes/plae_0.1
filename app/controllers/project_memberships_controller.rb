@@ -1,10 +1,14 @@
 class ProjectMembershipsController < ApplicationController
-  before_action :set_project, only: [:new, :create]
-  before_action :set_roles, only: [:new, :create]
+  before_action :set_project, only: [:new, :create, :edit, :update]
+  before_action :set_roles, only: [:new, :create, :edit, :update]
   before_action :authenticate_user!
 
   rescue_from ActiveRecord::RecordNotFound do
     flash[:notice] = 'The object you tried to access does not exist'
+    redirect_to projects_path
+  end
+
+  def index 
     redirect_to projects_path
   end
 
@@ -32,6 +36,20 @@ class ProjectMembershipsController < ApplicationController
     end
   end
 
+  def edit
+    #authorize_action_for(@project)
+    id = @project.project_memberships.find_by(role: 'Owner').user_id
+    @users = @project.users.reject { |u| u.id == id }
+  end
+
+  def update
+    user = User.find_by(id: params[:user][:id])
+    set_user_role(user, @project, params[:role])
+    flash[:notice] = "#{user.first_name} #{user.last_name}'s access level
+      has changed"
+    redirect_to project_path
+  end
+
   private
 
   def set_project
@@ -40,5 +58,11 @@ class ProjectMembershipsController < ApplicationController
 
   def set_roles
     @roles = Project.roles.map(&:to_s)
+  end
+
+  def set_user_role(user, project, role)
+    membership = user.project_memberships.find_by(project_id: project.id)
+    membership.role = role
+    membership.save
   end
 end
