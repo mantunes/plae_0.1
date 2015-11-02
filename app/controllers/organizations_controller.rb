@@ -1,6 +1,7 @@
 class OrganizationsController < ApplicationController
-  before_action :set_organization, only: [:show, :edit, :update, :destroy]
-  before_action :set_roles, only: [:invite]
+  before_action :set_organization, only: [:show, :edit, :update, :destroy,
+                                          :email_invitation]
+  before_action :set_roles, only: [:invite, :email_invitation]
   helper_method :admin?
 
   rescue_from ActiveRecord::RecordNotFound do
@@ -59,6 +60,22 @@ class OrganizationsController < ApplicationController
   end
 
   def email_invitation
+    user = User.find_by(email: params[:email].downcase)
+    if user
+      if Team.find_by(user_id: user.id, organization_id: @organization.id)
+        flash[:notice] = 'User already in this organization'
+        render('invite')
+      else
+        Team.create!(user_id: user.id, organization_id: @organization.id,
+                     role: params[:role])
+        flash[:notice] = "User #{user.first_name} #{user.last_name}
+          was added to the organization"
+        redirect_to organization_path
+      end
+    else
+      flash[:notice] = "Couldn't find user with email #{params[:email]}"
+      render('invite')
+    end
   end
 
   private
