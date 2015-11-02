@@ -1,0 +1,79 @@
+AllCops:
+  RunRailsCops: true
+  Include:
+    - '**/Rakefile'
+    - '**/*.rake'
+    - '**/config.ru'
+  Exclude:
+    - '**/Gemfile'
+    - '**/log/**/*'
+    - 'vendor/**/*'
+    - '**/tmp/**/*'
+    - '**/public/**/*'
+    - '**/config/**/*'
+    - '**/bin/**/*'
+    - '**/db/**/*'
+    - '**/spec/dummy/**/*'
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 100
+Metrics/MethodLength:
+  Max: 20
+Metrics/AbcSize:
+  Max: 20
+
+# it would be nice if we could say don't allow 3 or more,
+# but having 2 empty lines between methods is nice.
+Style/EmptyLines:
+  Enabled: false
+Style/EmptyLinesAroundBlockBody:
+  Enabled: false
+Style/EmptyLinesAroundClassBody:
+  Enabled: false
+Style/EmptyLinesAroundModuleBody:
+  Enabled: false
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/BracesAroundHashParameters:
+  Enabled: false
+
+# only force style on short strings... if they get a bit long, don't enforce
+Style/IfUnlessModifier:
+  MaxLineLength: 80
+
+# unless can get confusing sometimes
+Style/NegatedIf:
+  Enabled: false
+
+# It's not redundant, it's documentation
+Style/RedundantReturn:
+  Enabled: false
+
+# I'd rather be explicit than accidentally reference a keyword or variable.
+Style/RedundantSelf:
+  Enabled: false
+
+# This cops doesn't allow us to visually align stuff sometimes...
+Style/SingleSpaceBeforeFirstArg:
+  Enabled: false
+
+# Suggest using auto-cleanable resources (p.ex File.open with block)
+Style/AutoResourceCleanup:
+  Enabled: true
+
+# Keep consistency in calls of Enumerable methods (p.ex inject vs reduce)
+Style/CollectionMethods:
+  Enabled: true
+
+Style/MutableConstant:
+  Enabled: true
+
+Style/GuardClause:
+  Enabled: false
+
+Lint/LiteralInInterpolation:
+  AutoCorrect: true

@@ -9,7 +9,7 @@
         <th>Description</th>
         <th>Website</th>
         <th>Role</th>
-        <th>Created At</th>
+        <th>Projects</th>
       </tr>
       <tbody>
         <% @organizations.each do |organization| %>
@@ -18,7 +18,7 @@
             <td><%= organization.description %></td>
             <td><%= organization.website %></td>
             <td><%= organization.teams.find_by(user_id: current_user.id).role %></td>
-            <td><%= organization.created_at.strftime("%H:%M:%S %d/%m/%y") %></td>
+            <td><%= organization.projects.count %></td>
             <td><%= link_to "Edit", edit_organization_path(organization) %></td>
             <td><%= link_to 'Delete', organization, method: :delete, 
               data: { confirm: 'Are you sure?' } %></td>

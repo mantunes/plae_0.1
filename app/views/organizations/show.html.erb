@@ -1,24 +1,31 @@
 <div>
   <h2>Organization Details</h2>
+  <div class="row">
+    <div class="col-lg-8">
+      <table summary="fields">
+        <tr>
+          <th>Name: </th>
+          <td><%= @organization.name %></td>
+        </tr>
+        <tr>
+          <th>Description: </th>
+          <td><%= @organization.description %></td>
+        </tr>
+        <tr>
+          <th>Website: </th>
+          <td><%= @organization.website %></td>
+        </tr>
+        <tr>
+          <th>Created at: </th>
+          <td><%= @organization.created_at.strftime("%H:%M:%S %d/%m/%y") %></td>
+        </tr>
+      </table>
+    </div>
+    <div class="col-lg-4">
+      <td><%= button_to "Invite Members", invite_organization_path, method: :get %> </td>
+    </div>
+  </div>
 
-  <table summary="fields">
-    <tr>
-      <th>Name: </th>
-      <td><%= @organization.name %></td>
-    </tr>
-    <tr>
-      <th>Description: </th>
-      <td><%= @organization.description %></td>
-    </tr>
-    <tr>
-      <th>Website: </th>
-      <td><%= @organization.website %></td>
-    </tr>
-    <tr>
-      <th>Created at: </th>
-      <td><%= @organization.created_at.strftime("%H:%M:%S %d/%m/%y") %></td>
-    </tr>
-  </table>
   <br>
 
    <h3> Users </h3>
@@ -43,5 +50,23 @@
       <% end %>
     </tbody>
   </table>
+
+  <%unless @projects.empty? %>
+    <h3> Projects </h3>
+    <table summary="Project list" class="table">
+      <tr class="header">
+        <th>Project Name</th>
+        <th>Total Duration</th>
+      </tr>
+      <tbody>
+        <% @projects.each do |project| %>
+          <tr>
+            <td><%= project.name %></td>
+            <td><%= formatted_time(project.total_duration) if project.total_duration %></td>
+          </tr>
+        <% end %>
+      <tbody>
+    </table>
+  <% end %>
   <%= link_to "<< Back to List", organizations_path  %>
 </div>

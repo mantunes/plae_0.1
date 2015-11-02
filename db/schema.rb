@@ -36,11 +36,14 @@ ActiveRecord::Schema.define(version: 20151030113317) do
   end
 
   create_table "projects", force: :cascade do |t|
+    t.integer  "organization_id"
     t.string   "name"
-    t.integer  "total_duration", limit: 8
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.integer  "total_duration",  limit: 8
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
+
+  add_index "projects", ["organization_id"], name: "index_projects_on_organization_id", using: :btree
 
   create_table "roles", force: :cascade do |t|
     t.string   "name"
