@@ -19,12 +19,17 @@
           <th>Updated at: </th>
           <td><%= @project.updated_at.strftime("%H:%M:%S %d/%m/%y") %></td>
         </tr>
+        <tr>
+          <th>Organization: </th>
+          <td><%= @project.organization.try(:name) %></td>
+        </tr>
       </table>
     </div>
     <div class="col-lg-6">
       <% if owner? @project %>
         <%= link_to "Invite Members", new_project_membership_path(project_id: @project) %> <br>
-        <%= link_to "Manage Members", edit_project_membership_path(project_id: @project), method: :get %>
+        <%= link_to "Manage Members", edit_project_membership_path(project_id: @project), method: :get %> <br>
+        <%= link_to "Add to Organization", append_project_path, method: :get %>
       <% end %>
       <% unless owner? @project %>
         <%= button_to "Leave Project", leave_project_membership_path(project_id: @project), data: { confirm: 'Are you sure?' } %>

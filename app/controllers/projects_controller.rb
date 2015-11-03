@@ -1,5 +1,6 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, 
+                                     :append, :add_to_organization]
   before_action :authenticate_user!
 
   rescue_from ActiveRecord::RecordNotFound do
@@ -52,6 +53,17 @@ class ProjectsController < ApplicationController
     @project.destroy
     current_user.projects.delete(@project)
     redirect_to projects_path
+  end
+
+  def append
+    @organizations = current_user.organizations
+  end
+
+  def add_to_organization
+    organization = Organization.find(params[:organization][:organization_id])
+    organization.projects << @project
+    flash[:notice] = "#{@project.name} was added to #{organization.name} organization"
+    redirect_to project_path
   end
 
   private
