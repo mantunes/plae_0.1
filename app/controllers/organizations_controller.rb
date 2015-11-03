@@ -16,7 +16,7 @@ class OrganizationsController < ApplicationController
   def show
     authorize_action_for(@organization)
     @projects = @organization.projects
-    @users = @organization.users.order('teams.created_at asc')
+    @users = @organization.users.order('organization_memberships.created_at asc')
   end
 
   def new
@@ -26,7 +26,7 @@ class OrganizationsController < ApplicationController
   def create
     @organization = current_user.organizations.build(organization_params)
     if @organization.save
-      Team.create!(user_id: current_user.id, organization_id: @organization.id,
+      OrganizationMembership.create!(user_id: current_user.id, organization_id: @organization.id,
                    role: 'Admin')
       flash[:notice] = "You've successfully created a new organization"
       redirect_to @organization
@@ -62,11 +62,11 @@ class OrganizationsController < ApplicationController
   def email_invitation
     user = User.find_by(email: params[:email].downcase)
     if user
-      if Team.find_by(user_id: user.id, organization_id: @organization.id)
+      if OrganizationMembership.find_by(user_id: user.id, organization_id: @organization.id)
         flash[:notice] = 'User already in this organization'
         render('invite')
       else
-        Team.create!(user_id: user.id, organization_id: @organization.id,
+        OrganizationMembership.create!(user_id: user.id, organization_id: @organization.id,
                      role: params[:role])
         flash[:notice] = "User #{user.first_name} #{user.last_name}
           was added to the organization"

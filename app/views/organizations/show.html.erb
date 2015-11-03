@@ -39,11 +39,11 @@
       <% @users.each do |user| %>
         <tr>
           <td><%= "#{user.first_name} #{user.last_name}" %></td>
-          <td><%= user.teams.find_by(organization_id: @organization.id).role %></td>
+          <td><%= user.organization_memberships.find_by(organization_id: @organization.id).role %></td>
           <% if admin? @organization %>
-            <% unless user.teams.find_by(organization_id: @organization.id).role == "Admin" %>
-              <td> <%= link_to "Remove", remove_members_project_path(user_id: user.id), 
-                data: { confirm: 'Are you sure?' }  %></td>
+            <% unless user.organization_memberships.find_by(organization_id: @organization.id).role == "Admin" %>
+              <td> <%= link_to "Remove", organization_membership_path(user_id: user.id, organization_id: @organization.id, 
+                       method: :delete, data: { confirm: 'Are you sure?' }  %></td>
             <% end %>
           <% end %>
         </tr>
@@ -62,7 +62,7 @@
         <% @projects.each do |project| %>
           <tr>
             <td><%= project.name %></td>
-            <td><%= formatted_time(project.total_duration) if project.total_duration %></td>
+            <td><%= time_ago_in_words(project.total_duration.seconds.ago, include_seconds: true) if project.total_duration %></td>
           </tr>
         <% end %>
       <tbody>

@@ -1,5 +1,5 @@
 module OrganizationsHelper
   def admin?(organization)
-    organization.teams.find_by(user_id: current_user).role == 'Admin'
+    organization.organization_memberships.find_by(user_id: current_user).role == 'Admin'
   end
 end

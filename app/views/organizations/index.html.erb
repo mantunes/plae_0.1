@@ -17,7 +17,7 @@
             <td><%= link_to "#{organization.name}", organization %></td>
             <td><%= organization.description %></td>
             <td><%= organization.website %></td>
-            <td><%= organization.teams.find_by(user_id: current_user.id).role %></td>
+            <td><%= organization.organization_memberships.find_by(user_id: current_user.id).role %></td>
             <td><%= organization.projects.count %></td>
             <% if admin? organization %>
               <td><%= link_to "Edit", edit_organization_path(organization) %></td>
