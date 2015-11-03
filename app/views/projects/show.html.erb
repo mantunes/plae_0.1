@@ -23,10 +23,10 @@
     </div>
     <div class="col-lg-6">
       <% if owner? @project %>
-        <%= button_to "Manage Members", manage_project_path(@project), method: :get %> </td>
+        <%= link_to "Manage Members", edit_project_membership_path(project_id: @project.id), method: :get %> </td>
       <% end %>
       <% unless owner? @project %>
-        <%= button_to "Leave Project", leave_project_path(@project), data: { confirm: 'Are you sure?' } %> </td>
+        <%= button_to "Leave Project", leave_project_membership_path(project_id: @project), data: { confirm: 'Are you sure?' } %> </td>
       <% end %>
     </div>
   </div>
@@ -42,11 +42,11 @@
       <% @users.each do |user| %>
         <tr>
           <td><%= "#{user.first_name} #{user.last_name}" %></td>
-          <td><%= user.project_memberships.find_by(project_id: @project.id).access_level %></td>
+          <td><%= user.project_memberships.find_by(project_id: @project.id).role %></td>
           <% if owner? @project %>
-            <% unless user.project_memberships.find_by(project_id: @project.id).access_level == "Owner" %>
-              <td> <%= link_to "Remove", remove_members_project_path(user_id: user.id), 
-                data: { confirm: 'Are you sure?' }  %></td>
+            <% unless user.project_memberships.find_by(project_id: @project.id).role == "Owner" %>
+              <td> <%= link_to "Remove", project_membership_path(user_id: user.id, project_id: @project.id), 
+                      method: :delete, data: { confirm: 'Are you sure?' }  %></td>
             <% end %>
           <% end %>
         </tr>

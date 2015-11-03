@@ -6,8 +6,6 @@ class User < ActiveRecord::Base
   has_many :projects, through: :project_memberships
   has_many :organizations, through: :teams
 
-  #before_destroy :destroy_time_entries
-
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable,

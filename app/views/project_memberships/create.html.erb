@@ -1,0 +1,26 @@
+<div>
+  <h2>Manage Members of Project</h2>
+  <br>
+  <% if @users.blank? %>
+    <h4> You have no members in your project </h4>
+  <% else %>
+    <div class="authform">
+      <%= form_tag update_members_project_path do %>
+        <div class="form-group">
+          <%= label_tag(:user, "User:") %><br>
+          <%= collection_select(:user, :id, @users, :id, 
+            :email, {prompt: nil }, {class: "form-control"}) %>
+        </div>
+        <div>
+          <%= label_tag(:role, "Access Level:") %><br>
+          <%= select_tag :role, options_for_select(@roles), {class: "form-control"} %>
+        </div>
+        <br>
+        <div class="actions">
+          <%= link_to "Cancel", project_path, class: 'button left' %>
+          <%= submit_tag "Confirm", class: 'button right' %> 
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

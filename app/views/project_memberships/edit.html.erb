@@ -5,15 +5,16 @@
     <h4> You have no members in your project </h4>
   <% else %>
     <div class="authform">
-      <%= form_tag update_members_project_path do %>
+      <%= form_tag project_membership_path, method: :put do %>
+        <%= hidden_field_tag "project_id", @project.id%>
         <div class="form-group">
           <%= label_tag(:user, "User:") %><br>
           <%= collection_select(:user, :id, @users, :id, 
             :email, {prompt: nil }, {class: "form-control"}) %>
         </div>
         <div>
-          <%= label_tag(:access_level, "Access Level:") %><br>
-          <%= select_tag :access_level, options_for_select(@roles), {class: "form-control"} %>
+          <%= label_tag(:role, "Access Level:") %><br>
+          <%= select_tag :role, options_for_select(@roles), {class: "form-control"} %>
         </div>
         <br>
         <div class="actions">

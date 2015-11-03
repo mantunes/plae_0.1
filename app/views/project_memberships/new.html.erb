@@ -1,14 +1,14 @@
 <h2>Invite Members to Project</h2>
 <div class="authform">
-
-  <%= form_tag email_invitation_project_path do %>
+  <%= form_tag project_memberships_path do %>
+  <%= hidden_field_tag "project_id", @project.id%>
     <div class="form-group">
       <%= label_tag(:email, "Email:") %><br>
       <%= email_field_tag(:email, nil, class: 'form-control') %><br>
     </div>
     <div class="form-group">
-      <%= label_tag(:access_level, "Access Level:") %><br>
-      <%= select_tag :access_level, options_for_select(@roles), {class: "form-control"} %>
+      <%= label_tag(:role, "Access Level:") %><br>
+      <%= select_tag :role, options_for_select(@roles), {class: "form-control"} %>
     </div>
     <div class="actions">
       <%= link_to "Cancel", projects_path, class: 'button left' %>

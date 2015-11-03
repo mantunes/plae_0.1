@@ -1,5 +1,5 @@
 class ProjectMembershipsController < ApplicationController
-  before_action :set_project, only: [:new, :create, :edit, :update, 
+  before_action :set_project, only: [:new, :create, :edit, :update,
                                      :destroy, :leave]
   before_action :set_roles, only: [:new, :create, :edit, :update]
   before_action :authenticate_user!
@@ -9,7 +9,7 @@ class ProjectMembershipsController < ApplicationController
     redirect_to projects_path
   end
 
-  def index 
+  def index
     redirect_to projects_path
   end
 

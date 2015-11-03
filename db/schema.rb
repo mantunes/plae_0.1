@@ -27,9 +27,9 @@ ActiveRecord::Schema.define(version: 20151030113317) do
   create_table "project_memberships", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "project_id"
-    t.string   "access_level"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.string   "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "project_memberships", ["project_id"], name: "index_project_memberships_on_project_id", using: :btree

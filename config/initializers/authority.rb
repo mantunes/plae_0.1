@@ -25,10 +25,9 @@ Authority.configure do |config|
     :show    => 'read',
     :new     => 'create',
     :create  => 'create',
-    :edit    => 'update',
+    :edit    => 'edit',
     :update  => 'update',
     :destroy => 'delete',
-    :invite => 'invite',
     :manage => 'manage',
     :append => 'append'
   }
@@ -42,11 +41,12 @@ Authority.configure do |config|
   # Defaults are as follows:
   #
   config.abilities =  {
+    :new => 'creatable',
     :create => 'creatable',
     :read   => 'readable',
+    :edit => 'editable',
     :update => 'updatable',
     :delete => 'deletable',
-    :invite => 'invitable',
     :manage => 'manageable',
     :append => 'appendable'
   }

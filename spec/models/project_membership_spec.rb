@@ -11,6 +11,6 @@ RSpec.describe ProjectMembership, type: :model do
       it { should have_db_index(:user_id) }
       it { should have_db_index(:project_id) }
     end
-    it { should have_db_column(:access_level).of_type(:string) }
+    it { should have_db_column(:role).of_type(:string) }
   end
 end

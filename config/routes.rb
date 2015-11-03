@@ -5,10 +5,11 @@ Rails.application.routes.draw do
     get :append, on: :member
     post :add_to_project, on: :member
   end
-  resources :projects do
-     get :invite, :manage, :remove_members, on: :member
-     post :email_invitation, :leave, :update_members, on: :member
+  resources :projects
+  resources :project_memberships do 
+    post :leave, on: :member
   end
+
   resources :organizations do
       get :invite, on: :member
       post :email_invitation, on: :member
