@@ -1,26 +1,36 @@
-
 <div>
   <h2>Project Details</h2>
-
-  <table summary="fields">
-    <tr>
-      <th>Name: </th>
-      <td><%= @project.name %></td>
-    </tr>
-    <tr>
-      <th>Total Duration: </th>
-      <td><%= formatted_time(@project.total_duration) if @project.total_duration %></td>
-    </tr>
-    <tr>
-      <th>Created at: </th>
-      <td><%= @project.created_at.strftime("%H:%M:%S %d/%m/%y") %></td>
-    </tr>
-    <tr>
-      <th>Updated at: </th>
-      <td><%= @project.updated_at.strftime("%H:%M:%S %d/%m/%y") %></td>
-    </tr>
-  </table>
-  <br>
+  <div class="row">
+    <div class="col-lg-6">
+      <table summary="fields">
+        <tr>
+          <th>Name: </th>
+          <td><%= @project.name %></td>
+        </tr>
+        <tr>
+          <th>Total Duration: </th>
+          <td><%= time_ago_in_words(@project.total_duration.seconds.ago, include_seconds: true)if @project.total_duration %></td>
+        </tr>
+        <tr>
+          <th>Created at: </th>
+          <td><%= @project.created_at.strftime("%H:%M:%S %d/%m/%y") %></td>
+        </tr>
+        <tr>
+          <th>Updated at: </th>
+          <td><%= @project.updated_at.strftime("%H:%M:%S %d/%m/%y") %></td>
+        </tr>
+      </table>
+    </div>
+    <div class="col-lg-6">
+      <% if owner? @project %>
+        <%= link_to "Invite Members", new_project_membership_path(project_id: @project) %> <br>
+        <%= link_to "Manage Members", edit_project_membership_path(project_id: @project), method: :get %>
+      <% end %>
+      <% unless owner? @project %>
+        <%= button_to "Leave Project", leave_project_membership_path(project_id: @project), data: { confirm: 'Are you sure?' } %>
+      <% end %>
+    </div>
+  </div>
 
   <h3> Users </h3>
 
@@ -33,7 +43,13 @@
       <% @users.each do |user| %>
         <tr>
           <td><%= "#{user.first_name} #{user.last_name}" %></td>
-          <td><%= user.memberships.find_by(project_id: @project.id).access_level %></td>
+          <td><%= user.project_memberships.find_by(project_id: @project).role %></td>
+          <% if owner? @project %>
+            <% unless user.project_memberships.find_by(project_id: @project).role == "Owner" %>
+              <td> <%= link_to "Remove", project_membership_path(user_id: user.id, project_id: @project), 
+                      method: :delete, data: { confirm: 'Are you sure?' }  %></td>
+            <% end %>
+          <% end %>
         </tr>
       <% end %>
     </tbody>
@@ -49,7 +65,6 @@
         <th>Start Time</th>
         <th>End Time</th>
         <th>Total Time</th>
-        <th>Created At</th>
       </tr>
       <tbody>
         <% @time_entries.each do |time_entry| %>
@@ -58,8 +73,7 @@
             <td><%= "#{time_entry.user.first_name} #{time_entry.user.last_name}" %></td>
             <td><%= time_entry.start_time.strftime("%H:%M:%S %d/%m/%y") %></td>
             <td><%= time_entry.end_time.strftime("%H:%M:%S %d/%m/%y") %></td>
-            <td><%= formatted_time(time_entry.total_time) %></td>
-            <td><%= time_entry.created_at.strftime("%H:%M:%S %d/%m/%y") %></td>
+            <td><%= time_ago_in_words(time_entry.total_time.seconds.ago, include_seconds: true) %></td>
           </tr>
         <% end %>
       <tbody>

@@ -1,0 +1,31 @@
+<div class="authform">
+  <%= form_for(@organization) do |t| %>
+    <% if @organization.errors.any? %>
+      <div id="error_explanation">
+        <h3><%= pluralize(@organization.errors.count, "error") %> 
+          prohibited this entry from being saved:</h3>
+        <ul>
+          <% @organization.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="form-group">
+      <%= t.label :name %><br>
+      <%= t.text_field :name, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= t.label :description %><br>
+      <%= t.text_field :description, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= t.label :website %><br>
+      <%= t.text_field :website, class: 'form-control' %>
+    </div>
+    <div class="actions">
+      <%= link_to "Cancel", organizations_path, class: 'button left'  %>
+      <%= t.submit class: 'button right' %>
+    </div>
+  <% end %>
+</div>

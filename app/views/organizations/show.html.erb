@@ -1,0 +1,76 @@
+<div>
+  <h2>Organization Details</h2>
+  <div class="row">
+    <div class="col-lg-8">
+      <table summary="fields">
+        <tr>
+          <th>Name: </th>
+          <td><%= @organization.name %></td>
+        </tr>
+        <tr>
+          <th>Description: </th>
+          <td><%= @organization.description %></td>
+        </tr>
+        <tr>
+          <th>Website: </th>
+          <td><%= @organization.website %></td>
+        </tr>
+        <tr>
+          <th>Created at: </th>
+          <td><%= @organization.created_at.strftime("%H:%M:%S %d/%m/%y") %></td>
+        </tr>
+      </table>
+    </div>
+    <div class="col-lg-4">
+      <% if admin? @organization %>
+        <%= link_to "Invite Members", new_organization_membership_path(organization_id: @organization) %> <br>
+        <%= link_to "Manage Members", edit_organization_membership_path(organization_id: @organization), method: :get %>
+      <% end %>
+      <% unless admin? @organization %>
+        <%= button_to "Leave organization", leave_organization_membership_path(organization_id: @organization), data: { confirm: 'Are you sure?' } %>
+      <% end %>
+    </div>
+  </div>
+
+  <br>
+
+  <h3> Users </h3>
+
+  <table summary="User list" class="table">
+    <tr class="header">
+      <th>Name</th>
+      <th>Role</th>
+    </tr>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= "#{user.first_name} #{user.last_name}" %></td>
+          <td><%= user.organization_memberships.find_by(organization_id: @organization).role %></td>
+          <% unless user.organization_memberships.find_by(organization_id: @organization).role == "Admin" %>
+            <td><%= link_to "Remove", organization_membership_path(user_id: user.id, organization_id: @organization), 
+              method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%unless @projects.empty? %>
+    <h3> Projects </h3>
+    <table summary="Project list" class="table">
+      <tr class="header">
+        <th>Project Name</th>
+        <th>Total Duration</th>
+      </tr>
+      <tbody>
+        <% @projects.each do |project| %>
+          <tr>
+            <td><%= project.name %></td>
+            <td><%= time_ago_in_words(project.total_duration.seconds.ago, include_seconds: true) if project.total_duration %></td>
+          </tr>
+        <% end %>
+      <tbody>
+    </table>
+  <% end %>
+  <%= link_to "<< Back to List", organizations_path  %>
+</div>

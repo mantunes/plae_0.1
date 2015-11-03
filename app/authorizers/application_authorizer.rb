@@ -1,6 +1,5 @@
 # Other authorizers should subclass this one
 class ApplicationAuthorizer < Authority::Authorizer
-
   # Any class method from Authority::Authorizer that isn't overridden
   # will call its authorizer's default method.
   #
@@ -12,5 +11,4 @@ class ApplicationAuthorizer < Authority::Authorizer
     # considered forbidden.
     false
   end
-
 end

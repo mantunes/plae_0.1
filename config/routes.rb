@@ -2,13 +2,18 @@ Rails.application.routes.draw do
 
   devise_for :users
   resources :time_entries do
-    get :select_project, on: :member
+    get :append, on: :member
     post :add_to_project, on: :member
   end
-  resources :projects do
-     get :invite, on: :member
-     post :email_invitation, on: :member
+  resources :projects
+  resources :project_memberships do
+    post :leave, on: :member
   end
+  resources :organizations
+  resources :organization_memberships do
+    post :leave, on: :member
+  end
+
   root to: 'time_entries#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
