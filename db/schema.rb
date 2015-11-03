@@ -11,39 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151030113317) do
+ActiveRecord::Schema.define(version: 20151015151802) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "organizations", force: :cascade do |t|
-    t.string   "name"
-    t.string   "description"
-    t.string   "website"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  create_table "project_memberships", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "project_id"
-    t.string   "role"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "project_memberships", ["project_id"], name: "index_project_memberships_on_project_id", using: :btree
-  add_index "project_memberships", ["user_id"], name: "index_project_memberships_on_user_id", using: :btree
-
-  create_table "projects", force: :cascade do |t|
-    t.integer  "organization_id"
-    t.string   "name"
-    t.integer  "total_duration",  limit: 8
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-  end
-
-  add_index "projects", ["organization_id"], name: "index_projects_on_organization_id", using: :btree
 
   create_table "roles", force: :cascade do |t|
     t.string   "name"
@@ -55,58 +26,6 @@ ActiveRecord::Schema.define(version: 20151030113317) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
-
-  create_table "teams", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "organization_id"
-    t.string   "role"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-  end
-
-  add_index "teams", ["organization_id"], name: "index_teams_on_organization_id", using: :btree
-  add_index "teams", ["user_id"], name: "index_teams_on_user_id", using: :btree
-
-  create_table "time_entries", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "project_id"
-    t.string   "name"
-    t.datetime "start_time"
-    t.datetime "end_time"
-    t.integer  "total_time", limit: 8
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-  end
-
-  add_index "time_entries", ["project_id"], name: "index_time_entries_on_project_id", using: :btree
-  add_index "time_entries", ["user_id"], name: "index_time_entries_on_user_id", using: :btree
-
-  create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.inet     "current_sign_in_ip"
-    t.inet     "last_sign_in_ip"
-    t.string   "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
-    t.string   "unconfirmed_email"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.string   "first_name",                          null: false
-    t.string   "last_name",                           null: false
-    t.integer  "failed_attempts",        default: 0
-    t.string   "unlock_token"
-    t.datetime "locked_at"
-  end
-
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "users_roles", id: false, force: :cascade do |t|
     t.integer "user_id"

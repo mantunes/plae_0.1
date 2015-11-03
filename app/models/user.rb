@@ -2,9 +2,9 @@ class User < ActiveRecord::Base
   include Authority::UserAbilities
   has_many :time_entries, dependent: :destroy
   has_many :project_memberships
-  has_many :teams
+  has_many :organization_memberships
   has_many :projects, through: :project_memberships
-  has_many :organizations, through: :teams
+  has_many :organizations, through: :organization_memberships
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

@@ -1,4 +1,4 @@
-class Team < ActiveRecord::Base
+class OrganizationMembership < ActiveRecord::Base
   belongs_to :user
   belongs_to :organization
   validates :role, presence: true
