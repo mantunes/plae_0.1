@@ -25,7 +25,7 @@ class OrganizationsController < ApplicationController
     @organization = current_user.organizations.build(organization_params)
     if @organization.save
       OrganizationMembership.create!(user_id: current_user.id, organization_id: @organization.id,
-                   role: 'Admin')
+                                     role: 'Admin')
       flash[:notice] = "You've successfully created a new organization"
       redirect_to @organization
     else

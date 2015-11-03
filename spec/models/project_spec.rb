@@ -18,8 +18,8 @@ RSpec.describe Project, type: :model do
   end
 
   it 'updates total duration of a project' do
-    time_entry = FactoryGirl.create(:time_entry, start_time: Time.now,
-                                                 end_time: Time.now + 5)
+    time_entry = FactoryGirl.create(:time_entry, start_time: Time.zone.now,
+                                                 end_time: Time.zone.now + 5)
     project.time_entries << time_entry
     expect(project.total_duration).to eq(5)
   end

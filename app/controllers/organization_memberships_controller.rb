@@ -1,6 +1,6 @@
 class OrganizationMembershipsController < ApplicationController
   before_action :set_organization, only: [:new, :create, :edit, :update,
-                                     :destroy, :leave]
+                                          :destroy, :leave]
   before_action :set_roles, only: [:new, :create, :edit, :update]
   before_action :authenticate_user!
 
@@ -26,7 +26,7 @@ class OrganizationMembershipsController < ApplicationController
         render('new')
       else
         OrganizationMembership.create!(user_id: user.id, organization_id: @organization.id,
-                     role: params[:role])
+                                       role: params[:role])
         flash[:notice] = "User #{user.first_name} #{user.last_name}
           was added to the organization"
         redirect_to organization_path(@organization.id)

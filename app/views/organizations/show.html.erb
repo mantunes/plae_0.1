@@ -47,8 +47,8 @@
           <td><%= "#{user.first_name} #{user.last_name}" %></td>
           <td><%= user.organization_memberships.find_by(organization_id: @organization).role %></td>
           <% unless user.organization_memberships.find_by(organization_id: @organization).role == "Admin" %>
-            <%= link_to "Remove", organization_membership_path(user_id: user.id, organization_id: @organization), 
-              method: :delete, data: { confirm: 'Are you sure?' } %>
+            <td><%= link_to "Remove", organization_membership_path(user_id: user.id, organization_id: @organization), 
+              method: :delete, data: { confirm: 'Are you sure?' } %></td>
           <% end %>
         </tr>
       <% end %>

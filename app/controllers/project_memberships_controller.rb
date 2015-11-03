@@ -18,7 +18,6 @@ class ProjectMembershipsController < ApplicationController
   end
 
   def create
-    authorize_action_for(@project)
     user = User.find_by(email: params[:email].downcase)
     if user
       if ProjectMembership.find_by(user_id: user.id, project_id: @project.id)

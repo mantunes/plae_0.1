@@ -10,7 +10,6 @@
         <th>Start Time</th>
         <th>End Time</th>
         <th>Total Time</th>
-        <th>Created At</th>
       </tr>
       <tbody>
         <% @time_entries.each do |time_entry| %>
@@ -20,7 +19,6 @@
             <td><%= time_entry.start_time.strftime("%H:%M:%S %d/%m/%y") %></td>
             <td><%= time_entry.end_time.strftime("%H:%M:%S %d/%m/%y") %></td>
             <td><%= time_ago_in_words(time_entry.total_time.seconds.ago, include_seconds: true) %></td>
-            <td><%= time_entry.created_at.strftime("%H:%M:%S %d/%m/%y") %></td>
             <td><%= link_to "Edit", edit_time_entry_path(time_entry) %></td>
             <td><%= link_to 'Delete', time_entry, method: :delete, 
               data: { confirm: 'Are you sure?' } %></td>
