@@ -1,12 +1,12 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy, 
-                                     :append, :add_to_organization]
+  before_action :set_project, only: [:show, :edit, :update, :destroy,
+                                     :join, :append, :add_to_organization]
   before_action :authenticate_user!
 
-  rescue_from ActiveRecord::RecordNotFound do
-    flash[:notice] = 'The object you tried to access does not exist'
-    redirect_to projects_path
-  end
+  #rescue_from ActiveRecord::RecordNotFound do
+   # flash[:notice] = 'The object you tried to access does not exist'
+    #redirect_to projects_path
+  #end
 
   def index
     @projects = current_user.projects
@@ -60,10 +60,28 @@ class ProjectsController < ApplicationController
   end
 
   def add_to_organization
-    organization = Organization.find(params[:organization][:organization_id])
-    organization.projects << @project
-    flash[:notice] = "#{@project.name} was added to #{organization.name} organization"
-    redirect_to project_path
+    organization = Organization.find_by(id: params[:organization][:organization_id])
+    if organization
+      organization.projects << @project
+      flash[:notice] = "#{@project.name} was added to #{organization.name} organization"
+      redirect_to project_path
+    else
+      @project.organization = nil
+      @project.save
+      redirect_to project_path
+    end
+  end
+
+  def join
+    membership = ProjectMembership.new(user_id: current_user.id,
+                                       project_id: @project.id, role: 'Member')
+    if membership.save
+      flash[:notice] = "You joined #{@project.name}"
+      redirect_to project_path
+    else
+      flash[:notice] = "Couldn't join #{@project.name}"
+      redirect_to project_path
+    end
   end
 
   private

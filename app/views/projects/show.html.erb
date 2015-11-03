@@ -30,9 +30,10 @@
         <%= link_to "Invite Members", new_project_membership_path(project_id: @project) %> <br>
         <%= link_to "Manage Members", edit_project_membership_path(project_id: @project), method: :get %> <br>
         <%= link_to "Add to Organization", append_project_path, method: :get %>
-      <% end %>
-      <% unless owner? @project %>
-        <%= button_to "Leave Project", leave_project_membership_path(project_id: @project), data: { confirm: 'Are you sure?' } %>
+      <% elsif already_in_project? @project %>
+        <%= button_to "Leave Project", leave_project_membership_path(project_id: @project), data: { confirm: 'Are you sure?'} %>
+      <% else %>
+        <%= link_to "Join Project", join_project_path(project_id: @project), method: :post %>
       <% end %>
     </div>
   </div>

@@ -9,10 +9,10 @@
         <div class="form-group">
           <%= label_tag(:organization, "Organization:") %><br>
           <%= collection_select(:organization, :organization_id, @organizations, :id, 
-            :name, {prompt: nil }, {class: "form-control"}) %>
+            :name, {prompt: "(none)" }, {class: "form-control"}) %>
         </div>
         <div class="actions">
-          <%= link_to "Cancel", projects_path, class: 'button left' %>
+          <%= link_to "Cancel", project_path, class: 'button left' %>
           <%= submit_tag "Confirm", class: 'button right' %> 
         </div>
       <% end %>

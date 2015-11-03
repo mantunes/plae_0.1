@@ -7,7 +7,9 @@ class ProjectAuthorizer < ApplicationAuthorizer
 
   def readable_by?(user)
     members = resource.project_memberships.map(&:user_id)
-    members.include? user.id
+    return true if members.include? user.id
+    organization = resource.organization
+    return true if user.organizations.include?(organization)
   end
 
   def editable_by?(user)
