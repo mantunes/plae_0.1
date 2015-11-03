@@ -3,10 +3,10 @@ class ProjectsController < ApplicationController
                                      :join, :append, :add_to_organization]
   before_action :authenticate_user!
 
-  #rescue_from ActiveRecord::RecordNotFound do
-   # flash[:notice] = 'The object you tried to access does not exist'
-    #redirect_to projects_path
-  #end
+  rescue_from ActiveRecord::RecordNotFound do
+    flash[:notice] = 'The object you tried to access does not exist'
+    redirect_to projects_path
+  end
 
   def index
     @projects = current_user.projects
@@ -56,6 +56,7 @@ class ProjectsController < ApplicationController
   end
 
   def append
+    authorize_action_for(@project)
     @organizations = current_user.organizations
   end
 

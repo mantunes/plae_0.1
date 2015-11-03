@@ -65,7 +65,7 @@
       <tbody>
         <% @projects.each do |project| %>
           <tr>
-            <td><%= project.name %></td>
+            <td><%= link_to "#{project.name}", project_path(project.id) %></td>
             <td><%= time_ago_in_words(project.total_duration.seconds.ago, include_seconds: true) if project.total_duration %></td>
           </tr>
         <% end %>

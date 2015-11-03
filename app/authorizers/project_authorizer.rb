@@ -17,4 +17,10 @@ class ProjectAuthorizer < ApplicationAuthorizer
     return false unless user_in_project
     user_in_project.role == 'Owner'
   end
+
+  def appendable_by?(user)
+    user_in_project = resource.project_memberships.find_by(user_id: user.id)
+    return false unless user_in_project
+    user_in_project.role == 'Owner'
+  end
 end

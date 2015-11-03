@@ -56,10 +56,16 @@ class TimeEntriesController < ApplicationController
   end
 
   def add_to_project
-    project = Project.find(params[:project][:project_id])
-    project.time_entries << @time_entry
-    flash[:notice] = "#{@time_entry.name} was added to #{project.name} project"
-    redirect_to time_entries_path
+    project = Project.find_by(id: params[:project][:project_id])
+    if project
+      project.time_entries << @time_entry
+      flash[:notice] = "#{@time_entry.name} was added to #{project.name} project"
+      redirect_to time_entries_path
+    else
+      @time_entry.project = nil
+      @time_entry.save
+      redirect_to time_entries_path
+    end
   end
 
   private
