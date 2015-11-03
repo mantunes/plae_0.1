@@ -29,7 +29,7 @@ class ProjectMembershipsController < ApplicationController
                                   role: params[:role])
         flash[:notice] = "User #{user.first_name} #{user.last_name}
         was added to the project"
-        redirect_to projects_path
+        redirect_to project_path(@project.id)
       end
     else
       flash[:notice] = "Couldn't find user with email #{params[:email]}"

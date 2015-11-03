@@ -1,7 +1,5 @@
 class OrganizationsController < ApplicationController
-  before_action :set_organization, only: [:show, :edit, :update, :destroy,
-                                          :email_invitation]
-  before_action :set_roles, only: [:invite, :email_invitation]
+  before_action :set_organization, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
 
   rescue_from ActiveRecord::RecordNotFound do
@@ -56,33 +54,7 @@ class OrganizationsController < ApplicationController
     redirect_to organizations_path
   end
 
-  def invite
-  end
-
-  def email_invitation
-    user = User.find_by(email: params[:email].downcase)
-    if user
-      if OrganizationMembership.find_by(user_id: user.id, organization_id: @organization.id)
-        flash[:notice] = 'User already in this organization'
-        render('invite')
-      else
-        OrganizationMembership.create!(user_id: user.id, organization_id: @organization.id,
-                     role: params[:role])
-        flash[:notice] = "User #{user.first_name} #{user.last_name}
-          was added to the organization"
-        redirect_to organization_path
-      end
-    else
-      flash[:notice] = "Couldn't find user with email #{params[:email]}"
-      render('invite')
-    end
-  end
-
   private
-
-  def set_roles
-    @roles = Organization.roles.map(&:to_s)
-  end
 
   def organization_params
     params.require(:organization).permit(:name, :description, :website)

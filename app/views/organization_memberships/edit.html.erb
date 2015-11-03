@@ -1,11 +1,12 @@
 <div>
-  <h2>Manage Members of Project</h2>
+  <h2>Manage Members of Organization </h2>
   <br>
   <% if @users.blank? %>
-    <h4> You have no members in your project </h4>
+    <h4> You have no members in your organization </h4>
   <% else %>
     <div class="authform">
-      <%= form_tag update_members_project_path do %>
+      <%= form_tag organization_membership_path, method: :put do %>
+        <%= hidden_field_tag "organization_id", @organization.id%>
         <div class="form-group">
           <%= label_tag(:user, "User:") %><br>
           <%= collection_select(:user, :id, @users, :id, 
@@ -17,7 +18,7 @@
         </div>
         <br>
         <div class="actions">
-          <%= link_to "Cancel", project_path, class: 'button left' %>
+          <%= link_to "Cancel", organization_path(@organization.id), class: 'button left' %>
           <%= submit_tag "Confirm", class: 'button right' %> 
         </div>
       <% end %>

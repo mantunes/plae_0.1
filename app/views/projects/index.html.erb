@@ -22,7 +22,6 @@
             <% if owner? project %>
               <td><%= link_to "Edit", edit_project_path(project) %></td>
               <td><%= link_to 'Delete', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-              <td><%= link_to "Invite Members", new_project_membership_path(project_id: project.id) %><td>
             <% end %>
           </tr>
         <% end %>

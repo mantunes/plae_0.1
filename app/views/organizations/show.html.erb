@@ -22,13 +22,19 @@
       </table>
     </div>
     <div class="col-lg-4">
-      <td><%= button_to "Invite Members", invite_organization_path, method: :get %> </td>
+      <% if admin? @organization %>
+        <%= link_to "Invite Members", new_organization_membership_path(organization_id: @organization) %> <br>
+        <%= link_to "Manage Members", edit_organization_membership_path(organization_id: @organization), method: :get %>
+      <% end %>
+      <% unless admin? @organization %>
+        <%= button_to "Leave organization", leave_organization_membership_path(organization_id: @organization), data: { confirm: 'Are you sure?' } %>
+      <% end %>
     </div>
   </div>
 
   <br>
 
-   <h3> Users </h3>
+  <h3> Users </h3>
 
   <table summary="User list" class="table">
     <tr class="header">
@@ -39,12 +45,10 @@
       <% @users.each do |user| %>
         <tr>
           <td><%= "#{user.first_name} #{user.last_name}" %></td>
-          <td><%= user.organization_memberships.find_by(organization_id: @organization.id).role %></td>
-          <% if admin? @organization %>
-            <% unless user.organization_memberships.find_by(organization_id: @organization.id).role == "Admin" %>
-              <td> <%= link_to "Remove", organization_membership_path(user_id: user.id, organization_id: @organization.id, 
-                       method: :delete, data: { confirm: 'Are you sure?' }  %></td>
-            <% end %>
+          <td><%= user.organization_memberships.find_by(organization_id: @organization).role %></td>
+          <% unless user.organization_memberships.find_by(organization_id: @organization).role == "Admin" %>
+            <%= link_to "Remove", organization_membership_path(user_id: user.id, organization_id: @organization), 
+              method: :delete, data: { confirm: 'Are you sure?' } %>
           <% end %>
         </tr>
       <% end %>

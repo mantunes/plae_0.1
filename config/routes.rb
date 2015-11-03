@@ -6,14 +6,14 @@ Rails.application.routes.draw do
     post :add_to_project, on: :member
   end
   resources :projects
-  resources :project_memberships do 
+  resources :project_memberships do
+    post :leave, on: :member
+  end
+  resources :organizations
+  resources :organization_memberships do
     post :leave, on: :member
   end
 
-  resources :organizations do
-      get :invite, on: :member
-      post :email_invitation, on: :member
-  end
   root to: 'time_entries#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

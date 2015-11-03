@@ -11,7 +11,7 @@
       <%= select_tag :role, options_for_select(@roles), {class: "form-control"} %>
     </div>
     <div class="actions">
-      <%= link_to "Cancel", projects_path, class: 'button left' %>
+      <%= link_to "Cancel", project_path(@project), class: 'button left' %>
       <%= submit_tag "Confirm", class: 'button right' %> 
    </div>
   <% end %>
