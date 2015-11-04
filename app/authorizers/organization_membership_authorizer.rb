@@ -3,7 +3,7 @@ class OrganizationMembershipAuthorizer < ApplicationAuthorizer
     user_in_organization = OrganizationMembership.find_by(user_id: user.id,
                                                           organization_id: resource.organization_id)
     return false unless user_in_organization
-    role = user_in_organization.role 
+    role = user_in_organization.role
     return true if role == 'AdminOwner' || role == 'Admin'
   end
 
@@ -11,7 +11,7 @@ class OrganizationMembershipAuthorizer < ApplicationAuthorizer
     user_in_organization = OrganizationMembership.find_by(user_id: user.id,
                                                           organization_id: resource.organization_id)
     return false unless user_in_organization
-    role = user_in_organization.role 
+    role = user_in_organization.role
     return true if role == 'AdminOwner' || role == 'Admin'
   end
 
@@ -19,7 +19,7 @@ class OrganizationMembershipAuthorizer < ApplicationAuthorizer
     user_in_organization = OrganizationMembership.find_by(user_id: user.id,
                                                           organization_id: resource.organization_id)
     return false unless user_in_organization
-    role = user_in_organization.role 
+    role = user_in_organization.role
     return true if role == 'AdminOwner' || role == 'Admin'
   end
 
@@ -27,7 +27,7 @@ class OrganizationMembershipAuthorizer < ApplicationAuthorizer
     user_in_organization = OrganizationMembership.find_by(user_id: user.id,
                                                           organization_id: resource.organization_id)
     return false unless user_in_organization
-    role = user_in_organization.role 
+    role = user_in_organization.role
     return true unless role == 'AdminOwner'
   end
 end

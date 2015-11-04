@@ -53,7 +53,7 @@
           <td><%= "#{user.first_name} #{user.last_name}" %></td>
           <td><%= user.project_memberships.find_by(project_id: @project).role %></td>
       <% if current_user.can_delete? @project.project_memberships.build  %>
-            <% unless user.project_memberships.find_by(project_id: @project).role == "Owner" %>
+            <% unless user.can_delete?(@project) || current_user.id == user.id %>
               <td> <%= link_to "Remove", project_membership_path(user_id: user.id, project_id: @project), 
                       method: :delete, data: { confirm: 'Are you sure?' }  %></td>
             <% end %>

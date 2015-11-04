@@ -25,11 +25,11 @@ Authority.configure do |config|
     :show    => 'read',
     :new     => 'create',
     :create  => 'create',
-    :edit    => 'edit',
+    :edit    => 'update',
     :update  => 'update',
     :destroy => 'delete',
-    :manage => 'manage',
-    :append => 'append'
+    :leave => 'leave',
+    :append => 'append',
   }
 
   # ABILITIES
@@ -47,8 +47,8 @@ Authority.configure do |config|
     :edit => 'editable',
     :update => 'updatable',
     :delete => 'deletable',
-    :manage => 'manageable',
-    :append => 'appendable'
+    :leave => 'leavable',
+    :append => 'appendable',
   }
 
   # LOGGER
