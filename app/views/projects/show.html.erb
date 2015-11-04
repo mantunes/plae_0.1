@@ -26,9 +26,11 @@
       </table>
     </div>
     <div class="col-lg-6">
-      <% if owner? @project %>
+      <% if current_user.can_create?(@project.project_memberships.build) %>
         <%= link_to "Invite Members", new_project_membership_path(project_id: @project) %> <br>
         <%= link_to "Manage Members", edit_project_membership_path(project_id: @project), method: :get %> <br>
+      <% end %>
+      <% if current_user.can_delete? @project %>
         <%= link_to "Add to Organization", append_project_path, method: :get %>
       <% elsif already_in_project? @project %>
         <%= button_to "Leave Project", leave_project_membership_path(project_id: @project), data: { confirm: 'Are you sure?'} %>
@@ -50,7 +52,7 @@
         <tr>
           <td><%= "#{user.first_name} #{user.last_name}" %></td>
           <td><%= user.project_memberships.find_by(project_id: @project).role %></td>
-          <% if owner? @project %>
+      <% if current_user.can_create? @project %>
             <% unless user.project_memberships.find_by(project_id: @project).role == "Owner" %>
               <td> <%= link_to "Remove", project_membership_path(user_id: user.id, project_id: @project), 
                       method: :delete, data: { confirm: 'Are you sure?' }  %></td>

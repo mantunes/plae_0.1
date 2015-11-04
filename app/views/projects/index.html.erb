@@ -19,7 +19,7 @@
             <td><%= time_ago_in_words(project.total_duration.seconds.ago, include_seconds: true) unless project.total_duration.blank? %></td>
             <td><%= project.created_at.strftime("%H:%M:%S %d/%m/%y") %></td>
             <td><%= project.project_memberships.find_by(user_id: current_user.id).role %></td>
-            <% if owner? project %>
+            <% if current_user.can_delete? project %>
               <td><%= link_to "Edit", edit_project_path(project) %></td>
               <td><%= link_to 'Delete', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
             <% end %>

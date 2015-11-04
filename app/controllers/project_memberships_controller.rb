@@ -2,7 +2,10 @@ class ProjectMembershipsController < ApplicationController
   before_action :set_project, only: [:new, :create, :edit, :update,
                                      :destroy, :leave]
   before_action :set_roles, only: [:new, :create, :edit, :update]
+  before_action :set_project_membership, except: :index
   before_action :authenticate_user!
+  authority_actions update: 'edit'
+
 
   rescue_from ActiveRecord::RecordNotFound do
     flash[:notice] = 'The object you tried to access does not exist'
@@ -14,10 +17,11 @@ class ProjectMembershipsController < ApplicationController
   end
 
   def new
-    authorize_action_for(@project)
+    authorize_action_for(@project_membership)
   end
 
   def create
+    authorize_action_for(@project_membership)
     user = User.find_by(email: params[:email].downcase)
     if user
       if ProjectMembership.find_by(user_id: user.id, project_id: @project.id)
@@ -37,12 +41,13 @@ class ProjectMembershipsController < ApplicationController
   end
 
   def edit
-    authorize_action_for(@project)
+    authorize_action_for(@project_membership)
     id = @project.project_memberships.find_by(role: 'Owner').user_id
     @users = @project.users.reject { |u| u.id == id }
   end
 
   def update
+    authorize_action_for(@project_membership)
     user = User.find_by(id: params[:user][:id])
     set_user_role(user, @project, params[:role])
     flash[:notice] = "#{user.first_name} #{user.last_name}'s access level
@@ -51,6 +56,7 @@ class ProjectMembershipsController < ApplicationController
   end
 
   def destroy
+    authorize_action_for(@project_membership)
     user = User.find_by(id: params[:user_id])
     delete_user_entries(user, @project)
     flash[:notice] = "#{user.first_name} #{user.last_name}'s has
@@ -59,6 +65,7 @@ class ProjectMembershipsController < ApplicationController
   end
 
   def leave
+    authorize_action_for(@project_membership)
     delete_user_entries(current_user, @project)
     flash[:notice] = "You left #{@project.name}"
     redirect_to projects_path
@@ -84,5 +91,9 @@ class ProjectMembershipsController < ApplicationController
     project.users.delete(user)
     member_entries = project.time_entries.where(user_id: user.id)
     project.time_entries.delete(member_entries)
+  end
+
+  def set_project_membership
+    @project_membership = @project.project_memberships.build
   end
 end

@@ -3,6 +3,7 @@ class OrganizationMembershipsController < ApplicationController
                                           :destroy, :leave]
   before_action :set_roles, only: [:new, :create, :edit, :update]
   before_action :authenticate_user!
+  authority_actions edit: 'create'
 
 
   rescue_from ActiveRecord::RecordNotFound do

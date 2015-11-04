@@ -2,6 +2,10 @@ class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy,
                                      :join, :append, :add_to_organization]
   before_action :authenticate_user!
+  authority_actions update: 'edit'
+  authority_actions append: 'delete'
+  authority_actions add_to_organization: 'delete'
+  authority_actions join: 'read'
 
   rescue_from ActiveRecord::RecordNotFound do
     flash[:notice] = 'The object you tried to access does not exist'
@@ -40,6 +44,7 @@ class ProjectsController < ApplicationController
   end
 
   def update
+    authorize_action_for(@project)
     if @project.update_attributes(project_params)
       flash[:notice] = 'Project updated successfully'
       redirect_to @project
@@ -50,6 +55,7 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
+    authorize_action_for(@project)
     @project.destroy
     current_user.projects.delete(@project)
     redirect_to projects_path
@@ -61,6 +67,7 @@ class ProjectsController < ApplicationController
   end
 
   def add_to_organization
+    authorize_action_for(@project)
     organization = Organization.find_by(id: params[:organization][:organization_id])
     if organization
       organization.projects << @project
@@ -74,6 +81,7 @@ class ProjectsController < ApplicationController
   end
 
   def join
+    authorize_action_for(@project)
     membership = ProjectMembership.new(user_id: current_user.id,
                                        project_id: @project.id, role: 'Member')
     if membership.save
