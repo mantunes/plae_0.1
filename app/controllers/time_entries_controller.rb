@@ -1,7 +1,7 @@
 class TimeEntriesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_time_entry, only: [:show, :edit, :update, :destroy,
                                         :append, :add_to_project]
-  before_action :authenticate_user!
 
   rescue_from ActiveRecord::RecordNotFound do
     flash[:notice] = 'The object you tried to access does not exist'

@@ -22,11 +22,11 @@
       </table>
     </div>
     <div class="col-lg-4">
-      <% if admin? @organization %>
+      <% if current_user.can_create? @organization.organization_memberships.build %>
         <%= link_to "Invite Members", new_organization_membership_path(organization_id: @organization) %> <br>
         <%= link_to "Manage Members", edit_organization_membership_path(organization_id: @organization), method: :get %>
       <% end %>
-      <% unless admin? @organization %>
+      <% if current_user.can_leave? @organization.organization_memberships.build %>
         <%= button_to "Leave organization", leave_organization_membership_path(organization_id: @organization), data: { confirm: 'Are you sure?' } %>
       <% end %>
     </div>
@@ -46,9 +46,11 @@
         <tr>
           <td><%= "#{user.first_name} #{user.last_name}" %></td>
           <td><%= user.organization_memberships.find_by(organization_id: @organization).role %></td>
-          <% unless user.organization_memberships.find_by(organization_id: @organization).role == "Admin" %>
-            <td><%= link_to "Remove", organization_membership_path(user_id: user.id, organization_id: @organization), 
-              method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% if current_user.can_delete? @organization.organization_memberships.build  %>
+            <% unless user.organization_memberships.find_by(organization_id: @organization).role == "AdminOwner" %>
+              <td><%= link_to "Remove", organization_membership_path(user_id: user.id, organization_id: @organization), 
+                method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% end %>
           <% end %>
         </tr>
       <% end %>

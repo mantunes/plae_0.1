@@ -1,9 +1,11 @@
 class OrganizationMembershipsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_organization, only: [:new, :create, :edit, :update,
                                           :destroy, :leave]
   before_action :set_roles, only: [:new, :create, :edit, :update]
-  before_action :authenticate_user!
-  authority_actions edit: 'create'
+  before_action :set_organization_membership, except: :index
+  authority_actions create: 'new'
+  authority_actions update: 'edit'
 
 
   rescue_from ActiveRecord::RecordNotFound do
@@ -16,7 +18,7 @@ class OrganizationMembershipsController < ApplicationController
   end
 
   def new
-    authorize_action_for(@organization)
+    authorize_action_for(@organization_membership)
   end
 
   def create
@@ -39,8 +41,8 @@ class OrganizationMembershipsController < ApplicationController
   end
 
   def edit
-    authorize_action_for(@organization)
-    id = @organization.organization_memberships.find_by(role: 'Admin').user_id
+    authorize_action_for(@organization_membership)
+    id = @organization.organization_memberships.find_by(role: 'AdminOwner').user_id
     @users = @organization.users.reject { |u| u.id == id }
   end
 
@@ -53,6 +55,7 @@ class OrganizationMembershipsController < ApplicationController
   end
 
   def destroy
+    authorize_action_for(@organization_membership)
     user = User.find_by(id: params[:user_id])
     delete_user_organization(user, @organization)
     flash[:notice] = "#{user.first_name} #{user.last_name}'s has
@@ -86,4 +89,7 @@ class OrganizationMembershipsController < ApplicationController
     organization.users.delete(user)
   end
 
+  def set_organization_membership
+    @organization_membership = @organization.organization_memberships.build
+  end
 end

@@ -1,9 +1,10 @@
 class ProjectMembershipsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_project, only: [:new, :create, :edit, :update,
                                      :destroy, :leave]
   before_action :set_roles, only: [:new, :create, :edit, :update]
   before_action :set_project_membership, except: :index
-  before_action :authenticate_user!
+  authority_actions create: 'new'
   authority_actions update: 'edit'
 
 
@@ -21,7 +22,6 @@ class ProjectMembershipsController < ApplicationController
   end
 
   def create
-    authorize_action_for(@project_membership)
     user = User.find_by(email: params[:email].downcase)
     if user
       if ProjectMembership.find_by(user_id: user.id, project_id: @project.id)

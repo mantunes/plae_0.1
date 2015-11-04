@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_project, only: [:show, :edit, :update, :destroy,
                                      :join, :append, :add_to_organization]
-  before_action :authenticate_user!
   authority_actions update: 'edit'
   authority_actions append: 'delete'
   authority_actions add_to_organization: 'delete'

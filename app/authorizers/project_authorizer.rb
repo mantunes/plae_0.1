@@ -6,7 +6,7 @@ class ProjectAuthorizer < ApplicationAuthorizer
     return true if user.organizations.include?(organization)
   end
 
-  def editable_by?(user)
+  def updatable_by?(user)
     user_in_project = resource.project_memberships.find_by(user_id: user.id)
     return false unless user_in_project
     user_in_project.role == 'Owner'

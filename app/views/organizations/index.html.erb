@@ -19,7 +19,7 @@
             <td><%= organization.website %></td>
             <td><%= organization.organization_memberships.find_by(user_id: current_user.id).role %></td>
             <td><%= organization.projects.count %></td>
-            <% if admin? organization %>
+            <% if current_user.can_delete? organization %>
               <td><%= link_to "Edit", edit_organization_path(organization) %></td>
               <td><%= link_to 'Delete', organization, method: :delete, 
                 data: { confirm: 'Are you sure?' } %></td>
