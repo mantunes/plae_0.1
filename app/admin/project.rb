@@ -1,17 +1,69 @@
 ActiveAdmin.register Project do
+  permit_params :name, :total_duration, :organization_id,
+                project_memberships_attributes: [:id, :user_id, :role, :_destroy]
 
-# See permitted parameters documentation:
-# https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-#
-# permit_params :list, :of, :attributes, :on, :model
-#
-# or
-#
-# permit_params do
-#   permitted = [:permitted, :attributes]
-#   permitted << :other if resource.something?
-#   permitted
-# end
+  index do
+    selectable_column
+    id_column
+    column :name
+    column 'Duration', :total_duration
+    column :organization
+    column :created_at
+    column :updated_at
+    actions
+  end
 
+  filter :name
+  filter :total_duration
+  filter :users
+  filter :organization
+  filter :created_at
+  filter :updated_at
+
+  form do |f|
+    f.inputs 'Project Details' do
+      f.input :name
+      f.input :total_duration
+      f.input :organization
+      f.has_many :project_memberships, heading: "Project Members", allow_destroy: true do |p|
+        p.input :user
+        p.input :role, as: :select, collection: Project.roles.unshift('Owner')
+      end
+    end
+    f.actions
+  end
+
+  sidebar "Project Information", only: [:show, :edit] do
+      attributes_table do
+      row :name
+      row :total_duration
+      row :organization
+      row :created_at
+      row :updated_at
+    end
+  end
+
+  show do
+
+    panel 'Users in Project' do
+      table_for project.project_memberships do
+        column 'id' do |member|
+          link_to member.user.id, admin_user_path(member.user.id)
+        end
+        column 'name' do |member|
+          "#{member.user.first_name} #{member.user.last_name}"
+        end
+        column 'join date' do |member|
+          member.created_at
+        end
+        column 'updated at' do |member|
+          member.updated_at
+        end
+        column 'Role' do |member|
+          member.role
+        end
+      end
+    end
+  end
 
 end

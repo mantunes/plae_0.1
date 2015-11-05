@@ -4,6 +4,7 @@ class Project < ActiveRecord::Base
   has_many :time_entries
   has_many :project_memberships, dependent: :destroy
   has_many :users, through: :project_memberships
+  accepts_nested_attributes_for :project_memberships, allow_destroy: true
 
   validates :name, presence: true
 

@@ -1,4 +1,6 @@
 ActiveAdmin.setup do |config|
+  config.display_name_methods = [:display_name, :full_name, :name, :username,
+                                 :first_name, :login, :title, :email, :to_s]
   # == Site Title
   #
   # Set the title that is displayed on the main layout
