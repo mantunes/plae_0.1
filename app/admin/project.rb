@@ -25,7 +25,7 @@ ActiveAdmin.register Project do
       f.input :name
       f.input :total_duration
       f.input :organization
-      f.has_many :project_memberships, heading: "Project Members", allow_destroy: true do |p|
+      f.has_many :project_memberships, heading: 'Project Members', allow_destroy: true do |p|
         p.input :user
         p.input :role, as: :select, collection: Project.roles.unshift('Owner')
       end
@@ -33,8 +33,8 @@ ActiveAdmin.register Project do
     f.actions
   end
 
-  sidebar "Project Information", only: [:show, :edit] do
-      attributes_table do
+  sidebar 'Project Information', only: [:show, :edit] do
+    attributes_table do
       row :name
       row :total_duration
       row :organization
@@ -53,15 +53,9 @@ ActiveAdmin.register Project do
         column 'name' do |member|
           "#{member.user.first_name} #{member.user.last_name}"
         end
-        column 'join date' do |member|
-          member.created_at
-        end
-        column 'updated at' do |member|
-          member.updated_at
-        end
-        column 'Role' do |member|
-          member.role
-        end
+        column 'join date', :created_at
+        column 'updated at', :updated_at
+        column 'Role', :role
       end
     end
   end
