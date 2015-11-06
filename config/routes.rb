@@ -1,8 +1,24 @@
 Rails.application.routes.draw do
-  root to: 'users#index'
-  devise_for :users
-  resources :users, only: [:index,:show]
 
+  devise_for :users
+  resources :time_entries do
+    get :append, on: :member
+    post :add_to_project, on: :member
+  end
+  resources :projects do
+    get :append, on: :member
+    post :add_to_organization, on: :member
+    post :join, on: :member
+  end
+  resources :project_memberships do
+    post :leave, on: :member
+  end
+  resources :organizations
+  resources :organization_memberships do
+    post :leave, on: :member
+  end
+
+  root to: 'time_entries#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

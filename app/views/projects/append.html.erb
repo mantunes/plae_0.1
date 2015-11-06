@@ -1,0 +1,21 @@
+<div>
+  <h2>Add Project to Organization</h2>
+  <br>
+  <% if @organizations.empty? %>
+    <h4> You're not in any organization </h4>
+  <% else %>
+    <div class="authform">
+      <%= form_tag add_to_organization_project_path do %>
+        <div class="form-group">
+          <%= label_tag(:organization, "Organization:") %><br>
+          <%= collection_select(:organization, :organization_id, @organizations, :id, 
+            :name, {prompt: "(none)" }, {class: "form-control"}) %>
+        </div>
+        <div class="actions">
+          <%= link_to "Cancel", project_path, class: 'button left' %>
+          <%= submit_tag "Confirm", class: 'button right' %> 
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,33 @@
+
+<div>
+  <h2>Time Entry Details</h2>
+
+  <table summary="fields">
+    <tr>
+      <th>Name: </th>
+      <td><%= @time_entry.name %></td>
+    </tr>
+    <tr>
+      <th>Start Time: </th>
+      <td><%= @time_entry.start_time.strftime("%H:%M:%S %d/%m/%y") %></td>
+    </tr>
+    <tr>
+      <th>End Time: </th>
+      <td><%= @time_entry.end_time.strftime("%H:%M:%S %d/%m/%y") %></td>
+    </tr>
+    <tr>
+      <th>Total Time: </th>
+      <td><%= time_ago_in_words(@time_entry.total_time.seconds.ago, include_seconds: true) %></td>
+    </tr>
+    <tr>
+      <th>Created at: </th>
+      <td><%= @time_entry.created_at.strftime("%H:%M:%S %d/%m/%y") %></td>
+    </tr>
+    <tr>
+      <th>Updated at: </th>
+      <td><%= @time_entry.updated_at.strftime("%H:%M:%S %d/%m/%y") %></td>
+    </tr>
+  </table>
+  <br>
+  <%= link_to "<< Back to List", time_entries_path  %>
+</div>

@@ -1,0 +1,92 @@
+<div>
+  <h2>Project Details</h2>
+  <div class="row">
+    <div class="col-lg-6">
+      <table summary="fields">
+        <tr>
+          <th>Name: </th>
+          <td><%= @project.name %></td>
+        </tr>
+        <tr>
+          <th>Total Duration: </th>
+          <td><%= time_ago_in_words(@project.total_duration.seconds.ago, include_seconds: true)if @project.total_duration %></td>
+        </tr>
+        <tr>
+          <th>Created at: </th>
+          <td><%= @project.created_at.strftime("%H:%M:%S %d/%m/%y") %></td>
+        </tr>
+        <tr>
+          <th>Updated at: </th>
+          <td><%= @project.updated_at.strftime("%H:%M:%S %d/%m/%y") %></td>
+        </tr>
+        <tr>
+          <th>Organization: </th>
+          <td><%= @project.organization.try(:name) %></td>
+        </tr>
+      </table>
+    </div>
+    <div class="col-lg-6">
+      <% if current_user.can_create? @project.project_memberships.build %>
+        <%= link_to "Invite Members", new_project_membership_path(project_id: @project) %> <br>
+        <%= link_to "Manage Members", edit_project_membership_path(project_id: @project), method: :get %> <br>
+      <% end %>
+      <% if current_user.can_append? @project.project_memberships.build  %>
+        <%= link_to "Add to Organization", append_project_path, method: :get %>
+      <% elsif already_in_project? @project %>
+        <%= button_to "Leave Project", leave_project_membership_path(project_id: @project), data: { confirm: 'Are you sure?'} %>
+      <% else %>
+        <%= link_to "Join Project", join_project_path(project_id: @project), method: :post %>
+      <% end %>
+    </div>
+  </div>
+
+  <h3> Users </h3>
+
+  <table summary="User list" class="table">
+    <tr class="header">
+      <th>Name</th>
+      <th>Access Level</th>
+    </tr>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= "#{user.first_name} #{user.last_name}" %></td>
+          <td><%= user.project_memberships.find_by(project_id: @project).role %></td>
+      <% if current_user.can_delete? @project.project_memberships.build  %>
+            <% unless user.can_delete?(@project) || current_user.id == user.id %>
+              <td> <%= link_to "Remove", project_membership_path(user_id: user.id, project_id: @project), 
+                      method: :delete, data: { confirm: 'Are you sure?' }  %></td>
+            <% end %>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <br>
+
+  <%unless @time_entries.empty? %>
+    <h3> Time Entries </h3>
+    <table summary="TimeEntry list" class="table">
+      <tr class="header">
+        <th>Time Entry Name</th>
+        <th>User</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Total Time</th>
+      </tr>
+      <tbody>
+        <% @time_entries.each do |time_entry| %>
+          <tr>
+            <td><%= time_entry.name %></td>
+            <td><%= "#{time_entry.user.first_name} #{time_entry.user.last_name}" %></td>
+            <td><%= time_entry.start_time.strftime("%H:%M:%S %d/%m/%y") %></td>
+            <td><%= time_entry.end_time.strftime("%H:%M:%S %d/%m/%y") %></td>
+            <td><%= time_ago_in_words(time_entry.total_time.seconds.ago, include_seconds: true) %></td>
+          </tr>
+        <% end %>
+      <tbody>
+    </table>
+  <% end %>
+  </br>
+  <%= link_to "<< Back to List", projects_path  %>
+</div>
