@@ -9,7 +9,10 @@ ActiveAdmin.register_page 'Dashboard' do
       column do
         panel 'Recent Users' do
           table_for User.order('id desc').limit(10).each do
-            column(:email) { |user| link_to(user.email, admin_user_path(user)) }
+          column 'name' do |user|
+            "#{user.first_name} #{user.last_name}"
+          end            
+          column(:email) { |user| link_to(user.email, admin_user_path(user)) }
           end
         end
       end

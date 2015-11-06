@@ -1,7 +1,7 @@
 ActiveAdmin.register Organization do
   permit_params :name, :description, :website,
-                organization_memberships_attributes: [:id, :project_id,
-                                                      :user_id, :role, :_destroy]
+                organization_memberships_attributes: [:id, :project_id, :user_id,
+                                                      :role, :_destroy]
 
   index do
     selectable_column
