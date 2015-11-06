@@ -4,7 +4,6 @@ ActiveAdmin.register_page 'Dashboard' do
 
   content title: proc { I18n.t('active_admin.dashboard') } do
 
-
     columns do
 
       column do
@@ -28,6 +27,7 @@ ActiveAdmin.register_page 'Dashboard' do
     end
 
     columns do
+
       column do
         panel 'Recent Projects' do
           table_for Project.last(5).map do
