@@ -58,6 +58,18 @@ ActiveAdmin.register Project do
         column 'Role', :role
       end
     end
-  end
 
+    panel 'Time Entries' do
+      table_for project.time_entries do
+        column 'id' do |time_entry|
+          link_to time_entry.id, admin_time_entry_path(time_entry.id)
+        end
+        column :name
+        column :start_time
+        column :end_time
+        column :total_time
+        column :user
+      end
+    end
+  end
 end
