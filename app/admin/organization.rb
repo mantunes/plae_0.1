@@ -26,7 +26,7 @@ ActiveAdmin.register Organization do
       f.input :description
       f.input :website
       f.has_many :organization_memberships, heading: 'Organization Members',
-                 allow_destroy: true do |p|
+                                            allow_destroy: true do |p|
         p.input :user
         p.input :role, as: :select, collection: Organization.roles.unshift('AdminOwner')
       end

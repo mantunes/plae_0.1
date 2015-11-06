@@ -9,18 +9,18 @@ ActiveAdmin.register_page 'Dashboard' do
 
       column do
         panel 'Recent Users' do
-          table_for User.order('id desc').limit(10).each do |user|
-            column(:email)    {|user| link_to(user.email, admin_user_path(user)) }
+          table_for User.order('id desc').limit(10).each do
+            column(:email) { |user| link_to(user.email, admin_user_path(user)) }
           end
         end
       end
 
       column do
         panel 'Recent Time Entries' do
-          table_for TimeEntry.order('id desc').limit(10).each do |entry|
-            column(:name)    {|entry| link_to(entry.name, admin_time_entry_path(entry)) }
-            column(:user)    {|entry| link_to(entry.user.email, admin_user_path(entry.user)) }
-            column(:total_time)    {|entry| entry.total_time }
+          table_for TimeEntry.order('id desc').limit(10).each do
+            column(:name) { |entry| link_to(entry.name, admin_time_entry_path(entry)) }
+            column(:user) { |entry| link_to(entry.user.email, admin_user_path(entry.user)) }
+            column 'Total time', &:total_time
           end
         end
       end
@@ -30,9 +30,11 @@ ActiveAdmin.register_page 'Dashboard' do
     columns do
       column do
         panel 'Recent Projects' do
-          table_for Project.last(5).map do |project|
-            column(:name) { |project| link_to(project.name, admin_project_path(project)) }
-            column(:duration) { |project| project.total_duration }
+          table_for Project.last(5).map do
+            column(:name) do |project|
+              link_to(project.name, admin_project_path(project))
+            end
+            column 'Duration', &:total_duration
             column(:users) { |project| project.project_memberships.count }
           end
         end
@@ -40,10 +42,12 @@ ActiveAdmin.register_page 'Dashboard' do
 
       column do
         panel 'Recent Organizations' do
-          table_for Organization.last(5).map do |organization|
-            column(:name) {|organization| link_to(organization.name, admin_organization_path(organization)) }
-            column(:website) {|organization| organization.website }
-            column(:users) {|organization| organization.organization_memberships.count }
+          table_for Organization.order('id desc').limit(10).each do
+            column(:name) do |organization|
+              link_to(organization.name, admin_organization_path(organization))
+            end
+            column 'Website', &:website
+            column(:users) { |organization| organization.organization_memberships.count }
           end
         end
       end
