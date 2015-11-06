@@ -3,31 +3,51 @@ ActiveAdmin.register_page 'Dashboard' do
   menu priority: 1, label: proc { I18n.t('active_admin.dashboard') }
 
   content title: proc { I18n.t('active_admin.dashboard') } do
-    div class: 'blank_slate_container', id: 'dashboard_default_message' do
-      span class: 'blank_slate' do
-        span I18n.t('active_admin.dashboard_welcome.welcome')
-        small I18n.t('active_admin.dashboard_welcome.call_to_action')
+
+
+    columns do
+
+      column do
+        panel 'Recent Users' do
+          table_for User.order('id desc').limit(10).each do |user|
+            column(:email)    {|user| link_to(user.email, admin_user_path(user)) }
+          end
+        end
+      end
+
+      column do
+        panel 'Recent Time Entries' do
+          table_for TimeEntry.order('id desc').limit(10).each do |entry|
+            column(:name)    {|entry| link_to(entry.name, admin_time_entry_path(entry)) }
+            column(:user)    {|entry| link_to(entry.user.email, admin_user_path(entry.user)) }
+            column(:total_time)    {|entry| entry.total_time }
+          end
+        end
+      end
+
+    end
+
+    columns do
+      column do
+        panel 'Recent Projects' do
+          table_for Project.last(5).map do |project|
+            column(:name) { |project| link_to(project.name, admin_project_path(project)) }
+            column(:duration) { |project| project.total_duration }
+            column(:users) { |project| project.project_memberships.count }
+          end
+        end
+      end
+
+      column do
+        panel 'Recent Organizations' do
+          table_for Organization.last(5).map do |organization|
+            column(:name) {|organization| link_to(organization.name, admin_organization_path(organization)) }
+            column(:website) {|organization| organization.website }
+            column(:users) {|organization| organization.organization_memberships.count }
+          end
+        end
       end
     end
 
-    # Here is an example of a simple dashboard with columns and panels.
-    #
-    # columns do
-    #   column do
-    #     panel 'Recent Posts' do
-    #       ul do
-    #         Post.recent(5).map do |post|
-    #           li link_to(post.title, admin_post_path(post))
-    #         end
-    #       end
-    #     end
-    #   end
-
-    #   column do
-    #     panel 'Info' do
-    #       para 'Welcome to ActiveAdmin.'
-    #     end
-    #   end
-    # end
-  end # content
+  end
 end
