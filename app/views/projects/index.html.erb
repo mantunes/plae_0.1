@@ -30,8 +30,12 @@
       </tbody>
     </table>
     <div class="row">
-      <%= page_entries_info @projects, entry_name: 'Project(s)' %>
+      <div class="col-lg-7">
+      <%= page_entries_info @projects, entry_name: 'Project' %>
+      </div>
+      <div class="col-lg-5">
       <%= paginate @projects %>
+      </div>
     </div>
   <% end %>
   <br>

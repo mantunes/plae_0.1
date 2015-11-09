@@ -29,8 +29,12 @@
       </tbody>
     </table>
     <div class="row">
-      <%= page_entries_info @organizations, entry_name: 'Organization(s)' %>
+      <div class="col-lg-7">
+      <%= page_entries_info @organizations, entry_name: 'Organization' %>
+      </div>
+      <div class="col-lg-5">
       <%= paginate @organizations %>
+      </div>
     </div>
   <% end %>
 <%= link_to "Add New Organization", new_organization_path %>
