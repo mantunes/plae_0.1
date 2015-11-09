@@ -9,7 +9,7 @@ class TimeEntriesController < ApplicationController
   end
 
   def index
-    @time_entries = current_user.time_entries.order(updated_at: :desc)
+    @time_entries = current_user.time_entries.order(:updated_at).page params[:page]
   end
 
   def show

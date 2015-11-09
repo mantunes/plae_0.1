@@ -28,8 +28,13 @@
         <% end %>
       <tbody>
     </table>
+    <div class="row">
+      <%= page_entries_info @time_entries, entry_name: 'Time Entries' %>
+      <%= paginate @time_entries %>
+    </div>
   <% end %>
   <div class="actions">
+    <br>
     <%= link_to "Add New Time Entry", new_time_entry_path %>
   </div>
 </div>

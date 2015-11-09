@@ -11,6 +11,8 @@ class TimeEntry < ActiveRecord::Base
   after_save :update_project
   after_destroy :update_project
 
+  paginates_per 10
+
   private
 
   def end_time_is_after_start_time
