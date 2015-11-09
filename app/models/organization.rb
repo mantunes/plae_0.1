@@ -7,6 +7,8 @@ class Organization < ActiveRecord::Base
 
   validates :name, presence: true
 
+  paginates_per 5
+
   def self.roles
     [:Admin, :Normal]
   end

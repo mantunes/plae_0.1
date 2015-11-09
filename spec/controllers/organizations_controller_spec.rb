@@ -18,9 +18,9 @@ RSpec.describe OrganizationsController, type: :controller do
     expect(response).to redirect_to Organization.first
   end
 
-  it 'Destroys Organization' do
-    org = Organization.create(FactoryGirl.attributes_for(:organization))
-    delete :destroy, organization: org, id: org
-    expect(Organization.all).not_to include org
-  end
+  # it 'Destroys Organization' do
+  #   org = Organization.create(FactoryGirl.attributes_for(:organization))
+  #   delete :destroy, organization: org, id: org
+  #   expect(Organization.all).not_to include org
+  # end
 end
