@@ -1,4 +1,5 @@
 Rails.application.configure do
+  config.assets.precompile += ['active_admin.css']
   # Settings specified here will take precedence over those in config/application.rb.
   config.action_mailer.default_url_options = { host: 'https://rocky-wave-8276.herokuapp.com' }
   config.action_mailer.delivery_method = :smtp
