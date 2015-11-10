@@ -44,7 +44,7 @@ RSpec.describe ProjectsController, type: :controller do
       expect(@project).not_to be_readable_by(@user)
     end
 
-    it 'let owner edit project name' do
+    it 'let owners edit project name' do
       expect(@project).to be_updatable_by(@user_owner)
     end
 
@@ -59,7 +59,7 @@ RSpec.describe ProjectsController, type: :controller do
     end
 
     it "doesn't let managers / members destroy project" do
-      expect(@project).not_to be_updatable_by(@user_manager)
+      expect(@project).not_to be_deletable_by(@user_manager)
       expect(@project).not_to be_deletable_by(@user_member)
       expect(@project).not_to be_deletable_by(@user)
     end

@@ -47,7 +47,6 @@ class ProjectMembershipsController < ApplicationController
   end
 
   def update
-    authorize_action_for(@project_membership)
     user = User.find_by(id: params[:user][:id])
     set_user_role(user, @project, params[:role])
     flash[:notice] = "#{user.first_name} #{user.last_name}'s access level
