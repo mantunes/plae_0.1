@@ -22,7 +22,8 @@ class ProjectMembershipsController < ApplicationController
   end
 
   def create
-    user = User.find_by(email: params[:email].downcase)
+    email = params[:email].downcase
+    user = User.find_by(email: email)
     if user
       if ProjectMembership.find_by(user_id: user.id, project_id: @project.id)
         flash[:notice] = 'User already in this project'
@@ -35,8 +36,9 @@ class ProjectMembershipsController < ApplicationController
         redirect_to project_path(@project.id)
       end
     else
-      flash[:notice] = "Couldn't find user with email #{params[:email]}"
-      render('new')
+      #User.invite!(email: email, first_name: "teste", last_name: "new")
+      #flash[:notice] = "Invitation sent to #{email}"
+      redirect_to new_user_invitation_path(project_id: @project)
     end
   end
 

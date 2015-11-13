@@ -16,6 +16,7 @@ class ApplicationController < ActionController::Base
       u.permit(:first_name, :last_name, :email, :password,
                :password_confirmation, :current_password)
     end
+    devise_parameter_sanitizer.for(:invite).concat [:first_name, :last_name]
   end
 
   def update_resource(resource, params)
