@@ -9,7 +9,7 @@ class OrganizationsController < ApplicationController
   end
 
   def index
-    @organizations = current_user.organizations
+    @organizations = current_user.organizations.order(updated_at: :desc).page(params[:page])
   end
 
   def show

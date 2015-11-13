@@ -29,6 +29,15 @@
         <% end %>
       </tbody>
     </table>
+    <div class="row">
+      <div class="col-lg-7">
+      <%= page_entries_info @projects, entry_name: 'Project' %>
+      </div>
+      <div class="col-lg-5">
+      <%= paginate @projects %>
+      </div>
+    </div>
   <% end %>
+  <br>
   <%= link_to "Add New Project", new_project_path %>
 </div>

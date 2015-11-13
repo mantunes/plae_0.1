@@ -7,7 +7,7 @@ class TimeEntryAuthorizer < ApplicationAuthorizer
     resource.user_id == user.id
   end
 
-  def appendable_by?(user)
+  def deletable_by?(user)
     resource.user_id == user.id
   end
 end

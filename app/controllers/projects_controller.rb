@@ -13,7 +13,7 @@ class ProjectsController < ApplicationController
   end
 
   def index
-    @projects = current_user.projects
+    @projects = current_user.projects.order(updated_at: :desc).page(params[:page])
   end
 
   def show
@@ -44,7 +44,6 @@ class ProjectsController < ApplicationController
   end
 
   def update
-    authorize_action_for(@project)
     if @project.update_attributes(project_params)
       flash[:notice] = 'Project updated successfully'
       redirect_to @project

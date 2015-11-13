@@ -265,6 +265,7 @@ DEPENDENCIES
   faker
   jbuilder (~> 2.0)
   jquery-rails
+  kaminari
   letter_opener
   pg
   rails (= 4.2.0)
