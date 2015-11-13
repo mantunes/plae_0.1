@@ -10,7 +10,7 @@ gem 'bootstrap-sass'
 gem 'rails_12factor', group: :production
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
-
+gem 'activeadmin', github: 'activeadmin'
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
