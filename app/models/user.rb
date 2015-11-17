@@ -24,4 +24,5 @@ class User < ActiveRecord::Base
   def display_name
     "#{id} - #{first_name} #{last_name}"
   end
+
 end

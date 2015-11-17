@@ -35,8 +35,7 @@ class OrganizationMembershipsController < ApplicationController
         redirect_to organization_path(@organization.id)
       end
     else
-      flash[:notice] = "Couldn't find user with email #{params[:email]}"
-      render('new')
+      redirect_to new_user_invitation_path(organization_id: @organization.id)
     end
   end
 
