@@ -36,8 +36,9 @@ class OrganizationMembershipsController < ApplicationController
         redirect_to organization_path(@organization.id)
       end
     else
-      flash[:notice] = "Invitation sent to #{email}"
-      redirect_to new_user_invitation_path(organization_id: @organization.id)
+      flash[:notice] = 'No registered user by that name. Send him an invite'
+      redirect_to new_user_invitation_path(organization_id: @organization.id,
+                                           email: email)
     end
   end
 

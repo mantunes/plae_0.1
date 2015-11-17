@@ -35,8 +35,8 @@ class ProjectMembershipsController < ApplicationController
         redirect_to project_path(@project.id)
       end
     else
-      flash[:notice] = "Invitation sent to #{email}"
-      redirect_to new_user_invitation_path(project_id: @project.id)
+      flash[:notice] = 'No registered user by that name. Send him an invite'
+      redirect_to new_user_invitation_path(project_id: @project.id, email: email)
     end
   end
 

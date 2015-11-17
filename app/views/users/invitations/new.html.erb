@@ -1,19 +1,36 @@
-<h2><%= t "devise.invitations.new.header" %></h2>
-<%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f| %>
-  <%= devise_error_messages! %>
+<div class="authform">
+  <h2><%= "Invite to #{@project.name} project" if @project %></h2>
+  <h2><%= "Invite to #{@organization.name} organization" if @organization %></h2>
+  <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f| %>
+    <%= devise_error_messages! %>
 
-<% resource.class.invite_key_fields.each do |field| %>
-  <p><%= f.label :Name %> <br />
-  <%= f.text_field :first_name %></p>
+  <% resource.class.invite_key_fields.each do |field| %>
+    <div class="form-group">
+      <p><%= f.label :Email %>
+      <% if params[:email].blank? %>
+        <%= f.text_field field, class: 'form-control' %></p>
+      <% else %>
+        <%= f.label :Email, "#{params[:email]}", class: 'form-control' %></p>
+        <%= f.hidden_field :email, value: params[:email] %>
+      <% end %>
 
-  <%= f.hidden_field :last_name, value: "(Unconfirmed)" %>
+      <p><%= f.label :Name %> <br />
+      <%= f.text_field :first_name, class: 'form-control' %></p>
+    </div>
 
-  <p><%= f.label field %></br>
-  <%= f.text_field field %></p>
-
-  <%= hidden_field_tag :project_id, params[:project_id] %>
-  <%= hidden_field_tag :organization_id, params[:organization_id] %>
-<% end %>
-  <p><%= f.submit t("devise.invitations.new.submit_button") %></p>
-<% end %>
-
+    <%= f.hidden_field :last_name, value: "(Unconfirmed)" %>
+    <%= hidden_field_tag :project_id, params[:project_id] %>
+    <%= hidden_field_tag :organization_id, params[:organization_id] %>
+  <% end %>
+  <div class="actions">
+    <% if @organization %>
+      <%= link_to "Cancel", organization_path(params[:organization_id]), class: 'button left' %>
+    <% elsif @project %>
+      <%= link_to "Cancel", project_path(params[:project_id]), class: 'button left' %>
+    <% else %>
+      <%= link_to "Cancel", root_path, class: 'button left' %>
+    <% end %>
+    <%= f.submit t("devise.invitations.new.submit_button"), class: 'button right' %>
+    <% end %>
+  </div>
+</div>

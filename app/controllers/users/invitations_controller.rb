@@ -1,5 +1,15 @@
 class Users::InvitationsController < Devise::InvitationsController
 
+  def new
+    unless params[:project_id].blank?
+      @project = Project.find(params[:project_id])
+    end
+    unless params[:organization_id].blank?
+      @organization = Organization.find(params[:organization_id])
+    end
+    super
+  end
+
   def create
     super do |_|
       unless params[:project_id].blank?
