@@ -35,7 +35,7 @@ class ProjectMembershipsController < ApplicationController
         redirect_to project_path(@project.id)
       end
     else
-      #flash[:notice] = "Invitation sent to #{email}"
+      flash[:notice] = "Invitation sent to #{email}"
       redirect_to new_user_invitation_path(project_id: @project.id)
     end
   end

@@ -1,15 +1,15 @@
 class Users::InvitationsController < Devise::InvitationsController
 
   def create
-    super do |_| 
+    super do |_|
       unless params[:project_id].blank?
         ProjectMembership.create(user_id: resource.id,
-                                 project_id: params[:project_id], role: "Member")
+                                 project_id: params[:project_id], role: 'Member')
       end
       unless params[:organization_id].blank?
         OrganizationMembership.create(user_id: resource.id,
                                       organization_id: params[:organization_id],
-                                      role: "Normal")
+                                      role: 'Normal')
       end
     end
   end
@@ -24,7 +24,7 @@ class Users::InvitationsController < Devise::InvitationsController
 
   def accept_resource
     resource = resource_class.accept_invitation!(update_resource_params)
-    #Analytics.report('invite.accept', resource.id)
+    # Analytics.report('invite.accept', resource.id)
     resource
   end
 end

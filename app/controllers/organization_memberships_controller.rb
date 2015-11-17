@@ -22,7 +22,8 @@ class OrganizationMembershipsController < ApplicationController
   end
 
   def create
-    user = User.find_by(email: params[:email].downcase)
+    email = params[:email].downcase
+    user = User.find_by(email: email)
     if user
       if OrganizationMembership.find_by(user_id: user.id, organization_id: @organization.id)
         flash[:notice] = 'User already in this organization'
@@ -35,6 +36,7 @@ class OrganizationMembershipsController < ApplicationController
         redirect_to organization_path(@organization.id)
       end
     else
+      flash[:notice] = "Invitation sent to #{email}"
       redirect_to new_user_invitation_path(organization_id: @organization.id)
     end
   end

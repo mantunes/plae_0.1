@@ -3,14 +3,16 @@
   <%= devise_error_messages! %>
 
 <% resource.class.invite_key_fields.each do |field| %>
-  <p> <%= f.label :first_name %> </p>
-  <%= f.text_field :first_name %>
+  <p><%= f.label :Name %> <br />
+  <%= f.text_field :first_name %></p>
 
   <%= f.hidden_field :last_name, value: "(Unconfirmed)" %>
+
+  <p><%= f.label field %></br>
+  <%= f.text_field field %></p>
+
   <%= hidden_field_tag :project_id, params[:project_id] %>
   <%= hidden_field_tag :organization_id, params[:organization_id] %>
-  <p><%= f.label field %><br />
-  <%= f.text_field field %></p>
 <% end %>
   <p><%= f.submit t("devise.invitations.new.submit_button") %></p>
 <% end %>
