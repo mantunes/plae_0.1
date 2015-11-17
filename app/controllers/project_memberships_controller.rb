@@ -7,7 +7,6 @@ class ProjectMembershipsController < ApplicationController
   authority_actions create: 'new'
   authority_actions update: 'edit'
 
-
   rescue_from ActiveRecord::RecordNotFound do
     flash[:notice] = 'The object you tried to access does not exist'
     redirect_to projects_path
@@ -36,9 +35,8 @@ class ProjectMembershipsController < ApplicationController
         redirect_to project_path(@project.id)
       end
     else
-      #User.invite!(email: email, first_name: "teste", last_name: "new")
       #flash[:notice] = "Invitation sent to #{email}"
-      redirect_to new_user_invitation_path(project_id: @project)
+      redirect_to new_user_invitation_path(project_id: @project.id)
     end
   end
 

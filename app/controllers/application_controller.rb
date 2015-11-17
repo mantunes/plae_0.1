@@ -17,6 +17,7 @@ class ApplicationController < ActionController::Base
                :password_confirmation, :current_password)
     end
     devise_parameter_sanitizer.for(:invite).concat [:first_name, :last_name]
+    devise_parameter_sanitizer.for(:accept_invitation).concat [:first_name, :last_name]
   end
 
   def update_resource(resource, params)
