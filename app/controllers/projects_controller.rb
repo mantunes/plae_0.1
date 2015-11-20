@@ -20,6 +20,12 @@ class ProjectsController < ApplicationController
     authorize_action_for(@project)
     @time_entries = @project.time_entries
     @users = @project.users.order('project_memberships.created_at asc')
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render :pdf => "project.pdf", :template => 'projects/show.html.erb'
+      end
+    end
   end
 
   def new

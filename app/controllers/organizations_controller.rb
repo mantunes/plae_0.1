@@ -16,6 +16,12 @@ class OrganizationsController < ApplicationController
     authorize_action_for(@organization)
     @projects = @organization.projects
     @users = @organization.users.order('organization_memberships.created_at asc')
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render :pdf => "organization.pdf", :template => 'organizations/show.html.erb'
+      end
+    end
   end
 
   def new

@@ -25,43 +25,46 @@
         </tr>
       </table>
     </div>
-    <div class="col-lg-6">
-      <% if current_user.can_create? @project.project_memberships.build %>
-        <%= link_to "Invite Members", new_project_membership_path(project_id: @project) %> <br>
-        <%= link_to "Manage Members", edit_project_membership_path(project_id: @project), method: :get %> <br>
-      <% end %>
-      <% if current_user.can_append? @project.project_memberships.build  %>
-        <%= link_to "Add to Organization", append_project_path, method: :get %>
-      <% elsif already_in_project? @project %>
-        <%= button_to "Leave Project", leave_project_membership_path(project_id: @project), data: { confirm: 'Are you sure?'} %>
-      <% else %>
-        <%= link_to "Join Project", join_project_path(project_id: @project), method: :post %>
-      <% end %>
-    </div>
+    <% unless request.format.to_sym == :pdf %>
+      <div class="col-lg-6">
+        <% if current_user.can_create? @project.project_memberships.build %>
+          <%= link_to "Invite Members", new_project_membership_path(project_id: @project) %> <br>
+          <%= link_to "Manage Members", edit_project_membership_path(project_id: @project), method: :get %> <br>
+        <% end %>
+        <% if current_user.can_append? @project.project_memberships.build  %>
+          <%= link_to "Add to Organization", append_project_path, method: :get %>
+        <% elsif already_in_project? @project %>
+          <%= button_to "Leave Project", leave_project_membership_path(project_id: @project), data: { confirm: 'Are you sure?'} %>
+        <% else %>
+          <%= link_to "Join Project", join_project_path(project_id: @project), method: :post %>
+        <% end %>
+      </div>
+    <% end %>
   </div>
+  <% unless request.format.to_sym == :pdf %>
+    <h3> Users </h3>
 
-  <h3> Users </h3>
-
-  <table summary="User list" class="table">
-    <tr class="header">
-      <th>Name</th>
-      <th>Access Level</th>
-    </tr>
-    <tbody>
-      <% @users.each do |user| %>
-        <tr>
-          <td><%= "#{user.first_name} #{user.last_name}" %></td>
-          <td><%= user.project_memberships.find_by(project_id: @project).role %></td>
-      <% if current_user.can_delete? @project.project_memberships.build  %>
-            <% unless user.can_delete?(@project) || current_user.id == user.id %>
-              <td> <%= link_to "Remove", project_membership_path(user_id: user.id, project_id: @project), 
-                      method: :delete, data: { confirm: 'Are you sure?' }  %></td>
+    <table summary="User list" class="table">
+      <tr class="header">
+        <th>Name</th>
+        <th>Access Level</th>
+      </tr>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= "#{user.first_name} #{user.last_name}" %></td>
+            <td><%= user.project_memberships.find_by(project_id: @project).role %></td>
+        <% if current_user.can_delete? @project.project_memberships.build  %>
+              <% unless user.can_delete?(@project) || current_user.id == user.id %>
+                <td> <%= link_to "Remove", project_membership_path(user_id: user.id, project_id: @project), 
+                  method: :delete, data: { confirm: 'Are you sure?' }  %></td>
+              <% end %>
             <% end %>
-          <% end %>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
   <br>
 
   <%unless @time_entries.empty? %>
@@ -88,5 +91,8 @@
     </table>
   <% end %>
   </br>
-  <%= link_to "<< Back to List", projects_path  %>
+    <% unless request.format.to_sym == :pdf %>
+    <%= link_to "<< Back to List", projects_path  %> <br>
+    <%= link_to 'Download PDF', { format: :pdf } %>
+  <% end %>
 </div>

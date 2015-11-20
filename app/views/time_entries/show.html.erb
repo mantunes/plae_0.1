@@ -29,5 +29,8 @@
     </tr>
   </table>
   <br>
-  <%= link_to "<< Back to List", time_entries_path  %>
+  <% unless request.format.to_sym == :pdf %>
+    <%= link_to '<< Back to List', time_entries_path  %> <br>
+    <%= link_to 'Download PDF', { format: :pdf } %>
+  <% end %>
 </div>
