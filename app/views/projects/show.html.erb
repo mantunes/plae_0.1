@@ -47,12 +47,14 @@
     <table summary="User list" class="table">
       <tr class="header">
         <th>Name</th>
+        <th>Email</th>
         <th>Access Level</th>
       </tr>
       <tbody>
         <% @users.each do |user| %>
           <tr>
             <td><%= "#{user.first_name} #{user.last_name}" %></td>
+            <td><%= user.email %></td>
             <td><%= user.project_memberships.find_by(project_id: @project).role %></td>
         <% if current_user.can_delete? @project.project_memberships.build  %>
               <% unless user.can_delete?(@project) || current_user.id == user.id %>

@@ -20,7 +20,7 @@ class TimeEntriesController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render :pdf => "time_entry.pdf", :template => 'time_entries/show.html.erb'
+        render pdf: 'time_entry', template: 'time_entries/show.html.erb'
       end
     end
   end

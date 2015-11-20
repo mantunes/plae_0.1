@@ -19,7 +19,7 @@ class OrganizationsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render :pdf => "organization.pdf", :template => 'organizations/show.html.erb'
+        render pdf: 'organization', template: 'organizations/show.html.erb'
       end
     end
   end

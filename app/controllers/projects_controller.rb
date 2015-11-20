@@ -23,7 +23,7 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render :pdf => "project.pdf", :template => 'projects/show.html.erb'
+        render pdf: 'project', template: 'projects/show.html.erb'
       end
     end
   end
