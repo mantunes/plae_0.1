@@ -6,7 +6,7 @@
   <% else %>
     <div class="authform">
       <%= form_tag organization_membership_path, method: :put do %>
-        <%= hidden_field_tag "organization_id", @organization.id%>
+        <%= hidden_field_tag "organization_id", @organization.id %>
         <div class="form-group">
           <%= label_tag(:user, "User:") %><br>
           <%= collection_select(:user, :id, @users, :id, 

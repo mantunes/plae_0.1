@@ -4,6 +4,7 @@ gem 'rails', '4.2.0'
 
 gem 'pg'
 gem 'devise'
+gem 'devise_invitable', '~> 1.5.2'
 gem 'authority'
 gem 'letter_opener'
 gem 'bootstrap-sass'

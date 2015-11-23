@@ -7,6 +7,10 @@ class OrganizationMembershipsController < ApplicationController
   authority_actions create: 'new'
   authority_actions update: 'edit'
 
+  rescue_from ActiveRecord::RecordInvalid  do
+    flash[:notice] = 'User already in this organization'
+    render('new')
+  end
 
   rescue_from ActiveRecord::RecordNotFound do
     flash[:notice] = 'The object you tried to access does not exist'
@@ -22,20 +26,22 @@ class OrganizationMembershipsController < ApplicationController
   end
 
   def create
-    user = User.find_by(email: params[:email].downcase)
-    if user
-      if OrganizationMembership.find_by(user_id: user.id, organization_id: @organization.id)
-        flash[:notice] = 'User already in this organization'
-        render('new')
-      else
+    email = params[:email].downcase
+    if valid_email?(email)
+      user = User.find_by(email: email)
+      if user
         OrganizationMembership.create!(user_id: user.id, organization_id: @organization.id,
-                                       role: params[:role])
+                                       role: params[:organization_membership][:role])
         flash[:notice] = "User #{user.first_name} #{user.last_name}
-          was added to the organization"
+                          was added to the organization"
         redirect_to organization_path(@organization.id)
+      else
+        flash[:notice] = 'No registered user by that name. Send him an invite'
+        redirect_to new_user_invitation_path(organization_id: @organization.id,
+                                             email: email)
       end
     else
-      flash[:notice] = "Couldn't find user with email #{params[:email]}"
+      flash[:notice] = 'Invalid Email'
       render('new')
     end
   end
@@ -91,5 +97,10 @@ class OrganizationMembershipsController < ApplicationController
 
   def set_organization_membership
     @organization_membership = @organization.organization_memberships.build
+  end
+
+  def valid_email?(email)
+    valid_email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+    email.present? && (email =~ valid_email_regex)
   end
 end
