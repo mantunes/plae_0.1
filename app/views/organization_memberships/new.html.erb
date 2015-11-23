@@ -1,19 +1,18 @@
 <h2>Invite Members to Organization</h2>
 <div class="authform">
-
-  <%= form_tag organization_memberships_path do %>
+  <%= form_for(@organization_membership) do |t| %>
+    <%= hidden_field_tag "organization_id", @organization.id%>
     <div class="form-group">
-      <%= hidden_field_tag "organization_id", @organization.id%>
-      <%= label_tag(:email, "Email:") %><br>
-      <%= email_field_tag :email, nil, :pattern => '[^@]+@[^@]+\.[a-zA-Z]{2,6}', class: 'form-control' %><br>
+      <%= t.label :email, "Email:" %><br>
+      <%= text_field_tag :email, nil, class: 'form-control' %>
     </div>
     <div class="form-group">
-      <%= label_tag(:role, "Access Level:") %><br>
-      <%= select_tag :role, options_for_select(@roles), {class: "form-control"} %>
+      <%= t.label :role, "Role:" %><br>
+      <%= t.select(:role, @roles, {}, {class: 'form-control'}) %>
     </div>
     <div class="actions">
       <%= link_to "Cancel", organization_path(@organization), class: 'button left' %>
-      <%= submit_tag "Confirm", class: 'button right' %> 
-   </div>
+      <%= t.submit "Confirm", class: 'button right' %>
+    </div>
   <% end %>
 </div>

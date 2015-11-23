@@ -7,6 +7,11 @@ class ProjectMembershipsController < ApplicationController
   authority_actions create: 'new'
   authority_actions update: 'edit'
 
+  rescue_from ActiveRecord::RecordInvalid  do
+    flash[:notice] = 'User already in this project'
+    render('new')
+  end
+
   rescue_from ActiveRecord::RecordNotFound do
     flash[:notice] = 'The object you tried to access does not exist'
     redirect_to projects_path
@@ -22,21 +27,21 @@ class ProjectMembershipsController < ApplicationController
 
   def create
     email = params[:email].downcase
-    user = User.find_by(email: email)
-    if user
-      if ProjectMembership.find_by(user_id: user.id, project_id: @project.id)
-        flash[:notice] = 'User already in this project'
-        render('new')
-      else
+    if valid_email?(email)
+      user = User.find_by(email: email)
+      if user
         ProjectMembership.create!(user_id: user.id, project_id: @project.id,
-                                  role: params[:role])
+                                  role: params[:project_membership][:role])
         flash[:notice] = "User #{user.first_name} #{user.last_name}
         was added to the project"
         redirect_to project_path(@project.id)
+      else
+        flash[:notice] = 'No registered user by that name. Send him an invite'
+        redirect_to new_user_invitation_path(project_id: @project.id, email: email)
       end
     else
-      flash[:notice] = 'No registered user by that name. Send him an invite'
-      redirect_to new_user_invitation_path(project_id: @project.id, email: email)
+      flash[:notice] = 'Invalid Email'
+      render('new')
     end
   end
 
@@ -94,5 +99,10 @@ class ProjectMembershipsController < ApplicationController
 
   def set_project_membership
     @project_membership = @project.project_memberships.build
+  end
+
+  def valid_email?(email)
+    valid_email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+    email.present? && (email =~ valid_email_regex)
   end
 end
