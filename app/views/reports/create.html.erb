@@ -1,0 +1,29 @@
+<div>
+  <h2>Custom Report</h2><br>
+    <div class="row">
+      <div class="col-lg-8">
+        <%= link_to "New Report", new_report_path %>
+      </div>
+      <div class="col-lg-4">
+        <h4><%= "Total Hours: #{@total_hours}" %> </h4>
+      </div>
+    </div>
+      <div class="col-lg-8" >
+        <%if @time_entries.empty? %>
+          <h4> No results </h4>
+        <% else %> 
+          <h3> Time Entries </h3>
+          <table summary="TimeEntry list" class="table">
+            <tbody>
+              <% @time_entries.each do |time_entry| %>
+                <tr>
+                  <td><%= time_entry.name %></td>
+                  <td><%= time_entry.project.try(:name) %></td>
+                  <td><%= time_ago_in_words(time_entry.total_time.seconds.ago, include_seconds: true) %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+      </div>
+</div>
