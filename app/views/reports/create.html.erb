@@ -18,6 +18,7 @@
               <% @time_entries.each do |time_entry| %>
                 <tr>
                   <td><%= time_entry.name %></td>
+                  <td><%= "#{time_entry.user.first_name} #{time_entry.user.last_name}" %></td>
                   <td><%= time_entry.project.try(:name) %></td>
                   <td><%= time_ago_in_words(time_entry.total_time.seconds.ago, include_seconds: true) %></td>
                 </tr>
@@ -27,3 +28,4 @@
         <% end %>
       </div>
 </div>
+
