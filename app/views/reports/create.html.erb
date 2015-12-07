@@ -2,7 +2,6 @@
   <h2>Custom Report</h2><br>
   <div class="row">
     <div class="col-lg-4">
-      <%= link_to "New Report", new_report_path %>
     </div>
   </div>
   <div class="row">
@@ -13,22 +12,35 @@
     <% else %>
       <div class="col-lg-8">
         <h3> Time Entries </h3>
-        <h5><%= "Time Period: #{@start_time.strftime '%d-%m-%Y %H:%M:%S'} to #{@end_time.strftime '%d-%m-%Y %H:%M:%S'}" %></h5>
+        <br>
+        <h5><%= "from: #{@start_time.strftime '%d-%m-%Y %H:%M:%S'}" %> </h5>
+        <h5><%= "to: #{@end_time.strftime '%d-%m-%Y %H:%M:%S'}" %></h5>
+        <br>
         <table summary="TimeEntry list" class="table">
+          <tr class="header">
+            <th>Time Entry Name</th>
+            <th>User</th>
+            <th>Project</th>
+            <th>Duration</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+          </tr>
           <tbody>
             <% @time_entries.each do |time_entry| %>
               <tr>
                 <td><%= time_entry.name %></td>
                 <td><%= "#{time_entry.user.first_name} #{time_entry.user.last_name}" %></td>
                 <td><%= time_entry.project.try(:name) %></td>
-                <td><%= time_ago_in_words(time_entry.total_time.seconds.ago, include_seconds: true) %></td>
+                <td><%= formatted_duration(time_entry.total_time) %></td>
+                <td><%= time_entry.start_time.strftime("%H:%M:%S %d/%m/%y") %></td>
+                <td><%= time_entry.end_time.strftime("%H:%M:%S %d/%m/%y") %></td>              
               </tr>
             <% end %>
           </tbody>
         </table>
       </div>
       <div class="col-lg-4">
-        <h4><%= "Total Hours: #{@total_hours}" %> </h4>
+        <h4><%= "Total Hours: #{formatted_duration(@time_entries.sum(:total_time).to_i)}" %> </h4>
       </div>
     <% end %>
   </div>

@@ -1,10 +1,10 @@
 <div>
-  <h2>Weekly Report</h2><br>
   <div class="row">
-    <div class="col-lg-4">
-      <%= link_to "New Report", new_report_path %>
+    <div class="col-lg-12">
+      <%= render 'form' %>
     </div>
   </div>
+  <h2>Weekly Report</h2><br>
   <div class="row">
     <%if @time_entries.empty? %>
       <div class="col-lg-12 col-md-offset-5">
@@ -13,21 +13,31 @@
     <% else %>
       <div class="col-lg-8">
         <h3> Time Entries </h3>
+        <br>
         <table summary="TimeEntry list" class="table">
+          <tr class="header">
+            <th>Time Entry Name</th>
+            <th>User</th>
+            <th>Duration</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+          </tr>
           <tbody>
-            <% @time_entries.each do |time_entry| %>
+            <% @time_entries.order('updated_at desc').each do |time_entry| %>
               <tr>
                 <td><%= time_entry.name %></td>
                 <td><%= "#{time_entry.user.first_name} #{time_entry.user.last_name}" %></td>
                 <td><%= time_entry.project.try(:name) %></td>
-                <td><%= time_ago_in_words(time_entry.total_time.seconds.ago, include_seconds: true) %></td>
+                <td><%= formatted_duration(time_entry.total_time) %></td>
+                <td><%= time_entry.start_time.strftime("%H:%M:%S %d/%m/%y") %></td>
+                <td><%= time_entry.end_time.strftime("%H:%M:%S %d/%m/%y") %></td>
               </tr>
             <% end %>
           </tbody>
         </table>
       </div>
       <div class="col-lg-4">
-        <h4><%= "Total Hours: #{@total_hours}" %> </h4>
+        <h4><%= "Total Hours: #{formatted_duration(@time_entries.sum(:total_time).to_i)}" %> </h4>
       </div>
     <% end %>
   </div>

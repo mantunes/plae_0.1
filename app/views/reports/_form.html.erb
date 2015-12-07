@@ -1,0 +1,55 @@
+<h2>New Report</h2>
+<div>
+  <div class = "container">
+   <div class = "jumbotron clearfix">
+        <%= form_tag reports_path do %>
+          <div class="row">
+            <div class="col-lg-6">
+              <%= label_tag :start_time %> 
+              <%= datetime_select :start_time, include_seconds: true %>
+            </div>
+            <div class="col-lg-6">
+              <%= label_tag :end_time %>
+              <%= datetime_select :end_time, include_seconds: true %>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-lg-6">
+              <% unless current_user.projects.empty? %>
+                <%= label_tag :projects %> <br>
+                <li> 
+                  <%= check_box_tag "without_project" %> Without Project
+                </li>
+                <hr>
+                <% current_user.projects.each do |project| %>
+                  <li>
+                    <%= check_box_tag "projects[]", project.id %> <%= project.name %> <br>
+                  </li>
+                <% end %>
+                <br>
+              <% end %>
+            </div>
+            <div class="col-lg-6">
+              <% unless current_user.organizations.empty? %>
+                <%= label_tag :organizations %> <br>
+                <% current_user.organizations.each do |organization| %>
+                  <li>
+                    <%= organization.name %> <br>
+                  </li>
+                  <ul> 
+                  <h5> Users </h5>
+                  <% organization.users.each do |user| %>
+                      <%= check_box_tag "users[]", user.id %> <%= user.first_name %>
+                  <% end %>
+                  </ul>
+                <% end %>
+                <br>
+              <% end %>
+            </div>
+          </div>
+          <%= submit_tag 'Confirm', class: 'btn btn-primary pull-right' %>
+        <% end %>
+    </div>
+  </div>
+</div>
