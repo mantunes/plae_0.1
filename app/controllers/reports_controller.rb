@@ -9,6 +9,9 @@ class ReportsController < ApplicationController
     @time_entries = get_time_entries(params[:projects], params[:users], params[:without_project])
     @time_entries = @time_entries.where('end_time >= ? AND end_time <= ?',
                                         @start_time, @end_time)
+    unless params[:name].nil?
+      @time_entries = @time_entries.where('name LIKE ?', "%#{params[:name]}%")
+    end
   end
 
   private
