@@ -3,11 +3,14 @@ class ReportsController < ApplicationController
 
   def index
     @start_time = 7.days.ago
-    @end_time = Time.now
+    @end_time = Time.zone.now
     @time_entries = current_user.time_entries.where('end_time >= ?', 1.week.ago)
     @organizations = current_user.organizations
     respond_to do |format|
       format.html
+      format.pdf do
+        render pdf: 'project', template: 'reports/index.html.erb'
+      end
       format.csv do
         headers['Content-Disposition'] = "attachment; filename=\"report.csv\""
         headers['Content-Type'] ||= 'text/csv'
@@ -29,7 +32,7 @@ class ReportsController < ApplicationController
   private
 
   def get_time_entries(projects, users, without_project)
-    if without_project == '1'
+    if without_project
       get_user_entries(users)
     else
       get_project_entries(projects, users)

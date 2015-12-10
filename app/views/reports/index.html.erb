@@ -1,23 +1,25 @@
-<div>
-  <div class="row">
-    <div class="col-lg-12">
-      <%= render 'form' %>
-    </div>
-  </div>
-  <div class = "container">
+<% unless request.format.to_sym == :pdf %>
+  <div>
     <div class="row">
-      <%if @time_entries.empty? %>
-        <div class="col-lg-12 col-md-offset-5">
-          <br>
-          <h4> No results </h4>
-        </div>
-      <% else %>
-        <div class="col-lg-9">
-          <h3> Time Entries </h3>
-          <br>
-          <h5><%= "from: #{@start_time.strftime '%d-%m-%Y %H:%M:%S'}" %> </h5>
-          <h5><%= "to: #{@end_time.strftime '%d-%m-%Y %H:%M:%S'}" %></h5>
-          <br>
+      <div class="col-lg-12">
+        <%= render 'form' %>
+      </div>
+    </div>
+<% end %>
+    <div class = "container">
+      <div class="row">
+        <%if @time_entries.empty? %>
+          <div class="col-lg-12 col-md-offset-5">
+            <br>
+            <h4> No results </h4>
+          </div>
+        <% else %>
+          <div class="col-lg-9">
+            <h3> Time Entries </h3>
+            <br>
+            <h5><%= "from: #{@start_time.strftime '%d-%m-%Y %H:%M:%S'}" %> </h5>
+            <h5><%= "to: #{@end_time.strftime '%d-%m-%Y %H:%M:%S'}" %></h5>
+            <br>
           <table summary="TimeEntry list" class="table">
             <tr class="header">
               <th>Time Entry Name</th>
@@ -46,6 +48,10 @@
         </div>
       <% end %>
     </div>
+  <% unless request.format.to_sym == :pdf %>
+    <br>
+    <%= link_to 'Export to CSV', reports_path(format: :csv), class: "btn btn-default" %>
+    <%= link_to 'Export to PDF', { format: :pdf }, class: "btn btn-default" %>
+  <% end %>
   </div>
-  <%= link_to 'Export to CSV', reports_path(format: :csv) %>
 </div>

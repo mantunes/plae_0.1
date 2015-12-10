@@ -23,7 +23,7 @@
             <td><%= link_to 'Delete', time_entry, method: :delete, 
               data: { confirm: 'Are you sure?' } %></td>
             <td><%= button_to "Add to Project",
-               append_time_entry_path(time_entry), method: :get %> </td>
+               append_time_entry_path(time_entry), method: :get, class: "btn btn-default" %> </td>
           </tr>
         <% end %>
       <tbody>
