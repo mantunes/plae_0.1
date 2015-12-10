@@ -6,6 +6,13 @@ class ReportsController < ApplicationController
     @end_time = Time.now
     @time_entries = current_user.time_entries.where('end_time >= ?', 1.week.ago)
     @organizations = current_user.organizations
+    respond_to do |format|
+      format.html
+      format.csv do
+        headers['Content-Disposition'] = "attachment; filename=\"report.csv\""
+        headers['Content-Type'] ||= 'text/csv'
+      end
+    end
   end
 
   def create

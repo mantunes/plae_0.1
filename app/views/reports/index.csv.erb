@@ -1,0 +1,9 @@
+<%- headers = ['Name', 'User', 'Project', 'Duration'] -%>
+<%= CSV.generate_line headers %>
+<%- @time_entries.each do |time_entry| -%>
+<%= CSV.generate_line([time_entry.name, time_entry.user.first_name, time_entry.project.try(:name), formatted_duration(time_entry.total_time)]) -%>
+<%- end -%>
+<%= CSV.generate_line [" "] -%>
+<%- total_hours = ['Total Hours'] -%>
+<%= CSV.generate_line total_hours -%>
+<%= CSV.generate_line([formatted_duration(@time_entries.sum(:total_time).to_i)]) -%>
