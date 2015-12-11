@@ -1,54 +1,49 @@
+<!-- Initialize the plugin: -->
+<script type="text/javascript">
+      $(document).ready(function() {
+        $('.multiselect').multiselect({
+          includeSelectAllOption: true
+        });
+      });
+</script>
 <div>
   <div class = "container">
    <div class = "jumbotron clearfix">
-        <%= form_tag reports_path do %>
-          <div class="row">
-            <div class="col-lg-6">
-              <%= label_tag :start_time %> 
-              <%= datetime_select("start_date", "", default: 7.days.ago, include_seconds: true) %>
-            </div>
-            <div class="col-lg-6">
-              <%= label_tag :end_time %>
-              <%= datetime_select("end_date", "", default: Time.now, include_seconds: true) %>
-            </div>
+      <%= form_tag reports_path do %>
+        <div class="row">
+          <div class="col-lg-6">
+            <%= label_tag :start_time, 'Start Date'%> 
+            <%= datetime_select("start_date", "", default: 7.days.ago, include_seconds: true) %>
           </div>
-          <br>
-          <div class="row">
+          <div class="col-lg-6">
+            <%= label_tag :end_time, 'End Date' %>
+            <%= datetime_select("end_date", "", default: Time.now, include_seconds: true) %>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-lg-2">
+            <%= label_tag :projects %> <br>
+            <%= select_tag 'projects', content_tag(:option, 'Without Project', :value=>"Without Project") + options_from_collection_for_select(current_user.projects, 'id', 'name'), {class: 'multiselect', multiple: true} %>
+            <br>
+          </div>
+          <% unless current_user.organizations.empty? %>
             <div class="col-lg-2">
-              <%= label_tag :Name %>
-              <%= text_field_tag :name, "", class: 'form-control' %>
-            </div>
-          </div>
-          <br>
-          <div class="row">
-            <div class="col-lg-8">
-              <% unless current_user.projects.empty? %>
-                <%= label_tag :projects %> <br>
-                <li> 
-                  <%= check_box_tag "without_project" %> Without Project
-                </li>
-                <hr>
-                <%= select_tag 'projects', options_from_collection_for_select(current_user.projects, 'id', 'name'), {:multiple=>true,:size=>6} %>
-                <br>
-              <% end %>
-            </div>
-            <div class="col-lg-4">
-              <% unless current_user.organizations.empty? %>
                 <%= label_tag :organizations %> <br>
-                <% current_user.organizations.each do |organization| %>
-                  <li>
-                    <%= organization.name %> <br>
-                  </li>
-                  <ul>
-                    <%= select_tag 'users', options_from_collection_for_select(organization.users, 'id', 'first_name'), {:multiple=>true,:size=>6} %>
-                  </ul>
-                <% end %>
-                <br>
-              <% end %>
+                <%= select_tag 'organizations', options_from_collection_for_select(@organizations, 'id', 'name'), {class: 'multiselect', multiple: true} %>
             </div>
+            <div class="col-lg-2">
+              <%= label_tag :users %> <br>
+              <%= select_tag 'users', options_from_collection_for_select(@organizations, 'id', 'name'), {class: 'multiselect', multiple: true} %>
+            </div>
+          <% end %>
+          <div class="col-lg-2">
+            <%= label_tag :Description %>
+            <%= text_field_tag :name, "", class: 'form-control' %>
           </div>
-          <%= submit_tag 'Confirm', class: 'btn btn-primary pull-right' %>
-        <% end %>
+        </div>
+        <%= submit_tag 'Apply', class: 'btn btn-primary pull-right' %>
+      <% end %>
     </div>
   </div>
 </div>

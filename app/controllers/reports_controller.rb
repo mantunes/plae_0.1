@@ -19,9 +19,10 @@ class ReportsController < ApplicationController
   end
 
   def create
+    @organizations = current_user.organizations
     @start_time = Time.zone.local(*params[:start_date].sort.map(&:last).map(&:to_i))
     @end_time = Time.zone.local(*params[:end_date].sort.map(&:last).map(&:to_i))
-    @time_entries = get_time_entries(params[:projects], params[:users], params[:without_project])
+    @time_entries = get_time_entries(params[:projects], params[:users])
     @time_entries = @time_entries.where('end_time >= ? AND end_time <= ?',
                                         @start_time, @end_time)
     unless params[:name].nil?
@@ -31,8 +32,8 @@ class ReportsController < ApplicationController
 
   private
 
-  def get_time_entries(projects, users, without_project)
-    if without_project
+  def get_time_entries(projects, users)
+    if projects.present? && projects[0] == 'Without Project'
       get_user_entries(users)
     else
       get_project_entries(projects, users)

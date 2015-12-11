@@ -19,6 +19,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
+gem 'bootstrap-multiselect-rails'
 
 group :development, :test do
   gem 'byebug'
