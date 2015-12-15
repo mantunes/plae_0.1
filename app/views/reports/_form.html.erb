@@ -9,7 +9,7 @@
 <div>
   <div class = "container">
    <div class = "jumbotron clearfix">
-      <%= form_tag reports_path do %>
+      <%= form_tag reports_path, method: :get do %>
         <div class="row">
           <div class="col-lg-6">
             <%= label_tag :start_time, 'Start Date'%> 
@@ -30,11 +30,11 @@
           <% unless current_user.organizations.empty? %>
             <div class="col-lg-2">
                 <%= label_tag :organizations %> <br>
-                <%= select_tag 'organizations', options_from_collection_for_select(@organizations, 'id', 'name'), {class: 'multiselect', multiple: true} %>
+                <%= select_tag 'organizations', options_from_collection_for_select(current_user.organizations, 'id', 'name'), {class: 'multiselect', multiple: true} %>
             </div>
             <div class="col-lg-2">
               <%= label_tag :users %> <br>
-              <%= select_tag 'users', options_from_collection_for_select(@organizations, 'id', 'name'), {class: 'multiselect', multiple: true} %>
+              <%= select_tag 'users', options_from_collection_for_select(current_user.organizations, 'id', 'name'), {class: 'multiselect', multiple: true} %>
             </div>
           <% end %>
           <div class="col-lg-2">

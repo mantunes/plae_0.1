@@ -13,6 +13,13 @@ class TimeEntry < ActiveRecord::Base
 
   paginates_per 10
 
+  scope :recent, -> { where('end_time >= ?', Time.zone.now - 1.week) }
+  scope :name_search, -> name { where('name ILIKE ?', "%#{name}%") }
+  scope :time_period, lambda { |start_date, end_date|
+                        where('end_time >= ? AND end_time <= ?', start_date, end_date)
+                      }
+
+
   private
 
   def end_time_is_after_start_time
@@ -27,4 +34,5 @@ class TimeEntry < ActiveRecord::Base
   def update_project
     project.save unless project.blank?
   end
+
 end
