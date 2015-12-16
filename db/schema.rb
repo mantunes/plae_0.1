@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151113111855) do
+ActiveRecord::Schema.define(version: 20151215190845) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,8 +50,8 @@ ActiveRecord::Schema.define(version: 20151113111855) do
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "organization_memberships", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "organization_id"
+    t.integer  "user_id",         null: false
+    t.integer  "organization_id", null: false
     t.string   "role"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
@@ -148,4 +148,6 @@ ActiveRecord::Schema.define(version: 20151113111855) do
 
   add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
 
+  add_foreign_key "organization_memberships", "organizations"
+  add_foreign_key "organization_memberships", "users"
 end

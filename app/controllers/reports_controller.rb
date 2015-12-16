@@ -1,6 +1,5 @@
 class ReportsController < ApplicationController
   before_action :authenticate_user!
-
   def index
     if params[:start_date].blank?
       @time_entries = weekly_entries
@@ -12,6 +11,14 @@ class ReportsController < ApplicationController
       @time_entries = @time_entries.name_search(params[:name])
     end
     export_to
+  end
+
+  def update_users
+    organizations = OrganizationMembership.where(organization_id: params[:organizations])
+    user_ids = organizations.map(&:user_id)
+    users = User.find(user_ids)
+    response = { elements: users.map { |u| [u.id, u.first_name] } }
+    render json: response
   end
 
   private

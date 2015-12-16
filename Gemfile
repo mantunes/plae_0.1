@@ -20,6 +20,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 gem 'bootstrap-multiselect-rails'
+gem 'jquery-turbolinks'
 
 group :development, :test do
   gem 'byebug'

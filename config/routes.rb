@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   resources :organization_memberships do
     post :leave, on: :member
   end
+  get '/reports/update_users' => 'reports#update_users'
   resources :reports
   root to: 'time_entries#index'
   # The priority is based upon order of creation: first created -> highest priority.
