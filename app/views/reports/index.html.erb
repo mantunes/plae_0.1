@@ -50,7 +50,7 @@
     </div>
   <% unless request.format.to_sym == :pdf %>
     <br>
-    <%= link_to 'Export to CSV', reports_path(format: :csv), class: "btn btn-default" %>
-    <%= link_to 'Export to PDF', { format: :pdf }, class: "btn btn-default" %>
+    <%= link_to 'Export to CSV', reports_path(format: :csv),id: "csv_export", class: "btn btn-default" %>
+    <%= link_to 'Export to PDF', { format: :pdf }, id: "pdf_export", class: "btn btn-default" %>
   <% end %>
   </div>

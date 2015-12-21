@@ -1,7 +1,7 @@
 class ReportsController < ApplicationController
   before_action :authenticate_user!
   def index
-    if params[:start_date].blank?
+    if params[:start_date].blank? || params[:end_date].blank?
       @time_entries = weekly_entries
     else
       @start_time = Time.zone.local(*params[:start_date].sort.map(&:last).map(&:to_i))
@@ -71,3 +71,5 @@ class ReportsController < ApplicationController
     end
   end
 end
+
+
