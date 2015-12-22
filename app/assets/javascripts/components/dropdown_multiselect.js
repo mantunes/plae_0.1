@@ -21,9 +21,10 @@ $(document).ready(function() {
 
   selectAll.click(function(){
     if($(this).prop("checked") == true) {
-      projectOptions.prop('checked', true);
+      projectOptions.prop('disabled', false);
+      $('.projectMultiselect').multiselect('selectAll', true);
     }else if($(this).prop('checked') == false){
-      projectOptions.prop('checked', false);
+      $('.projectMultiselect').multiselect('deselectAll', true);
     }
   });
 
@@ -35,10 +36,9 @@ $(document).ready(function() {
 
   withoutProject.click(function() {
     if($(this).prop("checked") == true) {
-      projectOptions.prop('checked', false);
-      projectOptions.prop('disabled',true);
-      selectAll.prop('checked', false);
-      selectAll.prop('disabled', true);
+      $('.projectMultiselect').multiselect('deselectAll', true);
+      $('.projectMultiselect').multiselect('select', 'Without Project');
+      projectOptions.prop('disabled', true);
     }
     else if($(this).prop("checked") == false){
       projectOptions.prop('disabled', false);
