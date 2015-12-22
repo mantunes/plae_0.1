@@ -4,7 +4,6 @@ class ReportsController < ApplicationController
     if params[:start_date].blank? || params[:end_date].blank?
       @time_entries = weekly_entries
     else
-      raise ba
       @start_time = Time.zone.local(*params[:start_date].sort.map(&:last).map(&:to_i))
       @end_time = Time.zone.local(*params[:end_date].sort.map(&:last).map(&:to_i))
       @time_entries = get_time_entries(params[:projects], params[:users])

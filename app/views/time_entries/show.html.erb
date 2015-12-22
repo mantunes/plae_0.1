@@ -13,11 +13,11 @@
     </tr>
     <tr>
       <th>End Time: </th>
-      <td><%= @time_entry.end_time.strftime("%H:%M:%S %d/%m/%y") %></td>
+      <td><%= @time_entry.end_time.try(:strftime, "%H:%M:%S %d/%m/%y") %></td>
     </tr>
     <tr>
       <th>Total Time: </th>
-      <td><%= time_ago_in_words(@time_entry.total_time.seconds.ago, include_seconds: true) %></td>
+      <td><%= time_ago_in_words(@time_entry.total_time.seconds.ago, include_seconds: true) unless @time_entry.total_time.blank? %></td>
     </tr>
     <tr>
       <th>Created at: </th>
