@@ -16,7 +16,7 @@
         <div class="row">
           <div class="col-lg-3" id="project-div">
             <%= label_tag :projects %> <br>
-            <%= select_tag 'projects',content_tag(:option, 'Select all', value: 'Select all') + content_tag(:option, 'Without Project', value: 'Without Project') + options_from_collection_for_select(current_user.projects, 'id', 'name'), {class: 'projectMultiselect', multiple: true} %>
+            <%= select_tag 'projects', content_tag(:option, 'Without Project') + options_from_collection_for_select(current_user.projects, 'id', 'name'), {class: 'projectMultiselect', multiple: true} %>
             <br>
           </div>
             <div class="col-lg-3" id="organization-div">
