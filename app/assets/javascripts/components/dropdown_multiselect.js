@@ -4,6 +4,7 @@ $(document).ready(function() {
     disableIfEmpty: true,
     buttonWidth: '200px'
   });
+
    $('.projectMultiselect').multiselect({
     buttonWidth: '200px',
     disableIfEmpty: true
@@ -13,10 +14,12 @@ $(document).ready(function() {
   $('#project-div ul li:eq(1)').after('<li class="divider"></li>');
   $('#organization-div ul li:eq(0)').after('<li class="divider"></li>');
 
-  var projectOptions = $('#project-div input[value!=""][type="checkbox"]');
-  var selectAllInput = $('#project-div input:eq(0)');
+  var projectOptions = $('#project-div input[value!="Select all"][value!="Without Project"][type="checkbox"]');
+  var withoutProject = $('input[value="Without Project"]');
+  var selectAll = $('input[value="Select all"]');
 
-  selectAllInput.click(function(){
+
+  selectAll.click(function(){
     if($(this).prop("checked") == true) {
       projectOptions.prop('checked', true);
     }else if($(this).prop('checked') == false){
@@ -24,22 +27,30 @@ $(document).ready(function() {
     }
   });
 
-  $('#project-div input:eq(1)').click(function() {
+  projectOptions.click(function() {
+    if(selectAll.prop("checked") == true) {
+      selectAll.prop("checked", false);
+    }
+  });
+
+  withoutProject.click(function() {
     if($(this).prop("checked") == true) {
       projectOptions.prop('checked', false);
       projectOptions.prop('disabled',true);
-      $('#project-div input:eq(0)').prop('disabled',true);
-      $('#project-div input:eq(0)').prop('checked',false);
+      selectAll.prop('checked', false);
+      selectAll.prop('disabled', true);
     }
     else if($(this).prop("checked") == false){
       projectOptions.prop('disabled', false);
-      $('#project-div input:eq(0)').prop('disabled',false);
+      selectAll.prop('disabled',false);
     }
+    console.log(projectOptions);
   });
 
   $('select.multiselect.updatable').change(function() {
     sendRequest($(this));
   });
+
 });
 
 function sendRequest(className) {
