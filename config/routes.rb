@@ -22,6 +22,8 @@ Rails.application.routes.draw do
   end
   get '/reports/update_users' => 'reports#update_users'
   resources :reports
+  resources :slack_responses, only: :create
+
   root to: 'time_entries#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
