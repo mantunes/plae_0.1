@@ -3,13 +3,14 @@
     <h4> You have no Organizations </h4>
   <% else %>
     <h2>Organizations</h2>
-    <table summary="Organization list" class="table">
+    <table summary="Organization list" class="table table-hover">
       <tr class="header">
         <th>Name</th>
         <th>Description</th>
         <th>Website</th>
         <th>Role</th>
         <th>Projects</th>
+        <th>Actions</th>
       </tr>
       <tbody>
         <% @organizations.each do |organization| %>
@@ -20,9 +21,17 @@
             <td><%= organization.organization_memberships.find_by(user_id: current_user.id).role %></td>
             <td><%= organization.projects.count %></td>
             <% if current_user.can_delete? organization %>
-              <td><%= link_to "Edit", edit_organization_path(organization) %></td>
-              <td><%= link_to 'Delete', organization, method: :delete, 
-                data: { confirm: 'Are you sure?' } %></td>
+              <td>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    Action <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><%= link_to "Edit", edit_organization_path(organization) %></li>
+                    <li><%= link_to 'Delete', organization, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+                  </ul>
+                </div>
+              </td>
             <% end %>
           </tr>
         <% end %>
@@ -37,5 +46,6 @@
       </div>
     </div>
   <% end %>
-<%= link_to "Add New Organization", new_organization_path %>
+  <br>
+  <%= link_to "Add New Organization", new_organization_path, class: "btn btn-success" %>
 </div>

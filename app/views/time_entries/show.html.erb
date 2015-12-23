@@ -30,7 +30,6 @@
   </table>
   <br>
   <% unless request.format.to_sym == :pdf %>
-    <%= link_to '<< Back to List', time_entries_path  %> <br>
-    <%= link_to 'Download PDF', { format: :pdf } %>
+    <%= link_to 'Download PDF', { format: :pdf },  class: "btn btn-danger" %>
   <% end %>
 </div>

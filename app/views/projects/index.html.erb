@@ -3,7 +3,7 @@
     <h4> You have no projects </h4>
   <% else %>
     <h2>My Projects</h2>
-    <table summary="Project list" class="table">
+    <table summary="Project list" class="table table-hover">
       <tr class="header">
         <th>Project Name</th>
         <th>Number of Tasks</th>
@@ -11,6 +11,7 @@
         <th>Organization</th>
         <th>Created At</th>
         <th>Access level</th>
+        <th>Actions</th>
       </tr>
       <tbody>
         <% @projects.each do |project| %>
@@ -22,8 +23,17 @@
             <td><%= project.created_at.strftime("%H:%M:%S %d/%m/%y") %></td>
             <td><%= project.project_memberships.find_by(user_id: current_user.id).role %></td>
             <% if current_user.can_delete? project %>
-              <td><%= link_to "Edit", edit_project_path(project) %></td>
-              <td><%= link_to 'Delete', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <td>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    Action <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><%= link_to "Edit", edit_project_path(project) %></li>
+                    <li><%= link_to 'Delete', project, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+                  </ul>
+                </div>
+              </td>
             <% end %>
           </tr>
         <% end %>
@@ -39,5 +49,5 @@
     </div>
   <% end %>
   <br>
-  <%= link_to "Add New Project", new_project_path %>
+  <%= link_to "Add New Project", new_project_path, class: "btn btn-success" %>
 </div>
