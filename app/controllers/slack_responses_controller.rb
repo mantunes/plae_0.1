@@ -1,7 +1,7 @@
 class SlackResponsesController < ApplicationController
 
-  #skip_before_filter :verify_authenticity_token
-  #before_filter :verify_slack_token
+  skip_before_filter :verify_authenticity_token
+  before_filter :verify_slack_token
 
   def create
     render nothing: true#, status: :ok and return unless responder.respond?
@@ -22,8 +22,8 @@ class SlackResponsesController < ApplicationController
    # @responder ||= Slack::Responder.new(params[:text])
   #end
  
-  #def verify_slack_token
-   # render nothing: true, status: :forbidden and return unless Slack::TOKENS.include?(params[:token])
-  #end
+  def verify_slack_token
+    render nothing: true, status: :forbidden and return unless Slack::TOKENS.include?(params[:token])
+  end
 
 end
