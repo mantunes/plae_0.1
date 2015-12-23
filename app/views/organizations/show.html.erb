@@ -1,7 +1,7 @@
 <div>
   <h2>Organization Details</h2>
   <div class="row">
-    <div class="col-lg-8">
+    <div class="col-lg-7">
       <table summary="fields">
         <tr>
           <th>Name: </th>
@@ -22,14 +22,21 @@
       </table>
     </div>
     <% unless request.format.to_sym == :pdf %>
-      <div class="col-lg-4">
-        <% if current_user.can_create? @organization.organization_memberships.build %>
-          <%= link_to "Invite Members", new_organization_membership_path(organization_id: @organization) %> <br>
-          <%= link_to "Manage Members", edit_organization_membership_path(organization_id: @organization), method: :get %>
-        <% end %>
-        <% if current_user.can_leave? @organization.organization_memberships.build %>
-          <%= button_to "Leave organization", leave_organization_membership_path(organization_id: @organization), data: { confirm: 'Are you sure?' } %>
-        <% end %>
+      <div class="col-lg-5">
+        <div class="btn-group">
+          <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+            Options <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <% if current_user.can_create? @organization.organization_memberships.build %>
+              <li><%= link_to "Invite Members", new_organization_membership_path(organization_id: @organization) %></li>
+              <li><%= link_to "Manage Members", edit_organization_membership_path(organization_id: @organization), method: :get %></li>
+            <% end %>
+            <% if current_user.can_leave? @organization.organization_memberships.build %>
+              <li><%= link_to "Leave organization", leave_organization_membership_path(organization_id: @organization), data: { confirm: 'Are you sure?' } %></li>
+            <% end %>
+          </ul>
+        </div>
       </div>
     <% end %>
   </div>
@@ -38,7 +45,7 @@
   <% unless request.format.to_sym == :pdf %>
     <h3> Users </h3>
 
-    <table summary="User list" class="table">
+    <table summary="User list" class="table table-hover">
       <tr class="header">
         <th>Name</th>
         <th>Email</th>
@@ -64,7 +71,7 @@
 
   <%unless @projects.empty? %>
     <h3> Projects </h3>
-    <table summary="Project list" class="table">
+    <table summary="Project list" class="table table-hover">
       <tr class="header">
         <th>Project Name</th>
         <th>Total Duration</th>
@@ -80,7 +87,6 @@
     </table>
   <% end %>
   <% unless request.format.to_sym == :pdf %>
-    <%= link_to "<< Back to List", organizations_path  %> <br>
-    <%= link_to 'Download PDF', { format: :pdf } %>
+    <%= link_to 'Download PDF', { format: :pdf }, class: "btn btn-danger"%>
   <% end %>
 </div>

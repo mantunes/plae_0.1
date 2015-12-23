@@ -1,7 +1,7 @@
 <div>
   <h2>Project Details</h2>
   <div class="row">
-    <div class="col-lg-6">
+    <div class="col-lg-7">
       <table summary="fields">
         <tr>
           <th>Name: </th>
@@ -26,25 +26,32 @@
       </table>
     </div>
     <% unless request.format.to_sym == :pdf %>
-      <div class="col-lg-6">
-        <% if current_user.can_create? @project.project_memberships.build %>
-          <%= link_to "Invite Members", new_project_membership_path(project_id: @project) %> <br>
-          <%= link_to "Manage Members", edit_project_membership_path(project_id: @project), method: :get %> <br>
-        <% end %>
-        <% if current_user.can_append? @project.project_memberships.build  %>
-          <%= link_to "Add to Organization", append_project_path, method: :get %>
-        <% elsif already_in_project? @project %>
-          <%= button_to "Leave Project", leave_project_membership_path(project_id: @project), data: { confirm: 'Are you sure?'} %>
-        <% else %>
-          <%= link_to "Join Project", join_project_path(project_id: @project), method: :post %>
-        <% end %>
+      <div class="col-lg-5">
+        <div class="btn-group">
+          <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+            Options <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <% if current_user.can_create? @project.project_memberships.build %>
+              <li><%= link_to "Invite Members", new_project_membership_path(project_id: @project) %></li>
+              <li><%= link_to "Manage Members", edit_project_membership_path(project_id: @project), method: :get %></li>
+            <% end %>
+            <% if current_user.can_append? @project.project_memberships.build  %>
+              <li><%= link_to "Add to Organization", append_project_path, method: :get %></li>
+            <% elsif already_in_project? @project %>
+              <li><%= link_to "Leave Project", leave_project_membership_path(project_id: @project), data: { confirm: 'Are you sure?'} %></li>
+            <% else %>
+              <li><%= link_to "Join Project", join_project_path(project_id: @project), method: :post %></li>
+            <% end %>
+          </ul>
+        </div>
       </div>
     <% end %>
   </div>
   <% unless request.format.to_sym == :pdf %>
     <h3> Users </h3>
 
-    <table summary="User list" class="table">
+    <table summary="User list" class="table table-hover">
       <tr class="header">
         <th>Name</th>
         <th>Email</th>
@@ -71,7 +78,7 @@
 
   <%unless @time_entries.empty? %>
     <h3> Time Entries </h3>
-    <table summary="TimeEntry list" class="table">
+    <table summary="TimeEntry list" class="table table-hover">
       <tr class="header">
         <th>Time Entry Name</th>
         <th>User</th>
@@ -94,7 +101,6 @@
   <% end %>
   </br>
     <% unless request.format.to_sym == :pdf %>
-    <%= link_to "<< Back to List", projects_path  %> <br>
-    <%= link_to 'Download PDF', { format: :pdf } %>
+    <%= link_to 'Download PDF', { format: :pdf },  class: "btn btn-danger" %>
   <% end %>
 </div>
