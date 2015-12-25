@@ -2,7 +2,8 @@
   <% if @organizations.empty? %>
     <h4> You have no Organizations </h4>
   <% else %>
-    <h2>Organizations</h2>
+    <h2>My Organizations</h2>
+    <br>
     <table summary="Organization list" class="table table-hover">
       <tr class="header">
         <th>Name</th>
@@ -47,5 +48,5 @@
     </div>
   <% end %>
   <br>
-  <%= link_to "Add New Organization", new_organization_path, class: "btn btn-success" %>
+  <%= link_to "New Organization", new_organization_path, class: "btn btn-success" %>
 </div>

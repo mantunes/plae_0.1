@@ -1,12 +1,9 @@
-<div>
-  <h2>Organization Details</h2>
+<div class="container">
+  <h2><%= @organization.name %></h2>
+  <br>
   <div class="row">
     <div class="col-lg-7">
       <table summary="fields">
-        <tr>
-          <th>Name: </th>
-          <td><%= @organization.name %></td>
-        </tr>
         <tr>
           <th>Description: </th>
           <td><%= @organization.description %></td>
@@ -14,10 +11,6 @@
         <tr>
           <th>Website: </th>
           <td><%= @organization.website %></td>
-        </tr>
-        <tr>
-          <th>Created at: </th>
-          <td><%= @organization.created_at.strftime("%H:%M:%S %d/%m/%y") %></td>
         </tr>
       </table>
     </div>
@@ -68,7 +61,7 @@
       </tbody>
     </table>
   <% end %>
-
+  <br>
   <%unless @projects.empty? %>
     <h3> Projects </h3>
     <table summary="Project list" class="table table-hover">
@@ -87,6 +80,8 @@
     </table>
   <% end %>
   <% unless request.format.to_sym == :pdf %>
-    <%= link_to 'Download PDF', { format: :pdf }, class: "btn btn-danger"%>
+    <div class="pull-right">
+      <%= link_to '.PDF', { format: :pdf }, class: "btn btn-danger"%>
+    </div>
   <% end %>
 </div>

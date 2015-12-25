@@ -1,6 +1,6 @@
+<h2><%= "Invite to #{@project.name}" if @project %></h2>
+<h2><%= "Invite to #{@organization.name}" if @organization %></h2>
 <div class="authform">
-  <h2><%= "Invite to #{@project.name} project" if @project %></h2>
-  <h2><%= "Invite to #{@organization.name} organization" if @organization %></h2>
   <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f| %>
     <%= devise_error_messages! %>
 

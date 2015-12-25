@@ -67,12 +67,16 @@ class TimeEntriesController < ApplicationController
   def add_to_project
     project = Project.find_by(id: params[:project][:project_id])
     if project
+      old_project = @time_entry.try(:project)
       project.time_entries << @time_entry
-      flash[:notice] = "#{@time_entry.name} was added to #{project.name} project"
+      old_project.save if old_project
       redirect_to time_entries_path
+      flash[:notice] = "#{@time_entry.name} was added to #{project.name} project"
     else
+      old_project = @time_entry.try(:project)
       @time_entry.project = nil
       @time_entry.save
+      old_project.save if old_project
       redirect_to time_entries_path
     end
   end

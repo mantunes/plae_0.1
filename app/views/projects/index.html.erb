@@ -3,13 +3,13 @@
     <h4> You have no projects </h4>
   <% else %>
     <h2>My Projects</h2>
+    <br>
     <table summary="Project list" class="table table-hover">
       <tr class="header">
         <th>Project Name</th>
         <th>Number of Tasks</th>
         <th>Total Duration</th>
         <th>Organization</th>
-        <th>Created At</th>
         <th>Access level</th>
         <th>Actions</th>
       </tr>
@@ -20,7 +20,6 @@
             <td><%= project.time_entries.count %></td>
             <td><%= time_ago_in_words(project.total_duration.seconds.ago, include_seconds: true) unless project.total_duration.blank? %></td>
             <td><%= project.organization.try(:name) %> </td>
-            <td><%= project.created_at.strftime("%H:%M:%S %d/%m/%y") %></td>
             <td><%= project.project_memberships.find_by(user_id: current_user.id).role %></td>
             <% if current_user.can_delete? project %>
               <td>
@@ -49,5 +48,5 @@
     </div>
   <% end %>
   <br>
-  <%= link_to "Add New Project", new_project_path, class: "btn btn-success" %>
+  <%= link_to "New Project", new_project_path, class: "btn btn-success" %>
 </div>

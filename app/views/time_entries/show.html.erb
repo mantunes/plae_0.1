@@ -1,7 +1,7 @@
 
-<div>
+<div class="container">
   <h2>Time Entry Details</h2>
-
+  <br>
   <table summary="fields">
     <tr>
       <th>Name: </th>
@@ -30,6 +30,8 @@
   </table>
   <br>
   <% unless request.format.to_sym == :pdf %>
-    <%= link_to 'Download PDF', { format: :pdf },  class: "btn btn-danger" %>
+    <div class="pull-right">
+      <%= link_to '.PDF', { format: :pdf },  class: "btn btn-danger" %>
+    </div>
   <% end %>
 </div>

@@ -19,7 +19,6 @@ class TimeEntry < ActiveRecord::Base
                         where('end_time >= ? AND end_time <= ?', start_date, end_date)
                       }
 
-
   private
 
   def end_time_is_after_start_time

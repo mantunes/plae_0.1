@@ -3,6 +3,7 @@
     <h4> You have no Time Entries</h4>
   <% else %>
     <h2>Time Entries</h2>
+    <br>
     <table summary="TimeEntry list" class="table table-hover">
       <tr class="header">
         <th>Time Entry Name</th>
@@ -15,7 +16,7 @@
       <tbody>
         <% @time_entries.each do |time_entry| %>
           <tr>
-            <td><%= link_to "#{time_entry.name}", time_entry %></td>
+            <td><%= time_entry.name %></td>
             <td><%= time_entry.project.try(:name) %></td>
             <td><%= time_entry.start_time.strftime("%H:%M:%S %d/%m/%y") %></td>
             <td><%= time_entry.end_time.try(:strftime, "%H:%M:%S %d/%m/%y") %></td>
@@ -49,6 +50,6 @@
   <% end %>
   <div class="actions">
     <br>
-    <%= link_to "Add New Time Entry", new_time_entry_path, class: "btn btn-success" %>
+    <%= link_to "New Time Entry", new_time_entry_path, class: "btn btn-success" %>
   </div>
 </div>

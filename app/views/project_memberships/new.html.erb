@@ -1,4 +1,4 @@
-<h2>Invite Members to Project</h2>
+<h2><%= "Invite to #{@project.name}" %></h2>
 <div class="authform">
   <%= form_for(@project_membership) do |t| %>
     <%= hidden_field_tag "project_id", @project.id%>

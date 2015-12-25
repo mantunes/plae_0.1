@@ -15,7 +15,9 @@
         <%= render 'layouts/navigation_links' %>
       </ul>
       <% if user_signed_in? %>
-        <h4> <%= "#{current_user.first_name} #{current_user.last_name}" %> </h4>
+        <h4 class="dropdown-toggle" data-toggle="dropdown">
+          <%= "#{current_user.first_name} #{current_user.last_name}" %> <span class="caret"></span>
+        </h4>
       <% end %>
     </div>
   </div>
