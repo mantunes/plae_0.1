@@ -90,3 +90,26 @@ section {
   @extend .well;
   @extend .well-lg;
 }
+
+a#names:link {
+  color: white;
+  text-align: right;
+  line-height: 25px
+}
+a#names:visited {
+    color: green;
+}
+a#names:hover {
+    color: grey;
+    cursor: pointer;
+    text-decoration: none;
+}
+/* selected link */
+
+.navbar-right > a {
+  color: white;
+  font-size: 18px;
+}
+.navbar-right {
+  padding-top: 10px;
+}
