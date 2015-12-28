@@ -8,13 +8,14 @@ class SlackResponsesController < ApplicationController
 
     # Respond differently to Slash Command vs Webhook POSTs
     # See `Responding` sections above for the require difference.
-    #if params[:command].present?  
+    if params[:text].present?  
       #render text: responder.response.to_s
-    #else
+      t = TimeEntry.create(name: params[:text], start_time: Time.now);
+      render json: { text: "TimeEntry #{t.name} was created" }
+    else
       #render json: { text: responder.response.to_s }
-      TimeEntry.create(name: params[:text], start_time: Time.now);
-      render json: { text: "teste" }
-    #end
+      render json: { text: "[Error] Choose a task name" }
+    end
   end
  
   private
