@@ -66,26 +66,26 @@
     <% end %>
   </div>
 <script type="text/javascript">
-            var chart = new AmCharts.AmSerialChart();
-            var chartData = <%= convert_to_amcharts_json(@time_entries) %>;
-                // SERIAL CHART
-                chart.dataProvider = chartData;
-                chart.categoryField = "name";
-                chart.startDuration = 1;
-                // AXES
-                // category
-                var categoryAxis = chart.categoryAxis;
-                categoryAxis.labelRotation = 90;
-                categoryAxis.gridPosition = "start";
-                // GRAPH
-                var graph = new AmCharts.AmGraph();
-                graph.valueField = "total_time";
-                graph.balloonText = "[[category]]: [[value]]";
-                graph.type = "column";
-                graph.lineAlpha = 0;
-                graph.fillAlphas = 0.8;
-                chart.addGraph(graph);
-                chart.write("chartdiv");
+  var chart = new AmCharts.AmSerialChart();
+  var chartData = <%= convert_to_amcharts_json(@time_entries) %>;
+  // SERIAL CHART
+    chart.dataProvider = chartData;
+    chart.categoryField = "name";
+    chart.startDuration = 1;
+  // AXES
+  // category
+  var categoryAxis = chart.categoryAxis;
+  categoryAxis.labelRotation = 90;
+  categoryAxis.gridPosition = "start";
+  // GRAPH
+  var graph = new AmCharts.AmGraph();
+  graph.valueField = "total_time";
+  graph.balloonText = "[[category]]: [[value]]";
+  graph.type = "column";
+  graph.lineAlpha = 0;
+  graph.fillAlphas = 0.7;
+  chart.addGraph(graph);
+  chart.write("chartdiv");
 </script>
 <script type="text/javascript">
   var chartData = <%= convert_to_amcharts_json(@time_entries) %>;
