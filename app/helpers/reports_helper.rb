@@ -1,4 +1,7 @@
 module ReportsHelper
+  def convert_to_amcharts_json(data_array)
+    data_array.to_json.gsub(/\"text\"/, "text").html_safe
+  end
 
   def formatted_duration(total_seconds)
     hours = total_seconds / (60 * 60)
