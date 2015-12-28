@@ -16,4 +16,5 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require bootstrap-multiselect
+//= require moment
 //= require_tree .

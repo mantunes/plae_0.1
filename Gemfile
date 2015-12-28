@@ -21,7 +21,7 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 gem 'bootstrap-multiselect-rails'
 gem 'jquery-turbolinks'
-
+gem 'momentjs-rails'
 group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'

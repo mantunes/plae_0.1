@@ -22,8 +22,8 @@
             <br>
             <div class="container">
             <% unless request.format.to_sym == :pdf %>
-                <div id="chartdiv" style="width: 50%; height: 400px; float:left;"></div>
-                <div id="piechartdiv" style="width: 50%; height: 400px;"></div>
+                <div id="chartdiv"></div>
+                <div id="piechartdiv"></div>
             <% end %>
             <br>
               <table summary="TimeEntry list" class="table table-hover">
@@ -65,18 +65,30 @@
       <% end %>
     <% end %>
   </div>
-<script type="text/javascript">
+
+<%= content_tag :div, class: "temp_information", data: {temp: @time_entries} do %>
+<% end %>
+
+
+<script>
   var chart = new AmCharts.AmSerialChart();
-  var chartData = <%= convert_to_amcharts_json(@time_entries) %>;
-  // SERIAL CHART
-    chart.dataProvider = chartData;
-    chart.categoryField = "name";
-    chart.startDuration = 1;
-  // AXES
+  var chartData = $('.temp_information').data('temp')
+
+  chart.dataProvider = chartData;
+  chart.categoryField = "name";
+  chart.startDuration = 1;
   // category
   var categoryAxis = chart.categoryAxis;
   categoryAxis.labelRotation = 90;
   categoryAxis.gridPosition = "start";
+  // value
+  var valueAxis = new AmCharts.ValueAxis();
+  valueAxis.duration = "ss";
+  valueAxis.durationUnits = {DD:'d. ', hh:':', mm:':',ss:''};
+  valueAxis.axisAlpha = 1;
+  valueAxis.gridAlpha = 0;
+  valueAxis.stackType = "regular"; // we use stacked graphs to make color fills
+  chart.addValueAxis(valueAxis);
   // GRAPH
   var graph = new AmCharts.AmGraph();
   graph.valueField = "total_time";
@@ -86,12 +98,12 @@
   graph.fillAlphas = 0.7;
   chart.addGraph(graph);
   chart.write("chartdiv");
-</script>
-<script type="text/javascript">
-  var chartData = <%= convert_to_amcharts_json(@time_entries) %>;
+
   var chart = new AmCharts.AmPieChart();
   chart.valueField = "total_time";
   chart.titleField = "name";
   chart.dataProvider = chartData;
   chart.write("piechartdiv");
+
 </script>
+
