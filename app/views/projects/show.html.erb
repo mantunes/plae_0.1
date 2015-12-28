@@ -6,12 +6,18 @@
       <table summary="fields">
         <tr>
           <th>Total Duration:</th>
-          <td><%= time_ago_in_words(@project.total_duration.seconds.ago, include_seconds: true)if @project.total_duration %></td>
+          <% if @project.total_duration %>
+           <td><%= time_ago_in_words(@project.total_duration.seconds.ago, include_seconds: true)if @project.total_duration %></td>
+          <% else %>
+            <td>No tasks</td>
+          <% end %>
         </tr>
-        <tr>
-          <th>Organization: </th>
-          <td><%= @project.organization.try(:name) %></td>
-        </tr>
+        <% if @project.organization %>
+          <tr>
+            <th>Organization: </th>
+            <td><%= @project.organization.name %></td>
+          </tr>
+        <% end %>
       </table>
     </div>
     <% unless request.format.to_sym == :pdf %>
