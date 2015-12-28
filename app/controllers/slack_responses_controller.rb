@@ -12,6 +12,7 @@ class SlackResponsesController < ApplicationController
       #render text: responder.response.to_s
     #else
       #render json: { text: responder.response.to_s }
+      TimeEntry.create(name: params[:text], start_time: Time.now);
       render json: { text: "teste" }
     #end
   end
