@@ -8,11 +8,8 @@ class SlackResponsesController < ApplicationController
 
     # Respond differently to Slash Command vs Webhook POSTs
     # See `Responding` sections above for the require difference.
-    text = params[:text].split
-    10.times do 
-      puts text
-    end
-    if text.nil? || text.length > 2
+
+    if text.empty? || text.length > 2
       text = params[:text].split #render text: responder.response.to_s
       render json: { text: "[Error] Syntax: /plae_start Task Project" }
     else
@@ -20,15 +17,14 @@ class SlackResponsesController < ApplicationController
       t = create_entry(text)
       render json: { text: "TimeEntry #{t.name} was created" }
     end
-
   end
- 
+
   private
- 
+
   #def responder
    # @responder ||= Slack::Responder.new(params[:text])
   #end
- 
+
   def verify_slack_token
     render nothing: true, status: :forbidden and return unless Slack::TOKENS.include?(params[:token])
   end
