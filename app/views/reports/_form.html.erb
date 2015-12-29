@@ -5,11 +5,11 @@
         <div class="row">
           <div class="col-lg-6">
             <%= label_tag :start_time, 'Start Date'%> 
-            <%= datetime_select("start_date", "", default: @start_time, include_seconds: true) %>
+            <%= datetime_select("start_date", "", default: @start_time) %>
           </div>
           <div class="col-lg-6">
             <%= label_tag :end_time, 'End Date' %>
-            <%= datetime_select("end_date", "", default: @end_time, include_seconds: true) %>
+            <%= datetime_select("end_date", "", default: @end_time) %>
           </div>
         </div>
         <br>
