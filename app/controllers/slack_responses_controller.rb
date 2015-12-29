@@ -9,6 +9,9 @@ class SlackResponsesController < ApplicationController
     # Respond differently to Slash Command vs Webhook POSTs
     # See `Responding` sections above for the require difference.
     text = params[:text].split
+    10.times do 
+      puts text
+    end
     if text.nil? || text.length > 2
       text = params[:text].split #render text: responder.response.to_s
       render json: { text: "[Error] Syntax: /plae_start Task Project" }
