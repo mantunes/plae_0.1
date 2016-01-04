@@ -16,9 +16,6 @@ class Project < ActiveRecord::Base
     timed_entries = time_entries.map(&:total_time)
     timed_entries.compact!
     total_duration = timed_entries.sum
-    10.times do |variable|
-      puts total_duration
-    end
     update_column(:total_duration, total_duration)
   end
 

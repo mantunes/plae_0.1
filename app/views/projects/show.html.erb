@@ -92,6 +92,14 @@
         <% end %>
       <tbody>
     </table>
+    <div class="row">
+      <div class="col-lg-7">
+        <%= page_entries_info @time_entries, entry_name: 'Time Entries' %>
+      </div>
+      <div class="col-lg-5">
+        <%= paginate @time_entries %>
+      </div>
+    </div>
   <% end %>
   </br>
     <% unless request.format.to_sym == :pdf %>

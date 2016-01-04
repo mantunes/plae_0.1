@@ -9,6 +9,7 @@ class ReportsController < ApplicationController
       @time_entries = get_time_entries(params[:projects], params[:users])
       @time_entries = @time_entries.time_period(@start_time, @end_time)
       @time_entries = @time_entries.name_search(params[:name])
+      @time_entries = @time_entries.order(updated_at: :desc)
     end
     export_to
   end
@@ -71,5 +72,3 @@ class ReportsController < ApplicationController
     end
   end
 end
-
-

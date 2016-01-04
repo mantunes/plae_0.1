@@ -123,3 +123,8 @@ a#names:hover {
   width: 50%;
   height: 400px;
 }
+.table-hover th {
+  border-bottom: 4px solid #dddddd;
+  border-top: 0px !important;
+
+}

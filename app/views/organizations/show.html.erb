@@ -78,6 +78,14 @@
         <% end %>
       <tbody>
     </table>
+    <div class="row">
+      <div class="col-lg-7">
+        <%= page_entries_info @projects, entry_name: 'Projects' %>
+      </div>
+      <div class="col-lg-5">
+        <%= paginate @projects %>
+      </div>
+    </div>
   <% end %>
   <% unless request.format.to_sym == :pdf %>
     <div class="pull-right">

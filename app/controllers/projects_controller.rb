@@ -18,7 +18,7 @@ class ProjectsController < ApplicationController
 
   def show
     authorize_action_for(@project)
-    @time_entries = @project.time_entries
+    @time_entries = @project.time_entries.order(updated_at: :desc).page(params[:page])
     @users = @project.users.order('project_memberships.created_at asc')
     respond_to do |format|
       format.html
