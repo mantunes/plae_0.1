@@ -12,10 +12,6 @@ class ReportsController < ApplicationController
       @time_entries = @time_entries.order(updated_at: :desc)
     end
     @reins_params = convert_to_amcharts_json(@time_entries)
-    10.times do |variable|
-      puts "teste"
-      puts @reins_params
-    end
     export_to
   end
 
