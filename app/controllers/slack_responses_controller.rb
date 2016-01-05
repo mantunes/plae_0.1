@@ -5,7 +5,6 @@ class SlackResponsesController < ApplicationController
 
   def create
     # render nothing: true, status: :ok and return unless responder.respond?
-
     # Respond differently to Slash Command vs Webhook POSTs
     # See `Responding` sections above for the require difference.
     if params[:text].empty? || params[:text].length > 1

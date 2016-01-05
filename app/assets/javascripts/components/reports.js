@@ -26,11 +26,12 @@ $(document).ready(function() {
   graph.fillAlphas = 0.7;
   chart.addGraph(graph);
   chart.write("chartdiv");
-
+  // PIE CHART
   var chart = new AmCharts.AmPieChart();
   chart.valueField = "total_time";
   chart.titleField = "name";
   chart.dataProvider = chartData;
+  chart.balloonText = "";
   chart.write("piechartdiv");
 });
 
