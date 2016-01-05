@@ -13,7 +13,9 @@ class Project < ActiveRecord::Base
   paginates_per 5
 
   def update_total_duration
-    total_duration = time_entries.map(&:total_time).sum
+    timed_entries = time_entries.map(&:total_time)
+    timed_entries.compact!
+    total_duration = timed_entries.sum
     update_column(:total_duration, total_duration)
   end
 

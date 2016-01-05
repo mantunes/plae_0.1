@@ -2,7 +2,8 @@ Rails.application.routes.draw do
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  devise_for :users
+  devise_for :users, :controllers => { :invitations => 'users/invitations' }
+
   resources :time_entries do
     get :append, on: :member
     post :add_to_project, on: :member
@@ -19,6 +20,9 @@ Rails.application.routes.draw do
   resources :organization_memberships do
     post :leave, on: :member
   end
+  get '/reports/update_users' => 'reports#update_users'
+  resources :reports
+  resources :slack_responses, only: :create
 
   root to: 'time_entries#index'
   # The priority is based upon order of creation: first created -> highest priority.

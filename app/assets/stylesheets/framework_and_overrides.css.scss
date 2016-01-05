@@ -12,9 +12,12 @@ img {
   font-size: inherit;
   }
 
-// THESE ARE EXAMPLES YOU CAN MODIFY
-// create your own classes
-// to make views framework-neutral
+.navbar-collapse > h4 {
+  color: white;
+  text-align: right;
+  line-height: 25px
+}
+
 .column {
   @extend .col-md-6;
   @extend .text-center;
@@ -57,6 +60,7 @@ section {
   @extend .well;
   @extend .well-lg;
   padding-bottom: 40px;
+
 }
 .authform .right {
   float: right !important;
@@ -79,4 +83,48 @@ section {
   @extend .btn;
   @extend .btn-primary;
   @extend .btn-xs;
+}
+
+.jumbotron {
+  margin-top: 15px;
+  @extend .well;
+  @extend .well-lg;
+}
+
+a#names:link {
+  color: white;
+  text-align: right;
+  line-height: 25px
+}
+a#names:visited {
+    color: green;
+}
+a#names:hover {
+    color: grey;
+    cursor: pointer;
+    text-decoration: none;
+}
+/* selected link */
+
+.navbar-right > a {
+  color: white;
+  font-size: 18px;
+}
+.navbar-right {
+  padding-top: 10px;
+}
+
+#chartdiv{
+  width: 50%;
+  height: 400px;
+  float:left;
+}
+#piechartdiv{
+  width: 50%;
+  height: 400px;
+}
+.table-hover th {
+  border-bottom: 4px solid #dddddd;
+  border-top: 0px !important;
+
 }

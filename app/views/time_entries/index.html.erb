@@ -3,27 +3,38 @@
     <h4> You have no Time Entries</h4>
   <% else %>
     <h2>Time Entries</h2>
-    <table summary="TimeEntry list" class="table">
+    <br>
+    <table summary="TimeEntry list" class="table table-hover">
       <tr class="header">
         <th>Time Entry Name</th>
         <th>Project</th>
         <th>Start Time</th>
         <th>End Time</th>
         <th>Total Time</th>
+        <th>Actions</th>
       </tr>
       <tbody>
         <% @time_entries.each do |time_entry| %>
           <tr>
-            <td><%= link_to "#{time_entry.name}", time_entry %></td>
+            <td><%= time_entry.name %></td>
             <td><%= time_entry.project.try(:name) %></td>
             <td><%= time_entry.start_time.strftime("%H:%M:%S %d/%m/%y") %></td>
-            <td><%= time_entry.end_time.strftime("%H:%M:%S %d/%m/%y") %></td>
-            <td><%= time_ago_in_words(time_entry.total_time.seconds.ago, include_seconds: true) %></td>
-            <td><%= link_to "Edit", edit_time_entry_path(time_entry) %></td>
-            <td><%= link_to 'Delete', time_entry, method: :delete, 
-              data: { confirm: 'Are you sure?' } %></td>
-            <td><%= button_to "Add to Project",
-               append_time_entry_path(time_entry), method: :get %> </td>
+            <td><%= time_entry.end_time.try(:strftime, "%H:%M:%S %d/%m/%y") %></td>
+            <td><%= time_ago_in_words(time_entry.total_time.seconds.ago, include_seconds: true) unless time_entry.total_time.blank? %></td>
+            <td>
+              <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                  Action <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <li><%= link_to "Add to Project", append_time_entry_path(time_entry), method: :get %></li>
+                  <li class="divider"></li>
+                  <li><%= link_to "Edit", edit_time_entry_path(time_entry) %></li>
+                  <li><%= link_to 'Delete', time_entry, method: :delete, 
+                    data: { confirm: 'Are you sure?' } %></li>
+                </ul>
+              </div>
+            </td>
           </tr>
         <% end %>
       <tbody>
@@ -39,6 +50,6 @@
   <% end %>
   <div class="actions">
     <br>
-    <%= link_to "Add New Time Entry", new_time_entry_path %>
+    <%= link_to "New Time Entry", new_time_entry_path, class: "btn btn-success" %>
   </div>
 </div>

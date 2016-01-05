@@ -8,20 +8,19 @@ ActiveAdmin.register_page 'Dashboard' do
 
       column do
         panel 'Recent Users' do
-          table_for User.order('id desc').limit(10).each do
-          column 'name' do |user|
-            "#{user.first_name} #{user.last_name}"
-          end            
-          column(:email) { |user| link_to(user.email, admin_user_path(user)) }
+          table_for User.order('created_at desc').limit(10).each do
+            column 'name' do |user|
+              "#{user.first_name} #{user.last_name}"
+            end
+            column(:email) { |user| link_to(user.email, admin_user_path(user)) }
           end
         end
       end
 
       column do
         panel 'Recent Time Entries' do
-          table_for TimeEntry.order('id desc').limit(10).each do
+          table_for TimeEntry.order('created_at desc').limit(10).each do
             column(:name) { |entry| link_to(entry.name, admin_time_entry_path(entry)) }
-            column(:user) { |entry| link_to(entry.user.email, admin_user_path(entry.user)) }
             column 'Total time', &:total_time
           end
         end
@@ -30,7 +29,6 @@ ActiveAdmin.register_page 'Dashboard' do
     end
 
     columns do
-
       column do
         panel 'Recent Projects' do
           table_for Project.last(5).map do
@@ -45,7 +43,7 @@ ActiveAdmin.register_page 'Dashboard' do
 
       column do
         panel 'Recent Organizations' do
-          table_for Organization.order('id desc').limit(10).each do
+          table_for Organization.order('created_at desc').limit(10).each do
             column(:name) do |organization|
               link_to(organization.name, admin_organization_path(organization))
             end

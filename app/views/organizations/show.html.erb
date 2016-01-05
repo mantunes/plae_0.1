@@ -1,65 +1,70 @@
-<div>
-  <h2>Organization Details</h2>
+<div class="container">
+  <h2><%= @organization.name %></h2>
+  <br>
   <div class="row">
-    <div class="col-lg-8">
+    <div class="col-lg-7">
       <table summary="fields">
         <tr>
-          <th>Name: </th>
-          <td><%= @organization.name %></td>
-        </tr>
-        <tr>
-          <th>Description: </th>
+          <th>Description:</th>
           <td><%= @organization.description %></td>
         </tr>
         <tr>
-          <th>Website: </th>
+          <th>Website:</th>
           <td><%= @organization.website %></td>
-        </tr>
-        <tr>
-          <th>Created at: </th>
-          <td><%= @organization.created_at.strftime("%H:%M:%S %d/%m/%y") %></td>
         </tr>
       </table>
     </div>
-    <div class="col-lg-4">
-      <% if current_user.can_create? @organization.organization_memberships.build %>
-        <%= link_to "Invite Members", new_organization_membership_path(organization_id: @organization) %> <br>
-        <%= link_to "Manage Members", edit_organization_membership_path(organization_id: @organization), method: :get %>
-      <% end %>
-      <% if current_user.can_leave? @organization.organization_memberships.build %>
-        <%= button_to "Leave organization", leave_organization_membership_path(organization_id: @organization), data: { confirm: 'Are you sure?' } %>
-      <% end %>
-    </div>
+    <% unless request.format.to_sym == :pdf %>
+      <div class="col-lg-5">
+        <div class="btn-group">
+          <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+            Options <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <% if current_user.can_create? @organization.organization_memberships.build %>
+              <li><%= link_to "Invite Members", new_organization_membership_path(organization_id: @organization) %></li>
+              <li><%= link_to "Manage Members", edit_organization_membership_path(organization_id: @organization), method: :get %></li>
+            <% end %>
+            <% if current_user.can_leave? @organization.organization_memberships.build %>
+              <li><%= link_to "Leave organization", leave_organization_membership_path(organization_id: @organization), data: { confirm: 'Are you sure?' } %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    <% end %>
   </div>
 
   <br>
+  <% unless request.format.to_sym == :pdf %>
+    <h3> Users </h3>
 
-  <h3> Users </h3>
-
-  <table summary="User list" class="table">
-    <tr class="header">
-      <th>Name</th>
-      <th>Role</th>
-    </tr>
-    <tbody>
-      <% @users.each do |user| %>
-        <tr>
-          <td><%= "#{user.first_name} #{user.last_name}" %></td>
-          <td><%= user.organization_memberships.find_by(organization_id: @organization).role %></td>
-          <% if current_user.can_delete? @organization.organization_memberships.build  %>
-            <% unless user.can_delete?(@organization) || current_user.id == user.id %>
-              <td><%= link_to "Remove", organization_membership_path(user_id: user.id, organization_id: @organization), 
-                method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <table summary="User list" class="table table-hover">
+      <tr class="header">
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+      </tr>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= "#{user.first_name} #{user.last_name}" %></td>
+            <td><%= user.email %> </td>
+            <td><%= user.organization_memberships.find_by(organization_id: @organization).role %></td>
+            <% if current_user.can_delete? @organization.organization_memberships.build  %>
+              <% unless user.can_delete?(@organization) || current_user.id == user.id %>
+                <td><%= link_to "Remove", organization_membership_path(user_id: user.id, organization_id: @organization), 
+                  method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <% end %>
             <% end %>
-          <% end %>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+  <br>
   <%unless @projects.empty? %>
     <h3> Projects </h3>
-    <table summary="Project list" class="table">
+    <table summary="Project list" class="table table-hover">
       <tr class="header">
         <th>Project Name</th>
         <th>Total Duration</th>
@@ -73,6 +78,18 @@
         <% end %>
       <tbody>
     </table>
+    <div class="row">
+      <div class="col-lg-7">
+        <%= page_entries_info @projects, entry_name: 'Projects' %>
+      </div>
+      <div class="col-lg-5">
+        <%= paginate @projects %>
+      </div>
+    </div>
   <% end %>
-  <%= link_to "<< Back to List", organizations_path  %>
+  <% unless request.format.to_sym == :pdf %>
+    <div class="pull-right">
+      <%= link_to '.PDF', { format: :pdf }, class: "btn btn-danger"%>
+    </div>
+  <% end %>
 </div>

@@ -1,0 +1,42 @@
+<div>
+  <div class = "container">
+   <div class = "jumbotron clearfix">
+      <%= form_tag reports_path, method: :get, class: :'report_form' do %>
+        <div class="row">
+          <div class="col-lg-6">
+            <%= label_tag :start_time, 'Start Date'%> 
+            <%= datetime_select("start_date", "", default: @start_time) %>
+          </div>
+          <div class="col-lg-6">
+            <%= label_tag :end_time, 'End Date' %>
+            <%= datetime_select("end_date", "", default: @end_time) %>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-lg-3" id="project-div">
+            <%= label_tag :projects %> <br>
+            <%= select_tag 'projects', content_tag(:option, 'Without Project') + options_from_collection_for_select(current_user.projects, 'id', 'name'), {class: 'projectMultiselect', multiple: true} %>
+            <br>
+          </div>
+            <div class="col-lg-3" id="organization-div">
+                <%= label_tag :organizations %> <br>
+                <%= select_tag :organizations, options_from_collection_for_select(current_user.organizations, 'id', 'name'), :'data-size' => '5', :'data-resource' => 'organizations', class: 'multiselect updatable', multiple: true %>
+            </div>
+            <div class="col-lg-3" id="user-div">
+              <%= label_tag :users %> <br>
+              <%= select_tag :users, nil, :'data-size' => '5', :'data-resource' => 'users', class: 'multiselect', multiple: true %>
+            </div>
+          <div class="col-lg-3">
+            <%= label_tag :Description %>
+            <%= text_field_tag :name, "", class: 'form-control' %>
+          </div>
+        </div>
+        <div class="row">
+          <br>
+          <%= submit_tag 'Apply', class: 'btn btn-primary pull-right' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

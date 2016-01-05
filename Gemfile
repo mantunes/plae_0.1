@@ -4,6 +4,7 @@ gem 'rails', '4.2.0'
 
 gem 'pg'
 gem 'devise'
+gem 'devise_invitable', '~> 1.5.2'
 gem 'authority'
 gem 'letter_opener'
 gem 'bootstrap-sass'
@@ -16,6 +17,12 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
+gem 'bootstrap-multiselect-rails'
+gem 'jquery-turbolinks'
+gem 'momentjs-rails'
+gem 'reins'
 
 group :development, :test do
   gem 'byebug'

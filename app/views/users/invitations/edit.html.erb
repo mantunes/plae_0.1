@@ -1,0 +1,23 @@
+<div class="authform">
+  <h2><%= t 'devise.invitations.edit.header' %></h2>
+  <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => { :method => :put } do |f| %>
+    <%= devise_error_messages! %>
+    <%= f.hidden_field :invitation_token %>
+
+    <p><%= f.label :first_name %><br />
+    <%= f.text_field :first_name, class: 'form-control' %></p>
+
+    <p><%= f.label :last_name %><br />
+    <%= f.text_field :last_name, value: " ", class: 'form-control' %></p>
+
+    <p><%= f.label :password %><br />
+    <%= f.password_field :password, class: 'form-control' %></p>
+
+    <p><%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, class: 'form-control' %></p>
+    <div class="actions">
+    <%= link_to "Cancel", root_path, class: 'button left'  %>
+    <%= f.submit t("devise.invitations.edit.submit_button"), class: 'button right' %>
+    </div>
+  <% end %>
+</div>

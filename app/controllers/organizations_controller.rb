@@ -14,8 +14,14 @@ class OrganizationsController < ApplicationController
 
   def show
     authorize_action_for(@organization)
-    @projects = @organization.projects
+    @projects = @organization.projects.order(updated_at: :desc).page(params[:page])
     @users = @organization.users.order('organization_memberships.created_at asc')
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: 'organization', template: 'organizations/show.html.erb'
+      end
+    end
   end
 
   def new
