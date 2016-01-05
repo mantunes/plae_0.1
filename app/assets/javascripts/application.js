@@ -17,4 +17,5 @@
 //= require bootstrap-sprockets
 //= require bootstrap-multiselect
 //= require moment
+//= require reins
 //= require_tree .

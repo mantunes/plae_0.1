@@ -202,6 +202,8 @@ GEM
       i18n
       polyamorous (~> 1.2)
     rdoc (4.2.0)
+    reins (0.0.4)
+      rails (~> 4.1)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
     rspec-core (3.3.2)
@@ -286,6 +288,7 @@ DEPENDENCIES
   pg
   rails (= 4.2.0)
   rails_12factor
+  reins
   rspec-rails (~> 3.0)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)

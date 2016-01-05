@@ -11,6 +11,11 @@ class ReportsController < ApplicationController
       @time_entries = @time_entries.name_search(params[:name])
       @time_entries = @time_entries.order(updated_at: :desc)
     end
+    @reins_params = convert_to_amcharts_json(@time_entries)
+    10.times do |variable|
+      puts "teste"
+      puts @reins_params
+    end
     export_to
   end
 
@@ -23,6 +28,10 @@ class ReportsController < ApplicationController
   end
 
   private
+
+  def convert_to_amcharts_json(data_array)
+    data_array.to_json.gsub(/\"text\"/, "text").html_safe
+  end
 
   def weekly_entries
     @start_time = 7.days.ago
